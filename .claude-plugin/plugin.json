@@ -1,0 +1,25 @@
+{
+  "name": "dopeboy0608-skills",
+  "version": "1.2.0",
+  "description": "Agent skills for refactoring with Martin Fowler's catalog and organizing React/TypeScript code without changing logic.",
+  "author": {
+    "name": "YongKyu Kim",
+    "url": "https://github.com/dopeboy0608"
+  },
+  "homepage": "https://github.com/dopeboy0608/skills",
+  "repository": "https://github.com/dopeboy0608/skills",
+  "license": "MIT",
+  "keywords": [
+    "refactoring",
+    "code-smells",
+    "fowler",
+    "react",
+    "typescript",
+    "imports",
+    "hooks"
+  ],
+  "skills": [
+    "./skills/fowler-refactor",
+    "./skills/code-organizer"
+  ]
+}

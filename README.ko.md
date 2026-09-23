@@ -17,10 +17,12 @@
 
 ### Claude Code (플러그인 마켓플레이스)
 
+```bash
+claude plugin marketplace add dopeboy0608/skills
+claude plugin install dopeboy0608-skills
 ```
-/plugin marketplace add dopeboy0608/skills
-/plugin install dopeboy0608-skills@dopeboy-skills
-```
+
+세션 안에서는 `/plugin marketplace add dopeboy0608/skills` 실행 후 `/plugin install dopeboy0608-skills`를 실행합니다. 스킬은 `dopeboy0608-skills:fowler-refactor`, `dopeboy0608-skills:code-organizer`로 표시됩니다.
 
 ### 모든 에이전트 (npx)
 
