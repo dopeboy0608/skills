@@ -15,22 +15,29 @@ Korean translations of each skill live next to it as `SKILL.ko.md`. They are for
 
 ## Install
 
-### Claude Code (plugin marketplace)
+Pick **one** of the two methods. If you install both in Claude Code, every skill shows up twice.
+
+### Claude Code (plugin)
 
 ```bash
 claude plugin marketplace add dopeboy0608/skills
 claude plugin install dopeboy0608-skills
 ```
 
-Or inside a session: `/plugin marketplace add dopeboy0608/skills`, then `/plugin install dopeboy0608-skills`. Skills show up as `dopeboy0608-skills:fowler-refactor` and `dopeboy0608-skills:code-organizer`.
+Or inside a session: `/plugin marketplace add dopeboy0608/skills`, then `/plugin install dopeboy0608-skills`, then `/reload-plugins`.
+
+Plugin skills are namespaced: they show up and run as `/dopeboy0608-skills:fowler-refactor` and `/dopeboy0608-skills:code-organizer`.
 
 ### Any agent (npx)
 
-Requires **Node.js >= 22.20.0** (`nvm install 22 && nvm use 22`).
+Works with Claude Code, OpenCode, Cursor, Codex, Windsurf and more. Requires **Node.js >= 22.20.0** (`nvm install 22 && nvm use 22`).
 
 ```bash
-# Interactive: pick skills and agents
+# Interactive: pick skills and agents (installs into the current project)
 npx skills@latest add dopeboy0608/skills
+
+# Global: available in every project
+npx skills@latest add dopeboy0608/skills -g
 
 # A single skill
 npx skills@latest add dopeboy0608/skills --skill fowler-refactor
@@ -39,11 +46,27 @@ npx skills@latest add dopeboy0608/skills --skill fowler-refactor
 npx skills@latest add dopeboy0608/skills --skill code-organizer --agent opencode
 ```
 
-In Claude Code, restart the session or run `/reload-skills` after installing.
+Skills installed this way run as `/fowler-refactor` and `/code-organizer`. In Claude Code, restart the session or run `/reload-skills` after installing.
+
+### Update
+
+```bash
+# Plugin
+claude plugin marketplace update dopeboy-skills
+claude plugin update dopeboy0608-skills
+
+# npx
+npx skills@latest update
+```
 
 ### Uninstall
 
 ```bash
+# Plugin
+claude plugin uninstall dopeboy0608-skills
+claude plugin marketplace remove dopeboy-skills
+
+# npx
 npx skills@latest remove fowler-refactor
 npx skills@latest remove --global code-organizer
 ```
@@ -55,7 +78,8 @@ npx skills@latest remove --global code-organizer
 Invoke it explicitly:
 
 ```
-/fowler-refactor
+/fowler-refactor                     # npx
+/dopeboy0608-skills:fowler-refactor  # Claude plugin
 ```
 
 It does **not** auto-trigger on casual requests like "clean this up".
@@ -75,7 +99,8 @@ Pattern catalog: [English](./skills/fowler-refactor/references/fowler-patterns.m
 ## code-organizer
 
 ```
-/code-organizer
+/code-organizer                     # npx
+/dopeboy0608-skills:code-organizer  # Claude plugin
 ```
 
 You can also ask "organize imports" or "reorder hooks".

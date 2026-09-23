@@ -15,22 +15,29 @@
 
 ## 설치
 
-### Claude Code (플러그인 마켓플레이스)
+두 방법 중 **하나만** 고르세요. Claude Code에 둘 다 설치하면 같은 스킬이 두 번씩 보입니다.
+
+### Claude Code (플러그인)
 
 ```bash
 claude plugin marketplace add dopeboy0608/skills
 claude plugin install dopeboy0608-skills
 ```
 
-세션 안에서는 `/plugin marketplace add dopeboy0608/skills` 실행 후 `/plugin install dopeboy0608-skills`를 실행합니다. 스킬은 `dopeboy0608-skills:fowler-refactor`, `dopeboy0608-skills:code-organizer`로 표시됩니다.
+세션 안에서는 `/plugin marketplace add dopeboy0608/skills`, `/plugin install dopeboy0608-skills`, `/reload-plugins` 순서로 실행합니다.
+
+플러그인으로 설치한 스킬은 앞에 플러그인 이름이 붙어 `/dopeboy0608-skills:fowler-refactor`, `/dopeboy0608-skills:code-organizer`로 표시되고 실행됩니다.
 
 ### 모든 에이전트 (npx)
 
-**Node.js >= 22.20.0**이 필요합니다 (`nvm install 22 && nvm use 22`).
+Claude Code, OpenCode, Cursor, Codex, Windsurf 등에서 쓸 수 있습니다. **Node.js >= 22.20.0**이 필요합니다 (`nvm install 22 && nvm use 22`).
 
 ```bash
-# 인터랙티브: 스킬과 에이전트를 직접 선택
+# 인터랙티브: 스킬과 에이전트를 직접 선택 (현재 프로젝트에 설치)
 npx skills@latest add dopeboy0608/skills
+
+# 전역 설치: 모든 프로젝트에서 사용
+npx skills@latest add dopeboy0608/skills -g
 
 # 특정 스킬만 설치
 npx skills@latest add dopeboy0608/skills --skill fowler-refactor
@@ -39,11 +46,27 @@ npx skills@latest add dopeboy0608/skills --skill fowler-refactor
 npx skills@latest add dopeboy0608/skills --skill code-organizer --agent opencode
 ```
 
-Claude Code에서는 설치 후 재시작하거나 세션에서 `/reload-skills`를 실행하세요.
+이 방법으로 설치한 스킬은 `/fowler-refactor`, `/code-organizer`로 실행합니다. Claude Code에서는 설치 후 재시작하거나 세션에서 `/reload-skills`를 실행하세요.
+
+### 업데이트
+
+```bash
+# 플러그인
+claude plugin marketplace update dopeboy-skills
+claude plugin update dopeboy0608-skills
+
+# npx
+npx skills@latest update
+```
 
 ### 제거
 
 ```bash
+# 플러그인
+claude plugin uninstall dopeboy0608-skills
+claude plugin marketplace remove dopeboy-skills
+
+# npx
 npx skills@latest remove fowler-refactor
 npx skills@latest remove --global code-organizer
 ```
@@ -55,7 +78,8 @@ npx skills@latest remove --global code-organizer
 명시적으로 호출합니다:
 
 ```
-/fowler-refactor
+/fowler-refactor                     # npx
+/dopeboy0608-skills:fowler-refactor  # Claude 플러그인
 ```
 
 "이거 정리해줘" 같은 가벼운 요청에는 **자동으로 트리거되지 않습니다.**
@@ -75,7 +99,8 @@ npx skills@latest remove --global code-organizer
 ## code-organizer
 
 ```
-/code-organizer
+/code-organizer                     # npx
+/dopeboy0608-skills:code-organizer  # Claude 플러그인
 ```
 
 "import 순서 정리해줘", "훅 순서 정리해줘" 같은 요청으로도 실행됩니다.
