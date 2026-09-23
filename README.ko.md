@@ -19,8 +19,7 @@
 
 ```
 /plugin marketplace add dopeboy0608/skills
-/plugin install fowler-refactor@dopeboy-skills
-/plugin install code-organizer@dopeboy-skills
+/plugin install dopeboy0608-skills@dopeboy-skills
 ```
 
 ### 모든 에이전트 (npx)
