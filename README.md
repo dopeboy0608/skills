@@ -17,10 +17,12 @@ Korean translations of each skill live next to it as `SKILL.ko.md`. They are for
 
 ### Claude Code (plugin marketplace)
 
+```bash
+claude plugin marketplace add dopeboy0608/skills
+claude plugin install dopeboy0608-skills
 ```
-/plugin marketplace add dopeboy0608/skills
-/plugin install dopeboy0608-skills@dopeboy-skills
-```
+
+Or inside a session: `/plugin marketplace add dopeboy0608/skills`, then `/plugin install dopeboy0608-skills`. Skills show up as `dopeboy0608-skills:fowler-refactor` and `dopeboy0608-skills:code-organizer`.
 
 ### Any agent (npx)
 
