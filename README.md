@@ -19,8 +19,7 @@ Korean translations of each skill live next to it as `SKILL.ko.md`. They are for
 
 ```
 /plugin marketplace add dopeboy0608/skills
-/plugin install fowler-refactor@dopeboy-skills
-/plugin install code-organizer@dopeboy-skills
+/plugin install dopeboy0608-skills@dopeboy-skills
 ```
 
 ### Any agent (npx)

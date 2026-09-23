@@ -6,32 +6,35 @@
   },
   "metadata": {
     "description": "Agent skills for refactoring and organizing code.",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
-      "name": "fowler-refactor",
+      "name": "dopeboy0608-skills",
       "source": "./",
       "strict": false,
-      "description": "Refactor code with Martin Fowler's catalog via a structured interview, with zero breaking changes to callers.",
-      "version": "1.0.0",
-      "author": { "name": "YongKyu Kim" },
+      "description": "Agent skills for refactoring (Martin Fowler's catalog) and organizing React/TypeScript code without changing logic.",
+      "version": "1.1.0",
+      "author": {
+        "name": "YongKyu Kim"
+      },
+      "homepage": "https://github.com/dopeboy0608/skills",
+      "repository": "https://github.com/dopeboy0608/skills",
       "license": "MIT",
       "category": "engineering",
-      "keywords": ["refactoring", "code-smells", "fowler", "typescript", "react"],
-      "skills": ["./skills/fowler-refactor"]
-    },
-    {
-      "name": "code-organizer",
-      "source": "./",
-      "strict": false,
-      "description": "Reorder imports and hook/state/effect declarations in React/TypeScript code without changing logic.",
-      "version": "1.0.0",
-      "author": { "name": "YongKyu Kim" },
-      "license": "MIT",
-      "category": "engineering",
-      "keywords": ["react", "typescript", "imports", "hooks", "formatting"],
-      "skills": ["./skills/code-organizer"]
+      "keywords": [
+        "refactoring",
+        "code-smells",
+        "fowler",
+        "react",
+        "typescript",
+        "imports",
+        "hooks"
+      ],
+      "skills": [
+        "./skills/fowler-refactor",
+        "./skills/code-organizer"
+      ]
     }
   ]
 }
