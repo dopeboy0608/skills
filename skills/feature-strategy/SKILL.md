@@ -146,6 +146,8 @@ Phase A was written from the design only. The coding agent **can also check agai
 - [ ] Cross-checked against the design (with section links if available; otherwise mark "not checked")
 - [ ] Cross-checked against the code (use the fact-finding results from step 2)
 
+A design check marked "not checked" is not a mismatch: it doesn't count toward ①+② and doesn't block sub-tasks 01–02 or trigger re-verification. Show it in the verdict as "not checked", record it as open in the feature doc, and check it when the section link arrives at Phase C start.
+
 **Mismatch types and where they go**
 
 | Type | Examples | Handling |
