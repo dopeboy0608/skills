@@ -159,6 +159,7 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
 **Branching**
 - ①+② = 0 → **pass**. Go straight to question rounds; turn ③ into questions.
 - ①+② ≥ 1 → **re-verify once**. This prevents endless loops. Items still open afterwards stay marked "open" in the story; do not re-verify again. If none of them blocks the first two sub-tasks, continue. If any does, show the human the remaining items and let **the human decide** whether to proceed with a provisional value or wait for the owner.
+- When ①+② is large, group the items and mark which ones block the first two sub-tasks. Re-verify those first; the rest may stay "open" if they don't block.
 - A new `Re-verification` block is added only for the one allowed round; "newest round first" matters only when the human later restarts the gate on a changed story.
 
 **How to update the story**
@@ -176,7 +177,7 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
 - Add new decisions to the round when findings surface them.
 - When an answer comes with a condition, ask about the new decision it creates (e.g., "keep the old button" → how does it coexist with the new one?).
 - Question checklist:
-  - Issue hierarchy; how many sub-tasks to create and when
+  - Issue hierarchy; how many sub-tasks to create and when (skip anything already known, e.g., the user said there's no tracker)
   - How to split the first sub-task
   - Handling the missing API contract
   - Branch, commit, and PR strategy
@@ -191,6 +192,7 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
   - Ambiguous field mappings
 
 ### 5. Roadmap rules
+A roadmap shown while question rounds are still open is a provisional draft: don't save or create anything from it until step 6.
 - 01–02: **entry flow & layout**. One per entry point (e.g., create vs edit). With a single entry point, 01 is entry flow & layout and 02 is the next item below. Lay out static UI placeholders so later sub-tasks only fill in behavior.
 - Next: entry validation → editing & live calculation → secondary behavior (sorting, etc.)
 - **Put API-dependent work later**: save/fetch/delete integration, filters, removing mocks.
@@ -200,7 +202,7 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
 ### 6. Create sub-tasks and the feature doc
 - Show the human the roadmap and the drafts of sub-tasks 01–02, and get approval before creating anything (an external write; see "Operational notes").
 - Create the sub-tasks under the story (summary-only for the rest), then write the feature doc: roadmap & key mapping, workflow, decision log, findings (including ③ items), progress log.
-- Without a tracker, the roadmap and bodies already live in the feature doc; just fill in the rest.
+- Without a tracker, the roadmap and bodies already live in the feature doc; just fill in the rest. Nest each sub-task body's headings under its sub-task heading (e.g., `####` for the template's `##`), so they don't collide with the doc's own top-level sections.
 
 ### 7. Working without the API contract
 - Reuse existing list and response data as much as possible. Create mode can usually be built from that alone.
