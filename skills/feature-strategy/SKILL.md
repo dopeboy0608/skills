@@ -40,9 +40,9 @@ If the user names a phase, follow it, but stop and say so when a required input 
 ```
 Phase A. Story pre-definition   design → requirements doc → story body → answers to open questions
    ↓
-Phase B. Sub-task planning      cross-check gate ─┬─ pass ───────────────────────────┐
-                                                  └─ re-verify once → update story top ┘
-                                → fact finding → question rounds → roadmap → create sub-tasks → feature doc
+Phase B. Sub-task planning      fact finding → cross-check gate ─┬─ pass ───────────────────────────┐
+                                                                 └─ re-verify once → update story top ┘
+                                → question rounds → roadmap → create sub-tasks → feature doc
    ↓
 Phase C. Per-sub-task build     start → implement → stop before commit → human check → commit → refine next
    ↺ repeat per sub-task (open a Draft PR/MR after the first one)
