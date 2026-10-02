@@ -1,11 +1,28 @@
 ---
 name: feature-strategy
-description: End-to-end implementation strategy for large, design-heavy features, built on the idea of "big flow first, details incrementally". Pre-define requirements on the parent story from the design file, cross-check them against the codebase, design and create a sub-task roadmap, then implement one sub-task at a time with a human verification checkpoint after each. The agent gathers facts; the human makes decisions through rounds of questions. Includes a mock strategy so work can proceed before the API contract (DTO/schema) is ready. Use when asked to "document requirements from this design", "add screen layout to the story", "break this into sub-tasks", "plan the feature implementation", "go step by step so I can verify each one", "start before the API is ready", or when given a story link with a request to proceed in stages.
+description: Plan and build a large, design-heavy feature in verifiable steps — story requirements → sub-task roadmap → one sub-task at a time with a human check before every commit. The agent gathers facts; the human decides. Includes a mock strategy for when the API contract isn't ready. Use only when invoked explicitly via /feature-strategy, or when the user clearly asks to plan a large feature in stages from a parent story.
+disable-model-invocation: true
 ---
 
 # Feature Strategy
 
 Split a large story into sub-tasks small enough that **a human can verify the screen and the code after every step**, and write each sub-task so an agent can pick it up from its body alone.
+
+> **Explicit invocation only.** Don't start this workflow on casual requests like "break this down" or "make a plan". Run it when the user calls `/feature-strategy`, or clearly asks to plan a large feature in stages from a parent story.
+>
+> **Scope.** Tuned for UI-heavy features (screens, modals, design files). For backend or other work, apply the same cycle and read the UI-specific examples (modal, hook, Figma, `NODE_ENV`) as illustrations only.
+
+## Where to start
+
+Check the input, then enter at the matching phase:
+
+| Input | Start at |
+|---|---|
+| Design link, or a story without the five Phase A sections | Phase A |
+| Story with the five Phase A sections | Phase B (cross-check gate first) |
+| A sub-task key (+ design section link) | Phase C |
+
+If the user names a phase, follow it, but stop and say so when a required input is missing (e.g., Phase C without a sub-task body).
 
 ## Terms
 
@@ -43,6 +60,15 @@ Phase C. Per-sub-task build     start → implement → stop before commit → h
 3. **Don't block on the API contract.** Put contract-independent work at the front of the roadmap.
 4. **Protect existing code.** Replace existing components with new ones instead of editing them. Apply cleanup and refactoring to new code only.
 5. **Stop at every checkpoint.** After each sub-task, wait for human verification before committing.
+
+---
+
+## Without an issue tracker
+
+If there's no tracker, or the human doesn't want issues created, keep the same cycle but use the feature doc as the single source of truth:
+- Phase A: put the five sections at the top of the feature doc instead of a story body.
+- Phase B: write the roadmap and each sub-task body as sections of the feature doc (same template); skip the tracker steps in "Operational notes".
+- Phase C: refer to sub-tasks by their roadmap number (`01`, `02`, …) in requests and commit messages.
 
 ---
 

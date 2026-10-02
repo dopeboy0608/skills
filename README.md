@@ -81,7 +81,7 @@ npx skills@latest remove --global code-organizer
 /dopeboy0608-skills:feature-strategy  # Claude plugin
 ```
 
-You can also say "break this story into sub-tasks" or "start before the API is ready".
+It does **not** auto-trigger on casual requests like "break this down". Call it explicitly, or ask clearly to plan a large feature in stages from a parent story.
 
 - **Phase A, story pre-definition**: design → requirements doc (screen layout, FRs, fields, policies, open questions) in the story body.
 - **Phase B, sub-task planning**: cross-check the story against the code, run question rounds, then create the roadmap and sub-tasks.
