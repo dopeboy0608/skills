@@ -19,7 +19,8 @@ Check the input, then enter at the matching phase:
 | Input | Start at |
 |---|---|
 | Design link, or a story without the five Phase A sections | Phase A |
-| Story with the five Phase A sections | Phase B (cross-check gate first) |
+| Story with the five Phase A sections filled in, and the questions blocking sub-tasks 01–02 answered | Phase B (cross-check gate first) |
+| Story with the five sections but empty sections or unanswered blocking questions | Phase A (A-3: fill in answers) |
 | A sub-task key (+ design section link) | Phase C |
 
 If the user names a phase, follow it, but stop and say so when a required input is missing (e.g., Phase C without a sub-task body).
@@ -118,7 +119,7 @@ Writing rules:
 ## Phase B. Sub-task planning
 
 ### 0. Cross-check gate (verify Phase A)
-Phase A was written from the design only. The coding agent **can also check against the code**, so it verifies the story body at the start of Phase B. It shows the result as a verdict table; **the human decides** whether to pass or re-verify.
+Phase A was written from the design only. The coding agent **can also check against the code**, so it verifies the story body at the start of Phase B. Start the step 2 fact finding first (in the background), because the code cross-check uses its results; the gate verdict comes after it returns. It shows the result as a verdict table; **the human decides** whether to pass or re-verify.
 
 **Checklist**
 - [ ] All five sections exist: screen layout, FR, data & fields, policies & exceptions, open questions
@@ -139,7 +140,8 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
 
 **Branching**
 - ①+② = 0 → **pass**. Go straight to fact finding and question rounds; turn ③ into questions.
-- ①+② ≥ 1 → **re-verify once**. Anything still open stays as "open"; keep going as long as it doesn't block the first two sub-tasks. This prevents endless loops.
+- ①+② ≥ 1 → **re-verify once**. This prevents endless loops. Items still open afterwards stay marked "open" in the story; do not re-verify again. If none of them blocks the first two sub-tasks, continue. If any does, show the human the remaining items and let **the human decide** whether to proceed with a provisional value or wait for the owner.
+- A new `Re-verification` block is added only for the one allowed round; "newest round first" matters only when the human later restarts the gate on a changed story.
 
 **How to update the story**
 - Placement: at the **top** of the body, right below "Related docs" and above "Screen layout", add a `## Re-verification (YYYY-MM-DD)` block. Newest round goes first.
