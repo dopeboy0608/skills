@@ -1,6 +1,6 @@
 ---
 name: feature-strategy
-description: Plan and build a large, design-heavy feature in verifiable steps — story requirements → sub-task roadmap → one sub-task at a time with a human check before every commit. The agent gathers facts; the human decides. Includes a mock strategy for when the API contract isn't ready. Use only when invoked explicitly via /feature-strategy, or when the user clearly asks to plan a large feature in stages from a parent story.
+description: Plan and build a large, design-heavy feature in verifiable steps — story requirements → sub-task roadmap → one sub-task at a time with a human check before every commit. The agent gathers facts; the human decides. Includes a mock strategy for when the API contract isn't ready. Use only when invoked explicitly via /feature-strategy.
 disable-model-invocation: true
 ---
 
@@ -8,7 +8,7 @@ disable-model-invocation: true
 
 Split a large story into sub-tasks small enough that **a human can verify the screen and the code after every step**, and write each sub-task so an agent can pick it up from its body alone.
 
-> **Explicit invocation only.** Don't start this workflow on casual requests like "break this down" or "make a plan". Run it when the user calls `/feature-strategy`, or clearly asks to plan a large feature in stages from a parent story.
+> **Explicit invocation only.** Don't start this workflow on casual requests like "break this down" or "make a plan". Run it only when the user calls `/feature-strategy`.
 >
 > **Scope.** Tuned for UI-heavy features (screens, modals, design files). For backend or other work, apply the same cycle and read the UI-specific examples (modal, hook, Figma, `NODE_ENV`) as illustrations only.
 

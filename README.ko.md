@@ -81,7 +81,7 @@ npx skills@latest remove --global code-organizer
 /dopeboy0608-skills:feature-strategy  # Claude 플러그인
 ```
 
-"쪼개줘" 같은 일상적인 요청에는 **자동으로 실행되지 않습니다.** 명시적으로 호출하거나, 상위 스토리 기준으로 큰 피처를 단계별로 진행하자고 분명히 요청하세요.
+**자동으로 실행되지 않습니다.** 위 명령어로 명시적으로 호출하세요.
 
 - **Phase A, 스토리 사전 정의**: 디자인 → 요구사항 문서(화면 구성, FR, 필드, 정책, 확인 필요 사항)를 스토리 본문에 정리합니다.
 - **Phase B, 하위 작업 플래닝**: 스토리를 코드와 크로스체크하고, 질문 라운드를 거쳐 로드맵과 하위 작업을 만듭니다.
@@ -100,7 +100,7 @@ npx skills@latest remove --global code-organizer
 /dopeboy0608-skills:fowler-refactor  # Claude 플러그인
 ```
 
-"이거 정리해줘" 같은 가벼운 요청에는 **자동으로 트리거되지 않습니다.**
+**자동으로 트리거되지 않습니다.** "이거 정리해줘", "리팩터링해줘" 같은 요청으로는 시작되지 않으니 명시적으로 호출하세요.
 
 1. **인터뷰** (`grill-me` 방식): 대상, 코드 악취, 제약조건이 명확해질 때까지 추천 답변과 함께 질문을 하나씩 합니다.
 2. **패턴 매핑**: 파울러 카탈로그에서 적합한 패턴을 고릅니다 (Extract Function, Decompose Conditional, Split Phase, Replace Conditional with Lookup Table 등).

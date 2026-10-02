@@ -81,7 +81,7 @@ npx skills@latest remove --global code-organizer
 /dopeboy0608-skills:feature-strategy  # Claude plugin
 ```
 
-It does **not** auto-trigger on casual requests like "break this down". Call it explicitly, or ask clearly to plan a large feature in stages from a parent story.
+It does **not** auto-trigger. Call it explicitly with the command above.
 
 - **Phase A, story pre-definition**: design → requirements doc (screen layout, FRs, fields, policies, open questions) in the story body.
 - **Phase B, sub-task planning**: cross-check the story against the code, run question rounds, then create the roadmap and sub-tasks.
@@ -100,7 +100,7 @@ Invoke it explicitly:
 /dopeboy0608-skills:fowler-refactor  # Claude plugin
 ```
 
-It does **not** auto-trigger on casual requests like "clean this up".
+It does **not** auto-trigger. Casual requests like "clean this up" or "refactor this" will not start it; call it explicitly.
 
 1. **Interview** (`grill-me` style): one question at a time, each with a recommended answer, until the target, the smell, and the constraints are clear.
 2. **Pattern mapping**: picks patterns from the Fowler catalog (Extract Function, Decompose Conditional, Split Phase, Replace Conditional with Lookup Table, and more).
