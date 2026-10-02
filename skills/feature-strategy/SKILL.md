@@ -160,7 +160,7 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
 
 **Evidence rule**
 - One finding per row; never merge two findings into one row.
-- Every verdict row cites its evidence: ① two quoted spots in the story that conflict (or a quote that shows the gap), ② a story quote plus the design node, ③ a `file:line`. ③ counts only when the story or design **explicitly assumes** something and the code shows it is missing or different; "I couldn't find X in the repo" without such an assumption is not a finding.
+- Every verdict row cites its evidence: ① two quoted spots in the story that conflict (or a quote that shows the gap), ② a story quote plus the design node, ③ a `file:line` (for something that's missing, the story quote plus the search you ran, e.g., `git ls-files` or a grep pattern). ③ counts only when the story or design **explicitly assumes** something and the code shows it is missing or different; "I couldn't find X in the repo" without such an assumption is not a finding.
 - The "Blocks 01–02?" column applies to ①/② rows only. ③ rows go to question rounds; leave that column empty for them.
 - A finding you can't cite stays out of the verdict table. If it still looks plausible, list it in one line under **"Possible gaps (unverified)"**. These lines are not counted, never block, and never trigger re-verification; the human may turn them into questions.
 - Don't count findings to decide anything. Only whether an item **blocks the first two sub-tasks** matters.
