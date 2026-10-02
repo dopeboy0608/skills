@@ -19,7 +19,7 @@ Check the input, then enter at the matching phase:
 | Input | Start at |
 |---|---|
 | Design link, or a story without the five Phase A sections | Phase A |
-| Story with the five Phase A sections filled in, and the questions blocking sub-tasks 01–02 answered | Phase B (cross-check gate first) |
+| Story with the five Phase A sections filled in, and the questions blocking sub-tasks 01–02 answered | Phase B (starting with the input check) |
 | Story with the five sections but empty sections or unanswered blocking questions | Phase A (A-3: fill in answers) |
 | A sub-task key (+ design section link) | Phase C |
 
@@ -40,8 +40,8 @@ If the user names a phase, follow it, but stop and say so when a required input 
 ```
 Phase A. Story pre-definition   design → requirements doc → story body → answers to open questions
    ↓
-Phase B. Sub-task planning      fact finding → cross-check gate ─┬─ pass ───────────────────────────┐
-                                                                 └─ re-verify once → update story top ┘
+Phase B. Sub-task planning      input check → fact finding → cross-check gate ─┬─ pass ───────────────────────────┐
+                                                                             └─ re-verify once → update story top ┘
                                 → question rounds → roadmap → create sub-tasks → feature doc
    ↓
 Phase C. Per-sub-task build     start → implement → stop before commit → human check → commit → refine next
@@ -118,8 +118,25 @@ Writing rules:
 
 ## Phase B. Sub-task planning
 
-### 0. Cross-check gate (verify Phase A)
-Phase A was written from the design only. The coding agent **can also check against the code**, so it verifies the story body at the start of Phase B. Start the step 2 fact finding first (in the background), because the code cross-check uses its results; the gate verdict comes after it returns. It shows the result as a verdict table; **the human decides** whether to pass or re-verify.
+### 1. Input analysis
+- Fetch the story with all fields. Check the related links and the Phase A sections.
+- **Check that the story is actually filled in** before anything else: all five sections exist and are non-empty, and the questions blocking sub-tasks 01–02 are answered. Report what's missing.
+- If sections are missing or empty, or a blocking question is unanswered, stop and point the human to Phase A (A-3) first.
+- Treat answered questions as **settled**.
+- Use the Phase A result as the design baseline. Section links arrive at Phase C start.
+
+### 2. Fact finding (background sub-agent)
+Run this in a background sub-agent. Questions that don't depend on the findings (e.g., issue hierarchy, branch/PR strategy) don't need the sub-agent's result; ask them right away instead of waiting. Investigate:
+- Whether the entry points the spec mentions (buttons, menus, columns) **actually exist**. Specs often assume things the code doesn't have.
+- The closest reference implementations: similar "button → modal", "list cell click → modal", data fetch/mutation patterns
+- Validation, alert/confirm/toast utilities; locations of state enums and constants
+- **Naming collisions**: whether the English word for the new concept already means something else in the code
+- Tabs, multi-mount structures, global event bus usage (risk of duplicate listeners)
+- Whether other branches touch the same files (`git branch -a`, `git diff --stat <base>...<branch>`)
+- Whether the screen can be built without the API contract: fields already in existing lists and responses
+
+### 3. Cross-check gate (verify Phase A)
+Phase A was written from the design only. The coding agent **can also check against the code**, so it verifies the story body in Phase B. It runs after step 1 (input check) and step 2 (fact finding), because the code cross-check uses the fact-finding results; the gate verdict comes after they return. It shows the result as a verdict table; **the human decides** whether to pass or re-verify.
 
 **Checklist**
 - [ ] All five sections exist: screen layout, FR, data & fields, policies & exceptions, open questions
@@ -139,7 +156,7 @@ Phase A was written from the design only. The coding agent **can also check agai
 Why ③ stays out of the story: it would mix implementation decisions into the spec.
 
 **Branching**
-- ①+② = 0 → **pass**. Go straight to fact finding and question rounds; turn ③ into questions.
+- ①+② = 0 → **pass**. Go straight to question rounds; turn ③ into questions.
 - ①+② ≥ 1 → **re-verify once**. This prevents endless loops. Items still open afterwards stay marked "open" in the story; do not re-verify again. If none of them blocks the first two sub-tasks, continue. If any does, show the human the remaining items and let **the human decide** whether to proceed with a provisional value or wait for the owner.
 - A new `Re-verification` block is added only for the one allowed round; "newest round first" matters only when the human later restarts the gate on a changed story.
 
@@ -152,23 +169,7 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
 
 > Example: in one feature, ①+② was 0 and ③ was 3: a dropdown the spec assumed didn't exist, the obvious English name for the new concept already meant something else in the code, and the amount field had several candidates. The gate passed, and the three ③ items were resolved in question rounds.
 
-### 1. Input analysis
-- Fetch the story with all fields. Check the related links and the Phase A sections.
-- Treat answered questions as **settled**.
-- If the Phase A sections are missing, stop and point the human to Phase A first.
-- Use the Phase A result as the design baseline. Section links arrive at Phase C start.
-
-### 2. Fact finding (background sub-agent)
-Ask the questions that don't depend on the findings right away instead of waiting. Investigate:
-- Whether the entry points the spec mentions (buttons, menus, columns) **actually exist**. Specs often assume things the code doesn't have.
-- The closest reference implementations: similar "button → modal", "list cell click → modal", data fetch/mutation patterns
-- Validation, alert/confirm/toast utilities; locations of state enums and constants
-- **Naming collisions**: whether the English word for the new concept already means something else in the code
-- Tabs, multi-mount structures, global event bus usage (risk of duplicate listeners)
-- Whether other branches touch the same files (`git branch -a`, `git diff --stat <base>...<branch>`)
-- Whether the screen can be built without the API contract: fields already in existing lists and responses
-
-### 3. Question rounds
+### 4. Question rounds
 - Each round, ask **every question that can be answered now**, numbered, each with a recommendation and its reasoning.
 - Push questions that depend on another answer to the next round.
 - Add new decisions to the round when findings surface them.
@@ -188,20 +189,20 @@ Ask the questions that don't depend on the findings right away instead of waitin
   - How to inject mock data for verification
   - Ambiguous field mappings
 
-### 4. Roadmap rules
+### 5. Roadmap rules
 - 01–02: **entry flow & layout**. One per entry point (e.g., create vs edit). Lay out static UI placeholders so later sub-tasks only fill in behavior.
 - Next: entry validation → editing & live calculation → secondary behavior (sorting, etc.)
 - **Put API-dependent work later**: save/fetch/delete integration, filters, removing mocks.
 - Put cascading actions (bulk apply, etc.) and other apps (partner-facing screens, etc.) last.
 - Write full bodies for **the first two only**. Give the rest a title, FR, in/out, and references, and flesh them out right before starting.
 
-### 5. Working without the API contract
+### 6. Working without the API contract
 - Reuse existing list and response data as much as possible. Create mode can usually be built from that alone.
 - Put temporary types and mock fetch/mutation (returning a `Promise`) where your project structure expects them. Mark swap points with `// TODO(API)`.
 - If there's nothing to click on screen, inject mock fields behind a dev-only guard (e.g., `process.env.NODE_ENV === 'development'`) with `// TODO(API) remove`, and note in the roadmap which sub-task removes it.
 - Proceed with a provisional value for unconfirmed field mappings and log them as "confirm with backend".
 
-### 6. Sub-task body template
+### 7. Sub-task body template
 ```
 ## Goal                  (one line)
 ## Related FR
@@ -220,12 +221,12 @@ Ask the questions that don't depend on the findings right away instead of waitin
 - Summary-only sub-tasks start with `> Full body to be added before starting / **API required**`.
 - If another branch overlaps, list its branch, commits, and files under a **"⚠️ Must read"** section.
 
-### 7. Branch · commits · PR
+### 8. Branch · commits · PR
 - Use a single story branch. Sub-tasks are for tracking scope and decisions.
 - Put the **sub-task key** in each commit message and **fix the scope to the feature name**. Follow your team's commit convention otherwise.
 - Open a Draft PR/MR after the first sub-task and review commit by commit, so you don't end up with one giant PR.
 
-### 8. Protecting existing code
+### 9. Protecting existing code
 - **Don't edit or delete** existing components. Only swap the render site to the new component, and write the rollback path (restore one render line) in the sub-task.
 - When moving existing logic, first write it as is inside the new component; consider extracting it (e.g., into a hook) later.
 - If the old and new components **subscribe to the same global event**, behavior runs twice (e.g., a modal opens twice). Make sure only one is mounted.
