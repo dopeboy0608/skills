@@ -130,7 +130,7 @@ Writing rules:
 
 ### 2. Fact finding (background sub-agent)
 Run this in a background sub-agent; if the environment has no sub-agents, investigate sequentially yourself. Questions that don't depend on the findings (e.g., issue hierarchy, branch/PR strategy) don't need the result; ask them right away instead of waiting. They count as question round 1 (step 4). Investigate:
-- Whether the entry points the spec mentions (buttons, menus, columns) **actually exist**. Specs often assume things the code doesn't have.
+- For each entry point the spec mentions (buttons, menus, columns), whether the spec **treats it as already existing or reused** (e.g., "the existing action column", "reuse the toolbar") and whether the code actually has it. Specs often assume things the code doesn't have. If the entry point is to be **built new**, it's a roadmap item, not a mismatch; note where it will attach.
 - The closest reference implementations: similar "button → modal", "list cell click → modal", data fetch/mutation patterns
 - Validation, alert/confirm/toast utilities; locations of state enums and constants
 - **Naming collisions**: whether the English word for the new concept already means something else in the code
@@ -154,7 +154,7 @@ A design check marked "not checked" is not a mismatch: it isn't a ①/② findin
 |---|---|---|
 | ① Spec gap or contradiction | Missing copy, ambiguous validation order, conflicting ID formats | Re-verify with spec owner → **update the story** |
 | ② Story vs design mismatch | Field missing from the table, per-mode display differs | Check the design section → **update the story** |
-| ③ Spec vs code mismatch | A component the spec assumes doesn't exist, naming collision, ambiguous field mapping | Leave the story alone; record in **question rounds and the feature doc** |
+| ③ Spec vs code mismatch | A component the spec treats as existing or reusable doesn't exist (not one that is to be built new), naming collision, ambiguous field mapping | Leave the story alone; record in **question rounds and the feature doc** |
 
 Why ③ stays out of the story: it would mix implementation decisions into the spec.
 
@@ -184,7 +184,7 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
 - Push questions that depend on another answer to the next round.
 - Add new decisions to the round when findings surface them.
 - When an answer comes with a condition, ask about the new decision it creates (e.g., "keep the old button" → how does it coexist with the new one?).
-- Question checklist:
+- Question checklist (ask only the items that apply to this feature; skip the rest):
   - Issue hierarchy; how many sub-tasks to create and when (skip anything already known, e.g., the user said there's no tracker)
   - How to split the first sub-task
   - Handling the missing API contract
