@@ -146,7 +146,7 @@ Phase A was written from the design only. The coding agent **can also check agai
 - [ ] Cross-checked against the design (with section links if available; otherwise mark "not checked")
 - [ ] Cross-checked against the code (use the fact-finding results from step 2)
 
-A design check marked "not checked" is not a mismatch: it doesn't count toward ①+② and doesn't block sub-tasks 01–02 or trigger re-verification. Show it in the verdict as "not checked", record it as open in the feature doc, and check it when the section link arrives at Phase C start.
+A design check marked "not checked" is not a mismatch: it isn't a ①/② finding and doesn't block sub-tasks 01–02 or trigger re-verification. Show it in the verdict as "not checked", record it as open in the feature doc, and check it when the section link arrives at Phase C start.
 
 **Mismatch types and where they go**
 
@@ -158,10 +158,14 @@ A design check marked "not checked" is not a mismatch: it doesn't count toward �
 
 Why ③ stays out of the story: it would mix implementation decisions into the spec.
 
+**Evidence rule**
+- Every verdict row cites its evidence: ① two quoted spots in the story that conflict (or a quote that shows the gap), ② a story quote plus the design node, ③ a `file:line`.
+- A finding you can't cite stays out of the verdict table. If it still looks plausible, list it in one line under **"Possible gaps (unverified)"**. These lines are not counted, never block, and never trigger re-verification; the human may turn them into questions.
+- Don't count findings to decide anything. Only whether an item **blocks the first two sub-tasks** matters.
+
 **Branching**
-- ①+② = 0 → **pass**. Go straight to question rounds; turn ③ into questions.
-- ①+② ≥ 1 → **re-verify at most once**; the human may also skip it. If none of the items blocks the first two sub-tasks, offer both options (re-verify once, or pass the gate and carry the items as open) and let **the human choose**. This prevents endless loops. Items still open afterwards stay marked "open" in the story; do not re-verify again. If any of them blocks the first two sub-tasks, show the human the remaining items and let **the human decide** whether to proceed with a provisional value or wait for the owner.
-- When ①+② is large, group the items and mark which ones block the first two sub-tasks. Re-verify those first; the rest may stay "open" if they don't block.
+- No ①/② item blocks the first two sub-tasks → the gate can **pass**. Re-verification is optional: offer both options (re-verify once, or pass and carry the items as open) and let **the human choose**. Turn ③ into questions.
+- A ①/② item blocks the first two sub-tasks → **re-verify those items at most once**. This prevents endless loops. Items still open afterwards stay marked "open" in the story; do not re-verify again. Show the human what remains and let **the human decide** whether to proceed with a provisional value or wait for the owner.
 - A new `Re-verification` block is added only for the one allowed round; "newest round first" matters only when the human later restarts the gate on a changed story.
 
 **How to update the story**
@@ -171,7 +175,7 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
 - **Preserve formatting**: if the tracker replaces the whole body on edit, read it in its native format (e.g., Jira ADF), insert only the new block, and write it back in the same format. A markdown round-trip can break link cards and formatting.
 - Show the list of changes to the human and get approval before saving. This is an external write.
 
-> Example: in one feature, ①+② was 0 and ③ was 3: a dropdown the spec assumed didn't exist, the obvious English name for the new concept already meant something else in the code, and the amount field had several candidates. The gate passed, and the three ③ items were resolved in question rounds.
+> Example: in one feature, no ①/② item was found and ③ had 3 items: a dropdown the spec assumed didn't exist, the obvious English name for the new concept already meant something else in the code, and the amount field had several candidates. The gate passed, and the three ③ items were resolved in question rounds.
 
 ### 4. Question rounds
 - Each round, ask **every question that can be answered now**, numbered, each with a recommendation and its reasoning. Questions already asked during fact finding are round 1; if the gate later updates the story, re-confirm only the answers it affects.
