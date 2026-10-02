@@ -1,6 +1,7 @@
 ---
 name: fowler-refactor
-description: Analyze code using Martin Fowler's refactoring catalog (Extract Function, Decompose Conditional, Replace Conditional with Lookup Table, Split Phase, etc.) and propose safe, backward-compatible improvements via a structured interview. Use when asked to refactor, improve code structure, remove code smells, introduce indirection layers, or when invoking /fowler-refactor explicitly.
+description: Analyze code using Martin Fowler's refactoring catalog (Extract Function, Decompose Conditional, Replace Conditional with Lookup Table, Split Phase, etc.) and propose safe, backward-compatible improvements via a structured interview. Use only when invoked explicitly via /fowler-refactor.
+disable-model-invocation: true
 ---
 
 # Martin Fowler Refactoring Advisor
@@ -13,7 +14,7 @@ Analyzes code for smells using Martin Fowler's *Refactoring* catalog, conducts a
 
 ## ⚠️ Operating Principles
 
-1. **Explicit invocation only**: Does not auto-trigger on casual language like "clean this up". Activates when the user explicitly calls `/fowler-refactor` or mentions refactoring with clear intent.
+1. **Explicit invocation only**: Does not auto-trigger on casual language like "clean this up". Activates only when the user explicitly calls `/fowler-refactor`.
 2. **Zero Side-Effect / Backward Compatibility**: Public interfaces (function signatures, props, return types) are preserved 100%. No breaking changes to existing callers. Non-breaking structure is non-negotiable.
 3. **Propose before touching**: A refactoring proposal (report) is presented first. Code is modified only after the user approves — or after feedback is incorporated.
 4. **One question at a time (`grill-me`)**: If the scope or intent is unclear, ask one focused question with a recommended answer until the three core axes are resolved.

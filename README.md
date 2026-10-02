@@ -2,10 +2,11 @@
 
 > 🇰🇷 [한국어 README](./README.ko.md)
 
-Agent skills for refactoring and organizing code. They work in **Claude Code**, **OpenCode**, **Cursor**, **Codex**, **Windsurf**, and any agent that supports the [skills.sh](https://skills.sh) format.
+Agent skills for planning features, refactoring and organizing code. They work in **Claude Code**, **OpenCode**, **Cursor**, **Codex**, **Windsurf**, and any agent that supports the [skills.sh](https://skills.sh) format.
 
 | Skill | What it does |
 | --- | --- |
+| [`feature-strategy`](./skills/feature-strategy/SKILL.md) | Plans a large, design-heavy feature as "big flow first, details incrementally": requirements on the story, a sub-task roadmap, then one sub-task at a time with a **human check before every commit**. Includes a mock strategy for when the API contract isn't ready. |
 | [`fowler-refactor`](./skills/fowler-refactor/SKILL.md) | Applies Martin Fowler's refactoring catalog. It interviews you, proposes a Before/After plan, and changes code only after you approve, with **zero breaking changes** to existing callers. |
 | [`code-organizer`](./skills/code-organizer/SKILL.md) | Reorders imports and hook/state/ref/effect declarations in React/TypeScript code **without changing logic**. |
 
@@ -26,7 +27,7 @@ claude plugin install dopeboy0608-skills
 
 Or inside a session: `/plugin marketplace add dopeboy0608/skills`, then `/plugin install dopeboy0608-skills`, then `/reload-plugins`.
 
-Plugin skills are namespaced: they show up and run as `/dopeboy0608-skills:fowler-refactor` and `/dopeboy0608-skills:code-organizer`.
+Plugin skills are namespaced: they show up and run as `/dopeboy0608-skills:feature-strategy`, `/dopeboy0608-skills:fowler-refactor` and `/dopeboy0608-skills:code-organizer`.
 
 ### Any agent (npx)
 
@@ -46,7 +47,7 @@ npx skills@latest add dopeboy0608/skills --skill fowler-refactor
 npx skills@latest add dopeboy0608/skills --skill code-organizer --agent opencode
 ```
 
-Skills installed this way run as `/fowler-refactor` and `/code-organizer`. In Claude Code, restart the session or run `/reload-skills` after installing.
+Skills installed this way run as `/feature-strategy`, `/fowler-refactor` and `/code-organizer`. In Claude Code, restart the session or run `/reload-skills` after installing.
 
 ### Update
 
@@ -73,6 +74,23 @@ npx skills@latest remove --global code-organizer
 
 ---
 
+## feature-strategy
+
+```
+/feature-strategy                     # npx
+/dopeboy0608-skills:feature-strategy  # Claude plugin
+```
+
+It does **not** auto-trigger. Call it explicitly with the command above.
+
+- **Phase A, story pre-definition**: design → requirements doc (screen layout, FRs, fields, policies, open questions) in the story body.
+- **Phase B, sub-task planning**: cross-check the story against the code, run question rounds, then create the roadmap and sub-tasks.
+- **Phase C, per-sub-task build**: implement one sub-task, stop before commit for your check, then refine the next one.
+- The agent gathers facts; you make the decisions. Existing components are replaced, never edited, so rollback is one line.
+- Issue-tracker writes (Jira, Linear, ...) happen only after you approve the drafts.
+
+---
+
 ## fowler-refactor
 
 Invoke it explicitly:
@@ -82,7 +100,7 @@ Invoke it explicitly:
 /dopeboy0608-skills:fowler-refactor  # Claude plugin
 ```
 
-It does **not** auto-trigger on casual requests like "clean this up".
+It does **not** auto-trigger. Casual requests like "clean this up" or "refactor this" will not start it; call it explicitly.
 
 1. **Interview** (`grill-me` style): one question at a time, each with a recommended answer, until the target, the smell, and the constraints are clear.
 2. **Pattern mapping**: picks patterns from the Fowler catalog (Extract Function, Decompose Conditional, Split Phase, Replace Conditional with Lookup Table, and more).
