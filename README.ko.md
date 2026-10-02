@@ -2,10 +2,11 @@
 
 > 🇺🇸 [English README](./README.md)
 
-코드 리팩터링과 정렬을 위한 AI 에이전트 스킬 모음입니다. **Claude Code**, **OpenCode**, **Cursor**, **Codex**, **Windsurf** 등 [skills.sh](https://skills.sh) 형식을 지원하는 모든 에이전트에서 사용할 수 있습니다.
+기능 설계, 코드 리팩터링, 정렬을 위한 AI 에이전트 스킬 모음입니다. **Claude Code**, **OpenCode**, **Cursor**, **Codex**, **Windsurf** 등 [skills.sh](https://skills.sh) 형식을 지원하는 모든 에이전트에서 사용할 수 있습니다.
 
 | 스킬 | 설명 |
 | --- | --- |
+| [`feature-strategy`](./skills/feature-strategy/SKILL.ko.md) | 기획·디자인이 큰 피처를 "큰 흐름 먼저, 상세는 점진적으로" 구현합니다. 스토리 요구사항 정의 → 하위 작업 로드맵 → 하위 작업별 구현 순서로 진행하며, **커밋 전마다 사람이 확인**합니다. API 계약이 미정이어도 진행할 수 있는 mock 전략을 포함합니다. |
 | [`fowler-refactor`](./skills/fowler-refactor/SKILL.ko.md) | 마틴 파울러의 리팩터링 카탈로그를 적용합니다. 인터뷰 → Before/After 제안 → 승인 후 적용 순서로 진행하며, **기존 호출처에 Breaking Change가 없습니다.** |
 | [`code-organizer`](./skills/code-organizer/SKILL.ko.md) | React/TypeScript 코드의 import와 훅·상태·ref·이펙트 선언을 **로직 변경 없이** 정렬합니다. |
 
@@ -26,7 +27,7 @@ claude plugin install dopeboy0608-skills
 
 세션 안에서는 `/plugin marketplace add dopeboy0608/skills`, `/plugin install dopeboy0608-skills`, `/reload-plugins` 순서로 실행합니다.
 
-플러그인으로 설치한 스킬은 앞에 플러그인 이름이 붙어 `/dopeboy0608-skills:fowler-refactor`, `/dopeboy0608-skills:code-organizer`로 표시되고 실행됩니다.
+플러그인으로 설치한 스킬은 앞에 플러그인 이름이 붙어 `/dopeboy0608-skills:feature-strategy`, `/dopeboy0608-skills:fowler-refactor`, `/dopeboy0608-skills:code-organizer`로 표시되고 실행됩니다.
 
 ### 모든 에이전트 (npx)
 
@@ -46,7 +47,7 @@ npx skills@latest add dopeboy0608/skills --skill fowler-refactor
 npx skills@latest add dopeboy0608/skills --skill code-organizer --agent opencode
 ```
 
-이 방법으로 설치한 스킬은 `/fowler-refactor`, `/code-organizer`로 실행합니다. Claude Code에서는 설치 후 재시작하거나 세션에서 `/reload-skills`를 실행하세요.
+이 방법으로 설치한 스킬은 `/feature-strategy`, `/fowler-refactor`, `/code-organizer`로 실행합니다. Claude Code에서는 설치 후 재시작하거나 세션에서 `/reload-skills`를 실행하세요.
 
 ### 업데이트
 
@@ -70,6 +71,23 @@ claude plugin marketplace remove dopeboy-skills
 npx skills@latest remove fowler-refactor
 npx skills@latest remove --global code-organizer
 ```
+
+---
+
+## feature-strategy
+
+```
+/feature-strategy                     # npx
+/dopeboy0608-skills:feature-strategy  # Claude 플러그인
+```
+
+"스토리를 하위 작업으로 쪼개줘", "API 나오기 전에 먼저 진행" 같은 요청으로도 쓸 수 있습니다.
+
+- **Phase A, 스토리 사전 정의**: 디자인 → 요구사항 문서(화면 구성, FR, 필드, 정책, 확인 필요 사항)를 스토리 본문에 정리합니다.
+- **Phase B, 하위 작업 플래닝**: 스토리를 코드와 크로스체크하고, 질문 라운드를 거쳐 로드맵과 하위 작업을 만듭니다.
+- **Phase C, 하위 작업 단위 구현**: 하위 작업 하나를 구현하고 커밋 전에 멈춰 확인받은 뒤 다음 작업을 보강합니다.
+- 사실 조사는 에이전트가, 결정은 사람이 합니다. 기존 컴포넌트는 고치지 않고 대체하므로 롤백은 한 줄입니다.
+- 이슈 트래커(Jira, Linear 등) 쓰기는 초안을 승인한 뒤에만 실행합니다.
 
 ---
 
