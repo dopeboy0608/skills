@@ -160,7 +160,7 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
 
 **Branching**
 - ①+② = 0 → **pass**. Go straight to question rounds; turn ③ into questions.
-- ①+② ≥ 1 → **re-verify at most once**; the human may also skip it. If none of the items blocks the first two sub-tasks, offer both options (re-verify once, or pass the gate and carry the items as open) and let **the human choose**. This prevents endless loops. Items still open afterwards stay marked "open" in the story; do not re-verify again. If none of them blocks the first two sub-tasks, continue. If any does, show the human the remaining items and let **the human decide** whether to proceed with a provisional value or wait for the owner.
+- ①+② ≥ 1 → **re-verify at most once**; the human may also skip it. If none of the items blocks the first two sub-tasks, offer both options (re-verify once, or pass the gate and carry the items as open) and let **the human choose**. This prevents endless loops. Items still open afterwards stay marked "open" in the story; do not re-verify again. If any of them blocks the first two sub-tasks, show the human the remaining items and let **the human decide** whether to proceed with a provisional value or wait for the owner.
 - When ①+② is large, group the items and mark which ones block the first two sub-tasks. Re-verify those first; the rest may stay "open" if they don't block.
 - A new `Re-verification` block is added only for the one allowed round; "newest round first" matters only when the human later restarts the gate on a changed story.
 
