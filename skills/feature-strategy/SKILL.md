@@ -30,11 +30,24 @@ If the user names a phase, follow it, but stop and say so when a required input 
 
 | Term | Meaning |
 |---|---|
-| Story | Parent issue for the feature (Jira Story, Linear Issue, etc.) |
-| Sub-task | Implementation-unit issue under the story |
+| Story | Parent issue for the feature (GitHub issue, Jira Story, Linear Issue, etc.) |
+| Sub-task | Implementation-unit issue under the story (GitHub sub-issue, Jira Sub-task, etc.) |
 | Design file | Figma or similar design source |
 | API contract | Backend request/response schema (DTO, OpenAPI, etc.) |
 | Feature doc | Local doc holding this feature's decision log and progress log (e.g., `docs/feature/<KEY>-<slug>.md`) |
+
+### Tracker mapping
+
+Pick the column that matches the project's tracker. The cycle is identical; only where things live and how they are created differs.
+
+| | GitHub Issues | Jira, Linear, etc. | No tracker |
+|---|---|---|---|
+| Story | An issue | Story / Issue | Top of the feature doc |
+| Story body | The issue body (plain markdown) | The description (may be a rich format such as Jira ADF) | The feature doc |
+| Sub-task | A sub-issue linked under the story issue | Sub-task / child issue | A numbered section (`01`, `02`, …) of the feature doc |
+| Sub-task key | `#<number>` | The tracker key | The roadmap number |
+| Sub-task kind | A label (e.g., `sub-task`), unless the repo has issue types | The project's sub-task issue type | — |
+| Operational notes | "GitHub Issues" below | "Jira and other trackers" below | Skip |
 
 ## The cycle
 
@@ -174,7 +187,7 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
 - Placement: at the **top** of the body, right below "Related docs" and above "Screen layout", add a `## Re-verification (YYYY-MM-DD)` block. Newest round goes first.
 - Entry format: `<section/ID>: before → after (source: design node / owner confirmation / meeting)`
 - Don't rewrite the original sections. Append `(→ re-verified YYYY-MM-DD)` to the changed rows.
-- **Preserve formatting**: if the tracker replaces the whole body on edit, read it in its native format (e.g., Jira ADF), insert only the new block, and write it back in the same format. A markdown round-trip can break link cards and formatting.
+- **Preserve formatting**: if the tracker replaces the whole body on edit, read it in its native format (e.g., Jira ADF), insert only the new block, and write it back in the same format. A markdown round-trip can break link cards and formatting. GitHub issue bodies are plain markdown, so this doesn't apply there.
 - Show the list of changes to the human and get approval before saving. This is an external write.
 
 > Example: in one feature, no ①/② item was found and ③ had 3 items: a dropdown the spec assumed didn't exist, the obvious English name for the new concept already meant something else in the code, and the amount field had several candidates. The gate passed, and the three ③ items were resolved in question rounds.
@@ -185,7 +198,7 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
 - Add new decisions to the round when findings surface them.
 - When an answer comes with a condition, ask about the new decision it creates (e.g., "keep the old button" → how does it coexist with the new one?).
 - Question checklist (ask only the items that apply to this feature; skip the rest):
-  - Issue hierarchy; how many sub-tasks to create and when (skip anything already known, e.g., the user said there's no tracker)
+  - Issue hierarchy (e.g., sub-issues vs. issue type/label on GitHub Issues); how many sub-tasks to create and when (skip anything already known, e.g., the user said there's no tracker)
   - How to split the first sub-task
   - Handling the missing API contract
   - Branch, commit, and PR strategy
@@ -209,7 +222,7 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 
 ### 6. Create sub-tasks and the feature doc
 - Show the human the roadmap and the drafts of sub-tasks 01–02, and get approval before creating anything (an external write; see "Operational notes").
-- Create the sub-tasks under the story (summary-only for the rest), then write the feature doc: roadmap & key mapping, workflow, decision log, findings (including ③ items), progress log.
+- Create the sub-tasks under the story (on GitHub Issues, as sub-issues linked to the story issue; summary-only for the rest), then write the feature doc: roadmap & key mapping, workflow, decision log, findings (including ③ items), progress log.
 - Without a tracker, the roadmap and bodies already live in the feature doc; just fill in the rest. Nest each sub-task body's headings under its sub-task heading (e.g., `####` for the template's `##`), so they don't collide with the doc's own top-level sections.
 
 ### 7. Working without the API contract
@@ -228,12 +241,12 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 ## References            (file:line)
 ## Expected file changes (new / modified)
 ## API dependency (mock points)
-## Design                (section link — may be supplied by the human)
+## Design                (optional — section link, may be supplied by the human; omit if there is no design file)
 ## Verification scenario (checkboxes, including regressions)
 ## Code review points    (rollback path, naming, listener cleanup, cleanup tools on new code only)
 ## Commit                (team convention)
 ```
-- Title format example: `[App][Feature] NN. <entry point> > <content>`
+- Title format example: `[App][Feature] NN. <entry point> > <content>`. For a single-app project, a simpler `NN. <entry point> > <content>` is enough.
 - Summary-only sub-tasks start with `> Full body to be added before starting / **API required**`.
 - If another branch overlaps, list its branch, commits, and files under a **"⚠️ Must read"** section.
 
@@ -271,7 +284,20 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 4. (C) Per-sub-task commits, Draft PR/MR, progress log
 
 ## Operational notes (issue tracker)
+
+### All trackers
+- Creating and editing issues is an external write; get approval first, as described in step 6.
+- If a create call fails with a network error, **search by parent before retrying**, so you don't create duplicates. How to search depends on the tracker (see below).
+
+### GitHub Issues
+- Link each sub-task as a **sub-issue** of the story issue; don't track sub-tasks as a checklist in the story body. Check what your environment supports before relying on it: if the `gh` version has no command for linking sub-issues, use `gh api` with the sub-issues REST endpoint (`POST /repos/<owner>/<repo>/issues/<story number>/sub_issues`, body `sub_issue_id` = the sub-task's numeric issue **id**, not its number).
+- Issue types exist only on some organization repositories. If the repo has none, mark sub-tasks with a label (e.g., `sub-task`); if the label doesn't exist yet, ask before creating it.
+- Duplicate check: list the story's sub-issues (`GET /repos/<owner>/<repo>/issues/<story number>/sub_issues`) and compare titles before creating again.
+- The story body is plain markdown, so the `## Re-verification` block can be inserted directly; the format-preservation warning in step 3 doesn't apply.
+- Commit messages use the sub-task's `#<number>` as its key.
+
+### Jira and other trackers
 - Sub-task issue type names differ per project. List the issue types before creating any.
 - If several connections exist for the same tracker, their permissions can differ (e.g., read works but write returns 403). If one fails, retry with another.
-- If a create call fails with a network error, **search by parent before retrying**, so you don't create duplicates.
-- Creating and editing issues is an external write; get approval first, as described in step 6.
+- If the tracker stores bodies in a rich format (e.g., Jira ADF), follow the format-preservation rule in step 3.
+- Duplicate check: search by the parent issue before retrying.
