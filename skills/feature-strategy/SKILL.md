@@ -10,11 +10,11 @@ Split a large story into sub-tasks small enough that **a human can verify the sc
 
 > **Explicit invocation only.** Don't start this workflow on casual requests like "break this down" or "make a plan". Run it only when the user calls `/feature-strategy`.
 >
-> **Scope.** Tuned for UI-heavy features (screens, modals, design files). For backend or other work, apply the same cycle and read the UI-specific examples (modal, hook, Figma, `NODE_ENV`) as illustrations only.
+> **Scope.** Frontend only. Tuned for UI-heavy features (screens, modals, design files), and it also covers API-integration work driven by an API spec (DTO, request/response docs) with or without a design file. Backend implementation work is out of scope. Read the UI-specific examples (modal, hook, Figma, `NODE_ENV`) as illustrations for UI work.
 
 ## Where to start
 
-Input comes as an argument: `/feature-strategy <story key or link>` (or a sub-task key, or a design link). If none is given, ask for it.
+Input comes as an argument: `/feature-strategy <story key or link>` (or a sub-task key, a design link, an API spec, or a requirements memo). If none is given, ask for it.
 
 Check the input, then enter at the matching phase:
 
@@ -23,6 +23,8 @@ Check the input, then enter at the matching phase:
 | Design link, or a story whose five Phase A sections are missing or empty, or whose questions blocking sub-tasks 01–02 are unanswered | Phase A (A-3 if only answers are missing) |
 | Story with the five sections filled in and the blocking questions answered | Phase B (it re-runs this check in step 1) |
 | A sub-task key (+ design section link) | Phase C |
+| An API spec (DTO, request/response doc, OpenAPI) with no design file | Phase A, A-1b |
+| A requirements memo, spec document, or issue body with no design file | Phase A, A-2 (skip A-1) |
 
 If the user names a phase, follow it, but stop and say so when a required input is missing (e.g., Phase C without a sub-task body).
 
@@ -52,7 +54,7 @@ Pick the column that matches the project's tracker. The cycle is identical; only
 ## The cycle
 
 ```
-Phase A. Story pre-definition   design → requirements doc → story body → answers to open questions
+Phase A. Story pre-definition   design or API spec → requirements doc → story body → answers to open questions
    ↓
 Phase B. Sub-task planning      input check → fact finding → cross-check gate ─┬─ pass ──────────────────────────────┐
                                                                                └─ re-verify once → update story top ─┘
@@ -64,7 +66,7 @@ Phase C. Per-sub-task build     start → implement → stop before commit → h
 
 | Phase | Recommended environment | Input | Output |
 |---|---|---|---|
-| A | An environment that handles large design files well (desktop app, design-tool integration) | Design link, spec/wiki | Story body: screen layout → open questions |
+| A | An environment that handles large design files well (desktop app, design-tool integration) | Design link, API spec (DTO), spec/wiki, requirements memo | Story body: screen layout → open questions |
 | B | Coding agent with codebase access | Story + codebase | N sub-tasks, feature doc |
 | C | Coding agent | Sub-task + feature doc + per-section design link | Per-sub-task commits, Draft PR/MR |
 
@@ -93,6 +95,8 @@ If there's no tracker, or the human doesn't want issues created, keep the same c
 
 Goal: turn spec and design output into a **requirements doc a developer can make decisions from**, and put it in the story body. Phase B works from this body.
 
+No design file? Skip A-1. Start at A-1b if you have an API spec, or at A-2 if you have a requirements memo, spec document, or issue body (use it as the source for the sections below).
+
 ### A-1. Design → requirements doc
 Example prompt:
 ```
@@ -103,6 +107,18 @@ Read this design and document the requirements."
   - **Do whole-page analysis in an environment that handles large files.**
   - In the coding agent, look only at per-sub-task section (frame) links.
 - Leave outdated or exploratory sections ("… to be", cover-only sections) out of the doc when it's unclear whether they're current, and list them under "Open questions".
+
+### A-1b. API spec → requirements doc
+Use this when the work is wiring a screen (new or existing) to an API and the input is an API spec (DTO, request/response doc, OpenAPI), alone or alongside a design. If both exist, do A-1 and A-1b; the gate in Phase B cross-checks them.
+
+Example prompt:
+```
+"<spec link or file path>
+Read this API spec and document the requirements for wiring it to the frontend."
+```
+- Read the endpoints, request/response fields, types, nullability, enums, defaults, error responses, and status codes.
+- Don't invent fields or behavior the spec doesn't state. Whatever it leaves open goes under "Open questions" for the spec owner (backend) to answer.
+- Write the result into the A-2 sections, using the API-spec guidance there.
 
 ### A-2. Write it into the story
 Example prompt:
@@ -118,6 +134,12 @@ Keep the "Related docs" links (spec, design, analysis) at the top. Below them, w
 | Data & fields | Items per screen (modal, list…) with display/edit per mode, ID formats, state lists | Column/field definitions, API request fields, mock types |
 | Policies & exceptions | Validation priority table (rank / condition / message title / body), input validation, cascading rules | Validation sub-task, error message copy |
 | Open questions | What the design alone can't decide | Things to settle before question rounds |
+
+For API-spec-driven work:
+- *Screen layout*: when you're only attaching an API to an existing screen, reduce it to the target screen and entry point (one table row is enough). Keep the section; Phase B checks that all five sections exist.
+- *Data & fields*: write it as a **field mapping table**: `API field / type / nullable / UI field / transform rule / default or enum mapping`.
+- *Policies & exceptions*: record how each error response and status code is handled in the UI, plus the spec's validation rules (required, length, format).
+- *Open questions*: list what the spec leaves unclear (unspecified nullability, missing error responses, conflicting field definitions).
 
 Writing rules:
 - Copy UI text (toasts, modal titles/bodies, tooltips) **verbatim from the design**, so implementation can paste it as is.
@@ -150,9 +172,10 @@ Run this in a background sub-agent; if the environment has no sub-agents, invest
 - Tabs, multi-mount structures, global event bus usage (risk of duplicate listeners)
 - Whether other branches touch the same files (`git branch -a`, `git diff --stat <base>...<branch>`)
 - Whether the screen can be built without the API contract: fields already in existing lists and responses
+- For API-spec work: the existing types, DTOs, mappers, API clients, and fetch wrappers; how similar endpoints handle naming and nullability; existing mock data for the same endpoints
 
 ### 3. Cross-check gate (verify Phase A)
-Phase A was written from the design only. The coding agent **can also check against the code**, so it verifies the story body in Phase B. It runs after step 1 (input check) and step 2 (fact finding), because the code cross-check uses the fact-finding results. It shows the result as a verdict table; **the human decides** whether to pass or re-verify.
+Phase A was written from the design and/or API spec only. The coding agent **can also check against the code**, so it verifies the story body in Phase B. It runs after step 1 (input check) and step 2 (fact finding), because the code cross-check uses the fact-finding results. It shows the result as a verdict table; **the human decides** whether to pass or re-verify.
 
 **Checklist** (section presence and blocking-question answers were already checked in step 1)
 - [ ] Every FR has an entry point and an outcome; UI text is verbatim
@@ -161,19 +184,21 @@ Phase A was written from the design only. The coding agent **can also check agai
 
 A design check marked "not checked" is not a mismatch: it isn't a ①/② finding and doesn't block sub-tasks 01–02 or trigger re-verification. Show it in the verdict as "not checked", record it as open in the feature doc, and check it when the section link arrives at Phase C start.
 
+If the project has **no design file at all**, or the work only attaches an API to an existing screen, mark the design check "n/a — no design" instead. It is not a finding, never blocks, and isn't carried as open.
+
 **Mismatch types and where they go**
 
 | Type | Examples | Handling |
 |---|---|---|
-| ① Spec gap or contradiction | Missing copy, ambiguous validation order, conflicting ID formats | Re-verify with spec owner → **update the story** |
+| ① Spec gap or contradiction | Missing copy, ambiguous validation order, conflicting ID formats; an API spec that contradicts itself or omits error responses or nullability | Re-verify with spec owner → **update the story** |
 | ② Story vs design mismatch | Field missing from the table, per-mode display differs | Check the design section → **update the story** |
-| ③ Spec vs code mismatch | A component the spec treats as existing or reusable doesn't exist (not one that is to be built new), naming collision, ambiguous field mapping | Leave the story alone; record in **question rounds and the feature doc** |
+| ③ Spec vs code mismatch | A component the spec treats as existing or reusable doesn't exist (not one that is to be built new), naming collision, ambiguous field mapping, a DTO field whose type or name differs from the existing frontend type | Leave the story alone; record in **question rounds and the feature doc** |
 
 Why ③ stays out of the story: it would mix implementation decisions into the spec.
 
 **Evidence rule**
 - One finding per row; never merge two findings into one row.
-- Every verdict row cites its evidence: ① two quoted spots in the story that conflict (or a quote that shows the gap), ② a story quote plus the design node, ③ a `file:line` (for something that's missing, the story quote plus the search you ran, e.g., `git ls-files` or a grep pattern). ③ counts only when the story or design **explicitly assumes** something and the code shows it is missing or different; "I couldn't find X in the repo" without such an assumption is not a finding.
+- Every verdict row cites its evidence: ① two quoted spots in the story that conflict (or a quote that shows the gap), ② a story quote plus the design node, ③ a `file:line` (for something that's missing, the story quote plus the search you ran, e.g., `git ls-files` or a grep pattern). ③ counts only when the story, design, or API spec **explicitly assumes or states** something and the code shows it is missing or different; "I couldn't find X in the repo" without such an assumption is not a finding. For spec-driven work, ① may also cite two conflicting spots in the API spec, and ③ cites the spec's field definition plus the `file:line` of the differing type.
 - The "Blocks 01–02?" column applies to ①/② rows only. ③ rows go to question rounds; leave that column empty for them.
 - A finding you can't cite stays out of the verdict table. If it still looks plausible, list it in one line under **"Possible gaps (unverified)"**. These lines are not counted, never block, and never trigger re-verification; the human may turn them into questions.
 - Don't count findings to decide anything. Only whether an item **blocks the first two sub-tasks** matters.
@@ -217,6 +242,7 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 - 01–02: **entry flow & layout**. One per entry point (e.g., create vs edit). With a single entry point, 01 is entry flow & layout and 02 is the next item below. Lay out static UI placeholders so later sub-tasks only fill in behavior.
 - Next: entry validation → editing & live calculation → secondary behavior (sorting, etc.)
 - **Put API-dependent work later**: save/fetch/delete integration, filters, removing mocks.
+- **API-integration work** (the spec exists; the screen may already exist): if the screen already exists, 01–02 are the types/mapping layer and the first read integration instead of entry flow & layout. Then: read integration (fetch → screen mapping) → mutation integration → error, loading, and empty states → removing mocks and `TODO(API)` markers.
 - Put cascading actions (bulk apply, etc.) and other apps (partner-facing screens, etc.) last.
 - Write full bodies for **the first two only**. Give the rest a title, FR, in/out, and references, and flesh them out right before starting.
 
@@ -228,8 +254,14 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 ### 7. Working without the API contract
 - Reuse existing list and response data as much as possible. Create mode can usually be built from that alone.
 - Put temporary types and mock fetch/mutation (returning a `Promise`) where your project structure expects them. Mark swap points with `// TODO(API)`.
-- If there's nothing to click on screen, inject mock fields behind a dev-only guard (e.g., `process.env.NODE_ENV === 'development'`) with `// TODO(API) remove`, and note in the roadmap which sub-task removes it.
+- (UI work) If there's nothing to click on screen, inject mock fields behind a dev-only guard (e.g., `process.env.NODE_ENV === 'development'`) with `// TODO(API) remove`, and note in the roadmap which sub-task removes it.
 - Proceed with a provisional value for unconfirmed field mappings and log them as "confirm with backend".
+
+### 7b. When the API contract exists
+- Define the types from the spec first, plus a mapping layer between the API model and the UI model. Screens consume only the UI model, so a spec change touches one place.
+- Map every field in the mapping table. For fields the spec leaves open or ambiguous, proceed with a provisional mapping marked `// TODO(confirm: backend)` and log it as "confirm with backend" (same rule as step 7).
+- Handle the spec's error responses and status codes explicitly (what the UI shows for each), not only the happy path.
+- Remove existing mocks and `TODO(API)` markers in the sub-task that wires the real call, and note in the roadmap which sub-task removes what.
 
 ### 8. Sub-task body template
 ```
@@ -240,7 +272,7 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 ## Out of scope          (→ which sub-task takes it)
 ## References            (file:line)
 ## Expected file changes (new / modified)
-## API dependency (mock points)
+## API dependency (mock points; API spec link, endpoint, field-mapping summary)
 ## Design                (optional — section link, may be supplied by the human; omit if there is no design file)
 ## Verification scenario (checkboxes, including regressions)
 ## Code review points    (rollback path, naming, listener cleanup, cleanup tools on new code only)
@@ -256,6 +288,7 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 - Open a Draft PR/MR after the first sub-task and review commit by commit, so you don't end up with one giant PR.
 
 ### 10. Protecting existing code
+Written for UI components. For API-integration work, apply the same ideas to existing hooks, clients, and types: replace or extend them through options, and keep the default behavior.
 - **Don't edit or delete** existing components. Only swap the render site to the new component, and write the rollback path (restore one render line) in the sub-task.
 - When moving existing logic, first write it as is inside the new component; consider extracting it (e.g., into a hook) later.
 - If the old and new components **subscribe to the same global event**, behavior runs twice (e.g., a modal opens twice). Make sure only one is mounted.
@@ -278,7 +311,7 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 - Append each sub-task's outcome and carry-overs to the feature doc's "Progress log".
 
 ## Outputs
-1. (A) Story body: screen layout / FR / data & fields / policies & exceptions / open questions (with answers)
+1. (A) Story body: screen layout / FR / data & fields / policies & exceptions / open questions (with answers). For API-spec work, data & fields is the field mapping table.
 2. (B) N sub-tasks: full bodies for the first two, summaries for the rest
 3. (B) Feature doc: roadmap & key mapping, workflow, decision log, findings, progress log
 4. (C) Per-sub-task commits, Draft PR/MR, progress log
