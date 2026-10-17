@@ -138,7 +138,7 @@ Keep the "Related docs" links (spec, design, analysis) at the top. Below them, w
 
 For API-spec-driven work:
 - *Screen layout*: when you're only attaching an API to an existing screen, reduce it to the target screen and entry point (one table row is enough). Keep the section; Phase B checks that all five sections exist.
-- *Data & fields*: write it as a **field mapping table**: `API field / type / nullable / UI field / transform rule / default or enum mapping`. If the spec doesn't state a cell (e.g., nullability), write `not stated` instead of guessing, and add the question to *Open questions*.
+- *Data & fields*: write it as a **field mapping table**: `API field / type / nullable / UI field / transform rule / default or enum mapping`. If the spec doesn't state a cell (e.g., nullability), write `not stated` (in a Korean story, `미기재`; see the language table in step 8) instead of guessing, and add the question to *Open questions*.
 - *Policies & exceptions*: record how each error response and status code is handled in the UI, plus the spec's validation rules (required, length, format).
 - *Open questions*: list what the spec leaves unclear (unspecified nullability, missing error responses, conflicting field definitions).
 
@@ -152,6 +152,7 @@ Writing rules:
 - If an answer refers to code, use code identifiers (e.g., "add an option to `useValidateSelection`").
 - Phase B treats **answered items as settled** and re-asks only unanswered ones.
 - Ready for Phase B when every question that blocks the first two sub-tasks (entry flow, layout; for API-integration work on an existing screen, the types/mapping layer and the first read integration) has an answer. Others can stay as "pending backend" or "waiting for API".
+- When you list the blocking questions, name the sub-task each one blocks. A question that only affects a later sub-task (e.g., delete rules for the delete sub-task, whether `PUT` sends all fields for the edit sub-task) or can be settled by a one-place constant (e.g., a label wording) is not blocking, even if unanswered.
 - If nobody can answer (e.g., there is no backend owner), the human may **explicitly choose** to go on with provisional values instead. Log each one as "confirm with backend". The agent never makes this choice on its own; it only offers it after stating what is unanswered.
 
 ---
@@ -284,6 +285,21 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 - Title format example: `[App][Feature] NN. <entry point> > <content>`. For a single-app project, a simpler `NN. <entry point> > <content>` is enough.
 - Summary-only sub-tasks start with `> Full body to be added before starting / **API required**`.
 - If another branch overlaps, list its branch, commits, and files under a **"⚠️ Must read"** section.
+
+**Language table.** Write every heading and fixed marker in the story's language. For a Korean story, use exactly these (this file is the one loaded at run time, so the table lives here):
+
+| English | Korean |
+|---|---|
+| Goal / Related FR / Depends on | 목표 / 관련 FR / 선행 |
+| Scope (in) / Out of scope | 범위 (In) / 범위 밖 (Out) |
+| References / Expected file changes | 참고 구현 / 예상 변경 파일 |
+| API dependency / Design | API 의존 / 디자인 |
+| Verification scenario / Code review points / Commit | 확인 시나리오 / 코드 리뷰 포인트 / 커밋 |
+| Screen layout / Functional requirements | 화면 구성 / 기능 요구사항 |
+| Data & fields / Policies & exceptions / Open questions | 데이터·필드 정의 / 정책·예외 처리 / 확인 필요 사항 |
+| `not stated` | `미기재` |
+| `> Full body to be added before starting / **API required**` | `> 상세 본문은 착수 직전에 보강 예정 / **API 필요**` |
+| ⚠️ Must read | ⚠️ 참고 필수 |
 
 ### 9. Branch · commits · PR
 - Use a single story branch. Sub-tasks are for tracking scope and decisions.
