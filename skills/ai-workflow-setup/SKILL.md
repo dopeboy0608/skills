@@ -16,7 +16,7 @@ Scaffold references are in this skill's `references/scaffold/` (`fe-scaffold.md`
 
 ## Steps
 
-Ask for confirmation between steps. Write all user-facing text in the language of the project's `CLAUDE.md`.
+Ask for confirmation between steps. Write all user-facing text in the language of the project's `CLAUDE.md`. Start with a one-line banner that lists the steps (read choices → CLI → directories → tools → report), numbered "Step n/5" as you go, so prompts are not mistaken for errors. Do not narrate internal steps such as reading references.
 
 ### 0. Read the project's choices
 Read `CLAUDE.md`. The marker `<!-- ai-workflow: version=… strategy=… tracker=… stack=… -->` gives the strategy, tracker, and stack. If the file or marker is missing, tell the user to run `/ai-workflow-init` first (or ask for the three values and continue if they insist). Do not edit `CLAUDE.md` except in step 4 if the user asks.

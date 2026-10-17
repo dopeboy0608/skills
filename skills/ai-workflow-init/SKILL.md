@@ -39,6 +39,8 @@ Slots are written `{{NAME}}`. Every slot must be replaced; no `{{` may remain in
 4. If `CLAUDE.md` exists without the marker, do not touch it; tell the user and offer to generate only the other missing files, or stop.
 
 ### 2. Interview
+**Open with a clear banner before the first question**, so the user knows this is a guided interview and not an error: say that this is a 7-question setup interview, that nothing has been written yet, and that files are written only after the user approves a preview. Number every question ("Question 2/7"), and show your recommended answer on its own line. Speak in the user's language from the very first message (use the language of their earlier messages or the project's language setting); if it cannot be told, write the banner and first question in both English and Korean. Do not narrate internal steps such as reading references.
+
 One question at a time, each with your recommended answer; skip anything already known from the pre-check. Wait for the answer before the next question. Order:
 
 1. **Purpose and current scope** — what the project does and what is in scope now.
