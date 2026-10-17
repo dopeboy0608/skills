@@ -9,6 +9,8 @@ Agent skills for planning features, refactoring and organizing code. They work i
 | [`feature-strategy`](./skills/feature-strategy/SKILL.md) | Plans a large, design-heavy feature as "big flow first, details incrementally": requirements on the story, a sub-task roadmap, then one sub-task at a time with a **human check before every commit**. Includes a mock strategy for when the API contract isn't ready. |
 | [`fowler-refactor`](./skills/fowler-refactor/SKILL.md) | Applies Martin Fowler's refactoring catalog. It interviews you, proposes a Before/After plan, and changes code only after you approve, with **zero breaking changes** to existing callers. |
 | [`code-organizer`](./skills/code-organizer/SKILL.md) | Reorders imports and hook/state/ref/effect declarations in React/TypeScript code **without changing logic**. |
+| [`ai-workflow-init`](./skills/ai-workflow-init/SKILL.md) | Generates AI workflow rule documents (`CLAUDE.md`, `docs/ARCHITECTURE.md`, an `issue-start` skill) in an empty project through a short interview. Recommended for first-time adopters of an AI workflow or anyone who wants a minimal setup. Run `/ai-workflow-setup` next. |
+| [`ai-workflow-setup`](./skills/ai-workflow-setup/SKILL.md) | Sets up the dev environment after init: scaffolding CLI (with approval), frontend/backend directories, and tool checks (`gh`, plugin). Safe to re-run. |
 
 Korean translations of each skill live next to it as `SKILL.ko.md`. They are for humans; agents only read `SKILL.md`.
 

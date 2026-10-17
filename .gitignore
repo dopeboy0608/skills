@@ -2,3 +2,6 @@
 .junie/
 .DS_Store
 node_modules/
+
+# Local skill test pack (never commit)
+_sandbox-pack/

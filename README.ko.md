@@ -9,6 +9,8 @@
 | [`feature-strategy`](./skills/feature-strategy/SKILL.ko.md) | 기획·디자인이 큰 피처를 "큰 흐름 먼저, 상세는 점진적으로" 구현합니다. 스토리 요구사항 정의 → 하위 작업 로드맵 → 하위 작업별 구현 순서로 진행하며, **커밋 전마다 사람이 확인**합니다. API 계약이 미정이어도 진행할 수 있는 mock 전략을 포함합니다. |
 | [`fowler-refactor`](./skills/fowler-refactor/SKILL.ko.md) | 마틴 파울러의 리팩터링 카탈로그를 적용합니다. 인터뷰 → Before/After 제안 → 승인 후 적용 순서로 진행하며, **기존 호출처에 Breaking Change가 없습니다.** |
 | [`code-organizer`](./skills/code-organizer/SKILL.ko.md) | React/TypeScript 코드의 import와 훅·상태·ref·이펙트 선언을 **로직 변경 없이** 정렬합니다. |
+| [`ai-workflow-init`](./skills/ai-workflow-init/SKILL.ko.md) | 빈 프로젝트에서 짧은 인터뷰로 AI 워크플로우 규칙 문서(`CLAUDE.md`, `docs/ARCHITECTURE.md`, `issue-start` 스킬)를 생성합니다. AI 워크플로우를 처음 도입해보는 사람이나 최소한의 내용으로 구성하고 싶은 사람에게 추천하며, 다음으로 `/ai-workflow-setup`을 실행합니다. |
+| [`ai-workflow-setup`](./skills/ai-workflow-setup/SKILL.ko.md) | init 이후 개발환경을 설정합니다: 스캐폴딩 CLI(승인 후), 프론트/백 디렉터리, 도구 확인(`gh`, 플러그인). 재실행해도 안전합니다. |
 
 각 스킬 폴더의 `SKILL.ko.md`는 사람이 읽기 위한 한국어 번역본입니다. 에이전트는 `SKILL.md`만 읽습니다.
 
