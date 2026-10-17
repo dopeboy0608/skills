@@ -151,7 +151,7 @@ Writing rules:
 - Write the answers you got from spec, design, or backend owners **indented directly under each item** (e.g., "Backend will define", "Validate at save time", "Ignore that area").
 - If an answer refers to code, use code identifiers (e.g., "add an option to `useValidateSelection`").
 - Phase B treats **answered items as settled** and re-asks only unanswered ones.
-- Ready for Phase B when every question that blocks the first two sub-tasks (entry flow, layout) has an answer. Others can stay as "pending backend" or "waiting for API".
+- Ready for Phase B when every question that blocks the first two sub-tasks (entry flow, layout; for API-integration work on an existing screen, the types/mapping layer and the first read integration) has an answer. Others can stay as "pending backend" or "waiting for API".
 - If nobody can answer (e.g., there is no backend owner), the human may **explicitly choose** to go on with provisional values instead. Log each one as "confirm with backend". The agent never makes this choice on its own; it only offers it after stating what is unanswered.
 
 ---
@@ -251,6 +251,7 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 ### 6. Create sub-tasks and the feature doc
 - Show the human the roadmap and the drafts of sub-tasks 01–02, and get approval before creating anything (an external write; see "Operational notes").
 - Create the sub-tasks under the story (on GitHub Issues, as sub-issues linked to the story issue; summary-only for the rest), then write the feature doc: roadmap & key mapping, workflow, decision log, findings (including ③ items), progress log.
+- A sub-task's key is known only after it is created (e.g., GitHub issue numbers). As part of the approved creation, edit each created sub-task afterward and replace the key placeholder in its `## Commit` line with the real key, and mention it in your report.
 - Without a tracker, the roadmap and bodies already live in the feature doc; just fill in the rest. Nest each sub-task body's headings under its sub-task heading (e.g., `####` for the template's `##`), so they don't collide with the doc's own top-level sections.
 
 ### 7. Working without the API contract
