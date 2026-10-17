@@ -19,7 +19,7 @@ Scaffold references are in this skill's `references/scaffold/` (`fe-scaffold.md`
 Ask for confirmation between steps. Write all user-facing text in the language of the project's `CLAUDE.md`. Start with a one-line banner that lists the steps (read choices → CLI → directories → tools → report), numbered "Step n/5" as you go, so prompts are not mistaken for errors. Do not narrate internal steps such as reading references.
 
 ### 0. Read the project's choices
-Read `CLAUDE.md`. The marker `<!-- ai-workflow: version=… strategy=… tracker=… stack=… -->` gives the strategy, tracker, and stack. If the file or marker is missing, tell the user to run `/ai-workflow-init` first (or ask for the three values and continue if they insist). Do not edit `CLAUDE.md` except in step 4 if the user asks.
+Read `CLAUDE.md`. The marker `<!-- ai-workflow: version=… strategy=… tracker=… stack=… -->` gives the strategy, tracker, and stack. If the file or marker is missing, tell the user to run `/ai-workflow-init` first (or ask for the three values and continue if they insist). Do not edit `CLAUDE.md` or `docs/` except in step 3b.
 
 ### 1. Judge the stack
 Use `stack=` from the marker; if absent or unclear, ask "frontend, backend, or full-stack?".
@@ -33,6 +33,12 @@ Use `stack=` from the marker; if absent or unclear, ask "frontend, backend, or f
 - Show what already exists (including what the CLI created).
 - Frontend → `references/scaffold/fe-scaffold.md`; backend → `be-scaffold.md`; full-stack → show both and ask which layout goes where (for example `frontend/` and `backend/`, or the repository's existing split).
 - Ask "Add this structure on top?". If yes, create **only the directories that do not exist yet**, each with a `.gitkeep`. Never overwrite or move existing files and never create code files. Create the optional domain-only subfolders only when needed, as the reference says. Declining or "another structure already exists" skips the step.
+
+### 3b. Sync the documents with what now exists
+`ai-workflow-init` may have left "not decided yet" sentences. After steps 2–3, show the user a short before/after for these and write them only after approval; change nothing else in the documents:
+- `CLAUDE.md` "Commands": real commands from `package.json` scripts (or the stack's equivalent); say plainly which of lint/test do not exist yet instead of inventing them.
+- `CLAUDE.md` "Tech stack" and "Directory structure", and the matching lines of `docs/ARCHITECTURE.md`: what the CLI and the scaffold actually produced.
+- **Check `.gitignore`:** scaffolding CLIs may rewrite it. Confirm the `docs/history/*` lines from init are still there and re-add only the missing lines. Note that the CLI may also have created its own `README.md`; mention it and leave it as is.
 
 ### 4. External dependencies (only what the choices need)
 - **`dopeboy0608-skills` plugin** (provides `feature-strategy`, `code-organizer`, `fowler-refactor`): there is no reliable way to check it programmatically, so ask. If missing, give the install steps (`/plugin marketplace add dopeboy0608/skills`, `/plugin install dopeboy0608-skills`, `/reload-plugins`) but do not run them. Without it, `issue-start` cannot call `feature-strategy` and the `/code-organizer` rules in `CLAUDE.md` cannot apply.
