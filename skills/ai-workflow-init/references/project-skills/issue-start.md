@@ -33,7 +33,7 @@ The standard entry point once an issue is registered. The routing criteria live 
    - **Path A:** create the branch now. **Path B:** do not create a branch here; the single story branch is created when the strategy skill reaches implementation, following the strategy rules in CLAUDE.md.
 6. **Branch**:
    - **A**: no skill call; start implementing in this conversation from the issue content. Afterwards run the format/lint/test commands from the "Commands" section of CLAUDE.md. Commit/PR/merge only on the user's explicit request.
-   - **B**: invoke the `{{STRATEGY_SKILL}}` skill with the Skill tool. Pass the issue number, title, and a body summary (for example `Issue #24: <title> — <body summary>`). Tell it the label/branch work is already done. If the skill is not found, tell the user to run `ai-workflow-setup` (it checks the plugin) and stop.
+   - **B**: strategy skills are explicit-invocation only (`disable-model-invocation`), so you cannot call `{{STRATEGY_SKILL}}` with the Skill tool and must not imitate its procedure. Hand off instead: finish the common preparation the user approved, then print one paste-ready command for the user to run, with the issue number, title, a body summary, and any facts already known (existing sub-issues, mock/API status). Example: `/{{STRATEGY_SKILL}} Issue #24: <title> — <body summary>`. Mention that with a plugin install the command is `/dopeboy0608-skills:{{STRATEGY_SKILL}}`, and tell the user that the label/branch work is already done. If the user says the command is not found, tell them to run `ai-workflow-setup` (it checks the plugin) and stop.
 
 ## What this skill does not do
 

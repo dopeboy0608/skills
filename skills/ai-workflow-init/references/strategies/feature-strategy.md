@@ -14,7 +14,7 @@ Write this block into CLAUDE.md, translated, directly after the "Starting work o
 ---BEGIN---
 ## Large-task workflow: feature-strategy
 
-- **Skill**: `feature-strategy` runs the whole large-task procedure (story requirements → sub-task roadmap → one sub-task at a time with a human check before every commit). `issue-start` passes it the issue number, title, and a body summary.
+- **Skill**: `feature-strategy` runs the whole large-task procedure (story requirements → sub-task roadmap → one sub-task at a time with a human check before every commit). The user runs it; `issue-start` hands over a paste-ready command with the issue number, title, and a body summary.
 - **Feature document**: `docs/feature/<issue number>-<slug>.md` (no `#` in the file name). It holds the roadmap, decision log, and progress log. If the tracker is not GitHub issues, follow the key format the skill specifies.
 - **Sub-tasks**: created as GitHub **sub-issues** of the story issue (not as a checklist in the story body). The feature document is not the task list; it keeps the roadmap, decisions, and progress.
 - **Issue creation approval**: creating issues is normally "only on the user's explicit request". The approval step of `feature-strategy` Phase B (the user confirms the roadmap and the drafts of sub-tasks 01–02) counts as that explicit request. Create sub-issues only after that approval.

@@ -58,7 +58,7 @@ When extra libraries (TanStack Query, etc.) seem necessary, do not add them on y
 Start work on an issue with the `issue-start` skill (`.claude/skills/issue-start/`), after the issue has been refined and registered. It reads the issue and recommends one of two paths; the user always makes the final choice.
 
 - **Small task (implement directly)**: create the branch → implement → test/format/lint → (on request) commit/PR. The request or the ticket content is the spec; do not write a separate spec document.
-- **Large task**: invoke `{{STRATEGY_SKILL}}`. The procedure and artifacts follow that skill.
+- **Large task**: the user runs `/{{STRATEGY_SKILL}}` (explicit-invocation skill); `issue-start` prepares the issue and hands over a paste-ready command. The procedure and artifacts follow that skill.
 
 The recommendation criteria are in "Task routing criteria" of `docs/ARCHITECTURE.md`. Both paths follow the issue and branch conventions above, and commit/PR only when the user explicitly asks (except where the strategy rules below say otherwise).
 

@@ -2,7 +2,7 @@
 
 The user picks exactly one strategy for large tasks during the interview. Each preset has a fragment file in this folder; the fragment is the only place that describes that strategy's artifact locations and sub-task rules. Common documents only delegate ("follow the selected strategy skill").
 
-| Name | Skill to invoke (`{{STRATEGY_SKILL}}`) | Target stack | Needs setup | Fragment |
+| Name | Skill the user runs (`{{STRATEGY_SKILL}}`) | Target stack | Needs setup | Fragment |
 |---|---|---|---|---|
 | `feature-strategy` | `feature-strategy` (plugin form: `dopeboy0608-skills:feature-strategy`) | Frontend, full-stack | None beyond the `dopeboy0608-skills` plugin | `feature-strategy.md` |
 
