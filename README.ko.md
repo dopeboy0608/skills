@@ -93,6 +93,27 @@ npx skills@latest remove --global code-organizer
 
 ---
 
+## ai-workflow-init / ai-workflow-setup
+
+**AI 워크플로우를 처음 도입해보는 사람**, 또는 **복잡한 설정 없이 최소한의 내용으로 구성하고 싶은 사람**에게 추천합니다. 빈 프로젝트(또는 기존 프로젝트)에서 순서대로 실행하세요.
+
+```
+/ai-workflow-init                     # npx
+/dopeboy0608-skills:ai-workflow-init  # Claude 플러그인
+/ai-workflow-setup                    # npx
+/dopeboy0608-skills:ai-workflow-setup # Claude 플러그인
+```
+
+자동으로 트리거되지 않습니다. 외부 템플릿 레포를 clone하거나 조회하지 않으며, 필요한 자료는 모두 스킬의 `references/`에 들어 있습니다.
+
+1. **`ai-workflow-init`**: 7개 질문 인터뷰(목적/범위, 기술 스택, 명령어, 디렉터리, Out of scope, 큰 작업 워크플로우, 이슈 트래커) 후 **쓸 파일 전체를 미리보기**로 보여 줍니다. 승인 전에는 아무것도 쓰지 않고, 기존 파일은 덮어쓰지 않습니다. `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/TROUBLE_SHOOTING.md`, `issue-start` 스킬을 만들며, 재실행하면 빠진 것만 채웁니다.
+2. **`ai-workflow-setup`**: 프론트/백엔드/풀스택을 판단하고, **명령을 확인받은 뒤** 스캐폴딩 CLI(Vite, Next.js 등)를 실행합니다. 빠진 디렉터리를 보충하고 `CLAUDE.md`의 명령어·기술 스택을 실제 결과로 맞추며, 필요한 도구(`gh`, `dopeboy0608-skills` 플러그인)를 확인합니다. 재실행해도 안전합니다.
+3. **`issue-start`**(프로젝트에 생성됨): GitHub 이슈를 읽고 작은 작업(직접 구현)과 큰 작업 중 하나를 추천하며, 큰 작업이면 붙여넣어 실행할 `/feature-strategy` 명령을 안내합니다.
+
+이 버전의 지원 범위: 큰 작업 워크플로우 `feature-strategy`, 이슈 트래커 GitHub 이슈.
+
+---
+
 ## fowler-refactor
 
 명시적으로 호출합니다:

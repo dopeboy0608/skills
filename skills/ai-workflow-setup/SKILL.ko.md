@@ -1,6 +1,6 @@
 ---
 name: ai-workflow-setup
-description: ai-workflow-init으로 초기화한 프로젝트의 개발환경을 설정한다 — 스택 판단, 승인 후 스캐폴딩 CLI 실행, 프론트/백 디렉터리 보충, 선택한 워크플로우에 필요한 도구 확인(gh, dopeboy0608-skills 플러그인). 재실행해도 안전하고 규칙 문서가 이미 있는 프로젝트에서 단독 실행도 가능하다. AI 워크플로우를 처음 도입해보는 사람에게 추천한다. /ai-workflow-setup으로 명시 호출했을 때만 사용한다.
+description: ai-workflow-init으로 초기화한 프로젝트의 개발환경을 설정한다 — 프론트/백엔드/풀스택 판단, 승인 후 스캐폴딩 CLI(Vite, Next.js 등) 실행, 빠진 디렉터리 보충, CLAUDE.md 명령어·기술 스택 동기화, 필요한 도구(gh CLI, dopeboy0608-skills 플러그인) 확인. 재실행해도 안전하고 단독 실행도 가능하다. AI 워크플로우를 처음 도입해보는 사람에게 추천한다. /ai-workflow-setup으로 명시 호출했을 때만 사용한다.
 disable-model-invocation: true
 ---
 

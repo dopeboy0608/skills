@@ -1,6 +1,6 @@
 ---
 name: ai-workflow-setup
-description: Set up the development environment for a project initialized with ai-workflow-init — detect the stack, run the scaffolding CLI after approval, add missing frontend/backend directories, and check the tools the chosen workflow needs (gh, dopeboy0608-skills plugin). Safe to re-run and can run standalone in a project that already has the rule documents. Recommended for first-time adopters of an AI workflow. Use only when invoked explicitly via /ai-workflow-setup.
+description: Set up the development environment for a project initialized with ai-workflow-init — detects frontend/backend/full-stack, runs the project scaffolding CLI (e.g. Vite, Next.js) after approval, adds missing directories, syncs CLAUDE.md commands and tech stack, and checks required tools (gh CLI, dopeboy0608-skills plugin). Safe to re-run and can run standalone. Recommended for first-time adopters of an AI workflow. Use only when invoked explicitly via /ai-workflow-setup.
 disable-model-invocation: true
 ---
 

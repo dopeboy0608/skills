@@ -2,7 +2,7 @@
 
 > 🇰🇷 [한국어 README](./README.ko.md)
 
-Agent skills for planning features, refactoring and organizing code. They work in **Claude Code**, **OpenCode**, **Cursor**, **Codex**, **Windsurf**, and any agent that supports the [skills.sh](https://skills.sh) format.
+Agent skills for setting up an AI coding workflow, planning features, refactoring and organizing code. They work in **Claude Code**, **OpenCode**, **Cursor**, **Codex**, **Windsurf**, and any agent that supports the [skills.sh](https://skills.sh) format.
 
 | Skill | What it does |
 | --- | --- |
@@ -90,6 +90,27 @@ It does **not** auto-trigger. Call it explicitly with the command above.
 - **Phase C, per-sub-task build**: implement one sub-task, stop before commit for your check, then refine the next one.
 - The agent gathers facts; you make the decisions. Existing components are replaced, never edited, so rollback is one line.
 - Issue-tracker writes (Jira, Linear, ...) happen only after you approve the drafts.
+
+---
+
+## ai-workflow-init / ai-workflow-setup
+
+Recommended for people **adopting an AI workflow for the first time**, or anyone who wants a **minimal setup without complicated configuration**. Run them in order in a blank (or existing) project:
+
+```
+/ai-workflow-init                     # npx
+/dopeboy0608-skills:ai-workflow-init  # Claude plugin
+/ai-workflow-setup                    # npx
+/dopeboy0608-skills:ai-workflow-setup # Claude plugin
+```
+
+They do **not** auto-trigger. Neither skill clones or reads any external template; everything is bundled in the skill's `references/`.
+
+1. **`ai-workflow-init`**: a 7-question interview (purpose and scope, tech stack, commands, directories, out of scope, large-task workflow, issue tracker), then a **preview of every file** to be written. Nothing is written until you approve, and existing files are never overwritten. It generates `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/TROUBLE_SHOOTING.md` and an `issue-start` skill, and re-running it only fills in what is missing.
+2. **`ai-workflow-setup`**: detects frontend / backend / full-stack, runs the project scaffolding CLI (for example Vite or Next.js) **after you approve the command**, adds missing directories, syncs `CLAUDE.md` with the real commands and stack, and checks the tools the workflow needs (`gh`, the `dopeboy0608-skills` plugin). Safe to re-run.
+3. **`issue-start`** (generated into your project): reads a GitHub issue, recommends a small task (implement directly) or a large task, and for a large task hands you a ready-to-paste `/feature-strategy` command.
+
+Supported in this version: large-task workflow `feature-strategy`, issue tracker GitHub issues.
 
 ---
 

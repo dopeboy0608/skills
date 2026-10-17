@@ -1,6 +1,6 @@
 ---
 name: ai-workflow-init
-description: 빈 프로젝트(또는 기존 프로젝트)에서 짧은 인터뷰로 AI 워크플로우 규칙 문서(CLAUDE.md, docs/ARCHITECTURE.md, docs/TROUBLE_SHOOTING.md, issue-start 스킬)를 생성하고 ai-workflow-setup 실행을 안내한다. AI 워크플로우를 처음 도입해보는 사람이나 복잡한 설정 없이 최소한의 내용으로 구성하고 싶은 사람에게 추천한다. /ai-workflow-init으로 명시 호출했을 때만 사용한다.
+description: 빈 프로젝트(또는 기존 프로젝트)에서 짧은 인터뷰로 AI 워크플로우를 세팅한다 — CLAUDE.md 규칙, docs/ARCHITECTURE.md, docs/TROUBLE_SHOOTING.md, issue-start 스킬(작은 작업/큰 작업 분기, GitHub 이슈)을 생성한다. 기존 파일은 덮어쓰지 않고 쓰기 전에 미리보기를 보여 준다. AI 워크플로우를 처음 도입해보는 사람이나 복잡한 설정 없이 최소한으로 구성하고 싶은 사람에게 추천한다. 이후 /ai-workflow-setup을 실행한다. /ai-workflow-init으로 명시 호출했을 때만 사용한다.
 disable-model-invocation: true
 ---
 

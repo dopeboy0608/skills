@@ -1,6 +1,6 @@
 ---
 name: ai-workflow-init
-description: Generate the AI workflow rule documents (CLAUDE.md, docs/ARCHITECTURE.md, docs/TROUBLE_SHOOTING.md, an issue-start skill) in an empty or existing project through a short interview, then point to ai-workflow-setup. Recommended for people adopting an AI workflow for the first time, or anyone who wants a minimal setup without complicated configuration. Use only when invoked explicitly via /ai-workflow-init.
+description: Bootstrap an AI coding workflow in a blank (or existing) project — through a short interview, generate CLAUDE.md rules, docs/ARCHITECTURE.md, docs/TROUBLE_SHOOTING.md and an issue-start skill (small task vs. large task routing, GitHub issues). Never overwrites existing files and shows a preview before writing. Recommended for first-time adopters of an AI workflow or anyone who wants a minimal setup with little configuration. Run /ai-workflow-setup afterwards. Use only when invoked explicitly via /ai-workflow-init.
 disable-model-invocation: true
 ---
 
