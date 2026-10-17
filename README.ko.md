@@ -9,6 +9,8 @@
 | [`feature-strategy`](./skills/feature-strategy/SKILL.ko.md) | 기획·디자인이 큰 피처를 "큰 흐름 먼저, 상세는 점진적으로" 구현합니다. 스토리 요구사항 정의 → 하위 작업 로드맵 → 하위 작업별 구현 순서로 진행하며, **커밋 전마다 사람이 확인**합니다. API 계약이 미정이어도 진행할 수 있는 mock 전략을 포함합니다. |
 | [`fowler-refactor`](./skills/fowler-refactor/SKILL.ko.md) | 마틴 파울러의 리팩터링 카탈로그를 적용합니다. 인터뷰 → Before/After 제안 → 승인 후 적용 순서로 진행하며, **기존 호출처에 Breaking Change가 없습니다.** |
 | [`code-organizer`](./skills/code-organizer/SKILL.ko.md) | React/TypeScript 코드의 import와 훅·상태·ref·이펙트 선언을 **로직 변경 없이** 정렬합니다. |
+| [`ai-workflow-init`](./skills/ai-workflow-init/SKILL.ko.md) | 빈 프로젝트에서 짧은 인터뷰로 AI 워크플로우 규칙 문서(`CLAUDE.md`, `docs/ARCHITECTURE.md`, `issue-start` 스킬)를 생성합니다. AI 워크플로우를 처음 도입해보는 사람이나 최소한의 내용으로 구성하고 싶은 사람에게 추천하며, 다음으로 `/ai-workflow-setup`을 실행합니다. |
+| [`ai-workflow-setup`](./skills/ai-workflow-setup/SKILL.ko.md) | init 이후 개발환경을 설정합니다: 스캐폴딩 CLI(승인 후), 프론트/백 디렉터리, 도구 확인(`gh`, 플러그인). 재실행해도 안전합니다. |
 
 각 스킬 폴더의 `SKILL.ko.md`는 사람이 읽기 위한 한국어 번역본입니다. 에이전트는 `SKILL.md`만 읽습니다.
 
@@ -88,6 +90,27 @@ npx skills@latest remove --global code-organizer
 - **Phase C, 하위 작업 단위 구현**: 하위 작업 하나를 구현하고 커밋 전에 멈춰 확인받은 뒤 다음 작업을 보강합니다.
 - 사실 조사는 에이전트가, 결정은 사람이 합니다. 기존 컴포넌트는 고치지 않고 대체하므로 롤백은 한 줄입니다.
 - 이슈 트래커(Jira, Linear 등) 쓰기는 초안을 승인한 뒤에만 실행합니다.
+
+---
+
+## ai-workflow-init / ai-workflow-setup
+
+**AI 워크플로우를 처음 도입해보는 사람**, 또는 **복잡한 설정 없이 최소한의 내용으로 구성하고 싶은 사람**에게 추천합니다. 빈 프로젝트(또는 기존 프로젝트)에서 순서대로 실행하세요.
+
+```
+/ai-workflow-init                     # npx
+/dopeboy0608-skills:ai-workflow-init  # Claude 플러그인
+/ai-workflow-setup                    # npx
+/dopeboy0608-skills:ai-workflow-setup # Claude 플러그인
+```
+
+자동으로 트리거되지 않습니다. 외부 템플릿 레포를 clone하거나 조회하지 않으며, 필요한 자료는 모두 스킬의 `references/`에 들어 있습니다.
+
+1. **`ai-workflow-init`**: 7개 질문 인터뷰(목적/범위, 기술 스택, 명령어, 디렉터리, Out of scope, 큰 작업 워크플로우, 이슈 트래커) 후 **쓸 파일 전체를 미리보기**로 보여 줍니다. 승인 전에는 아무것도 쓰지 않고, 기존 파일은 덮어쓰지 않습니다. `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/TROUBLE_SHOOTING.md`, `issue-start` 스킬을 만들며, 재실행하면 빠진 것만 채웁니다.
+2. **`ai-workflow-setup`**: 프론트/백엔드/풀스택을 판단하고, **명령을 확인받은 뒤** 스캐폴딩 CLI(Vite, Next.js 등)를 실행합니다. 빠진 디렉터리를 보충하고 `CLAUDE.md`의 명령어·기술 스택을 실제 결과로 맞추며, 필요한 도구(`gh`, `dopeboy0608-skills` 플러그인)를 확인합니다. 재실행해도 안전합니다.
+3. **`issue-start`**(프로젝트에 생성됨): GitHub 이슈를 읽고 작은 작업(직접 구현)과 큰 작업 중 하나를 추천하며, 큰 작업이면 붙여넣어 실행할 `/feature-strategy` 명령을 안내합니다.
+
+이 버전의 지원 범위: 큰 작업 워크플로우 `feature-strategy`, 이슈 트래커 GitHub 이슈.
 
 ---
 

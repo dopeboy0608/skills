@@ -5,14 +5,14 @@
     "url": "https://github.com/dopeboy0608"
   },
   "metadata": {
-    "description": "Agent skills for feature planning, refactoring and organizing code.",
-    "version": "1.3.1"
+    "description": "Agent skills for AI workflow setup, feature planning, refactoring and organizing code.",
+    "version": "1.4.0"
   },
   "plugins": [
     {
       "name": "dopeboy0608-skills",
       "source": "./",
-      "description": "Agent skills for planning large features in verifiable steps (story → sub-tasks → checkpointed implementation), refactoring with Martin Fowler's catalog, and organizing React/TypeScript code without changing logic.",
+      "description": "Agent skills for planning large features in verifiable steps (story → sub-tasks → checkpointed implementation), bootstrapping an AI coding workflow in a blank project (CLAUDE.md rules, issue-start, project scaffolding), refactoring with Martin Fowler's catalog, and organizing React/TypeScript code without changing logic.",
       "category": "engineering",
       "keywords": [
         "feature-planning",
@@ -22,7 +22,14 @@
         "refactoring",
         "fowler",
         "react",
-        "typescript"
+        "typescript",
+        "ai-workflow",
+        "claude-md",
+        "project-setup",
+        "scaffold",
+        "boilerplate",
+        "github-issues",
+        "issue-start"
       ]
     }
   ]

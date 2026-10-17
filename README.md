@@ -2,13 +2,15 @@
 
 > 🇰🇷 [한국어 README](./README.ko.md)
 
-Agent skills for planning features, refactoring and organizing code. They work in **Claude Code**, **OpenCode**, **Cursor**, **Codex**, **Windsurf**, and any agent that supports the [skills.sh](https://skills.sh) format.
+Agent skills for setting up an AI coding workflow, planning features, refactoring and organizing code. They work in **Claude Code**, **OpenCode**, **Cursor**, **Codex**, **Windsurf**, and any agent that supports the [skills.sh](https://skills.sh) format.
 
 | Skill | What it does |
 | --- | --- |
 | [`feature-strategy`](./skills/feature-strategy/SKILL.md) | Plans a large, design-heavy feature as "big flow first, details incrementally": requirements on the story, a sub-task roadmap, then one sub-task at a time with a **human check before every commit**. Includes a mock strategy for when the API contract isn't ready. |
 | [`fowler-refactor`](./skills/fowler-refactor/SKILL.md) | Applies Martin Fowler's refactoring catalog. It interviews you, proposes a Before/After plan, and changes code only after you approve, with **zero breaking changes** to existing callers. |
 | [`code-organizer`](./skills/code-organizer/SKILL.md) | Reorders imports and hook/state/ref/effect declarations in React/TypeScript code **without changing logic**. |
+| [`ai-workflow-init`](./skills/ai-workflow-init/SKILL.md) | Generates AI workflow rule documents (`CLAUDE.md`, `docs/ARCHITECTURE.md`, an `issue-start` skill) in an empty project through a short interview. Recommended for first-time adopters of an AI workflow or anyone who wants a minimal setup. Run `/ai-workflow-setup` next. |
+| [`ai-workflow-setup`](./skills/ai-workflow-setup/SKILL.md) | Sets up the dev environment after init: scaffolding CLI (with approval), frontend/backend directories, and tool checks (`gh`, plugin). Safe to re-run. |
 
 Korean translations of each skill live next to it as `SKILL.ko.md`. They are for humans; agents only read `SKILL.md`.
 
@@ -88,6 +90,27 @@ It does **not** auto-trigger. Call it explicitly with the command above.
 - **Phase C, per-sub-task build**: implement one sub-task, stop before commit for your check, then refine the next one.
 - The agent gathers facts; you make the decisions. Existing components are replaced, never edited, so rollback is one line.
 - Issue-tracker writes (Jira, Linear, ...) happen only after you approve the drafts.
+
+---
+
+## ai-workflow-init / ai-workflow-setup
+
+Recommended for people **adopting an AI workflow for the first time**, or anyone who wants a **minimal setup without complicated configuration**. Run them in order in a blank (or existing) project:
+
+```
+/ai-workflow-init                     # npx
+/dopeboy0608-skills:ai-workflow-init  # Claude plugin
+/ai-workflow-setup                    # npx
+/dopeboy0608-skills:ai-workflow-setup # Claude plugin
+```
+
+They do **not** auto-trigger. Neither skill clones or reads any external template; everything is bundled in the skill's `references/`.
+
+1. **`ai-workflow-init`**: a 7-question interview (purpose and scope, tech stack, commands, directories, out of scope, large-task workflow, issue tracker), then a **preview of every file** to be written. Nothing is written until you approve, and existing files are never overwritten. It generates `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/TROUBLE_SHOOTING.md` and an `issue-start` skill, and re-running it only fills in what is missing.
+2. **`ai-workflow-setup`**: detects frontend / backend / full-stack, runs the project scaffolding CLI (for example Vite or Next.js) **after you approve the command**, adds missing directories, syncs `CLAUDE.md` with the real commands and stack, and checks the tools the workflow needs (`gh`, the `dopeboy0608-skills` plugin). Safe to re-run.
+3. **`issue-start`** (generated into your project): reads a GitHub issue, recommends a small task (implement directly) or a large task, and for a large task hands you a ready-to-paste `/feature-strategy` command.
+
+Supported in this version: large-task workflow `feature-strategy`, issue tracker GitHub issues.
 
 ---
 
