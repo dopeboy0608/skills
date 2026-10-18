@@ -4,8 +4,10 @@ Target stack: frontend / full-stack. Artifacts and sub-task rules for this strat
 
 ## Slot values
 
-- `{{STRATEGY_SKILL}}` → `feature-strategy` (mention that the plugin-namespaced name is `dopeboy0608-skills:feature-strategy`).
+- `{{STRATEGY_SKILL}}` → `feature-strategy`.
+- `{{STRATEGY_INVOKE_NOTE}}` → "With a plugin install the command is `/dopeboy0608-skills:feature-strategy`."
 - Marker value: `strategy=feature-strategy`.
+- Requires (for the summary): the `dopeboy0608-skills` plugin. Without it the large-task path does not work. `ai-workflow-setup` checks this.
 
 ## Workflow rules (`{{STRATEGY_RULES}}`)
 

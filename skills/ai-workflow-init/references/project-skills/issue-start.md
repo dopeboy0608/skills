@@ -2,7 +2,7 @@
 
 Create this as `.claude/skills/issue-start/SKILL.md` in the project. Replace the slots, translate the body into the user's language (keep the frontmatter keys, and keep `name` as `issue-start`), and show the result in the approval list.
 
-Slots: `{{STRATEGY_SKILL}}` — substituted in exactly **one** place (step 6). `{{ISSUE_LOOKUP}}` — from the tracker fragment (step 2). `{{DEFAULT_BRANCH_NOTE}}` — name the repository's actual default branch (check `git symbolic-ref --short HEAD` or `git branch`), for example "this repository uses `master`".
+Slots: `{{STRATEGY_SKILL}}` — substituted in exactly **one** place (step 6). `{{STRATEGY_INVOKE_NOTE}}` — from the strategy fragment (step 6; drop the sentence when empty). `{{ISSUE_LOOKUP}}` — from the tracker fragment (step 2). `{{DEFAULT_BRANCH_NOTE}}` — name the repository's actual default branch (check `git symbolic-ref --short HEAD` or `git branch`), for example "this repository uses `master`".
 
 Do not write the routing criteria into this file: `docs/ARCHITECTURE.md` ("Task routing criteria") is the single source.
 
@@ -33,11 +33,37 @@ The standard entry point once an issue is registered. The routing criteria live 
    - **Path A:** create the branch now. **Path B:** do not create a branch here; the single story branch is created when the strategy skill reaches implementation, following the strategy rules in CLAUDE.md.
 6. **Branch**:
    - **A**: no skill call; start implementing in this conversation from the issue content. Afterwards run the format/lint/test commands from the "Commands" section of CLAUDE.md. Commit/PR/merge only on the user's explicit request.
-   - **B**: strategy skills are explicit-invocation only (`disable-model-invocation`), so you cannot call `{{STRATEGY_SKILL}}` with the Skill tool and must not imitate its procedure. Hand off instead: finish the common preparation the user approved, then print one paste-ready command for the user to run, with the issue number, title, a body summary, and any facts already known (existing sub-issues, mock/API status). Example: `/{{STRATEGY_SKILL}} Issue #24: <title> — <body summary>`. Mention that with a plugin install the command is `/dopeboy0608-skills:{{STRATEGY_SKILL}}`, and tell the user that the label/branch work is already done. If the user says the command is not found, tell them to run `ai-workflow-setup` (it checks the plugin) and stop.
+   - **B**: the strategy skill is run by the user, so do not call it with the Skill tool and do not imitate its procedure. Hand off instead: finish the common preparation the user approved, then print one paste-ready command for the user to run, with the issue number, title, a body summary, and any facts already known from the issue. Example: `/{{STRATEGY_SKILL}} Issue #24: <title> — <body summary>`. {{STRATEGY_INVOKE_NOTE}} Tell the user that the label/branch work is already done. If the user says the command is not found, tell them to run `ai-workflow-setup` (it checks what the strategy needs) and stop.
 
 ## What this skill does not do
 
 - It does not commit, open PRs, or merge on its own; it waits for the user's request.
 - It does not list the routing criteria itself; ARCHITECTURE.md is the single source.
+```
+---END---
+
+## Variant: no strategy (`strategy=none`)
+
+Use this body instead of the one above. It has no large-task path, no `{{STRATEGY_SKILL}}`, and no routing step. Keep the same frontmatter keys; change `description` to: "Standard starting point for issue work. Takes an issue number, reads it, prepares the label and branch after the user confirms, and starts implementing. Triggered by "start issue #N", "pick up the issue", or an explicit /issue-start call."
+
+---BEGIN---
+```markdown
+# issue-start
+
+The standard entry point once an issue is registered. Every issue is implemented directly in this conversation.
+
+## Procedure
+
+1. **Issue number**: if `$ARGUMENTS` has none, ask the user.
+2. **Read the issue**: {{ISSUE_LOOKUP}}
+3. **Size check**: if the issue looks too big or its requirements are ambiguous (see "Task routing criteria" in `docs/ARCHITECTURE.md`), say so in 1–2 sentences and suggest splitting it into smaller issues first. If the user wants to go ahead anyway, follow it.
+4. **Preparation**, following "GitHub issue management" in CLAUDE.md:
+   - `gh issue edit <N> --add-label in-progress` (ask first)
+   - Create the branch from the repository's default branch ({{DEFAULT_BRANCH_NOTE}}): `git checkout <default> && git pull origin <default> --ff-only` (skip the pull when there is no `origin` remote) `&& git checkout -b <type>/<N>-<description>`. The type comes from the issue label (`bug`→`bug/`, `feature`→`feature/`, `chore`→`chore/`, `docs`→`docs/`).
+5. **Implement** from the issue content; do not write a separate spec document. Afterwards run the format/lint/test commands from the "Commands" section of CLAUDE.md. Commit/PR/merge only on the user's explicit request.
+
+## What this skill does not do
+
+- It does not commit, open PRs, or merge on its own; it waits for the user's request.
 ```
 ---END---

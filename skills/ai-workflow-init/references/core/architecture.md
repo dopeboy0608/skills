@@ -4,6 +4,8 @@ Fill the slots from the interview, translate into the user's language, and write
 
 Slots: `{{SCOPE}}`, `{{STRUCTURE_OVERVIEW}}`, `{{TECH_STACK}}` (or a pointer to CLAUDE.md), `{{OUT_OF_SCOPE}}`.
 
+If the strategy is `none`, replace the "Task routing criteria" section as described in `strategies/none.md`.
+
 ---BEGIN---
 # ARCHITECTURE
 

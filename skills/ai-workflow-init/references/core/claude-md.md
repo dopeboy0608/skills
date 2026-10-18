@@ -2,7 +2,7 @@
 
 Source for the generated `CLAUDE.md`. Fill every `{{SLOT}}` from the interview and the selected presets, then translate all prose into the user's language (see the language table in `SKILL.md`). Keep every instruction below the marker line. Remove this header, and drop any section whose slot is empty only if the section says so.
 
-Slots: `{{PROJECT_PURPOSE}}`, `{{COMMANDS}}`, `{{DIR_STRUCTURE}}`, `{{TECH_STACK}}`, `{{STRATEGY_SKILL}}` (once, in the large-task bullet), `{{TRACKER_RULES}}` (from `trackers/<tracker>.md`), `{{STRATEGY_RULES}}` (from `strategies/<strategy>.md`, "Workflow rules" block), `{{MARKER}}` (the settings marker line).
+Slots: `{{PROJECT_PURPOSE}}`, `{{COMMANDS}}`, `{{DIR_STRUCTURE}}`, `{{TECH_STACK}}`, `{{STRATEGY_SKILL}}` (once, in the large-task bullet; absent when the strategy is `none`), `{{TRACKER_RULES}}` (from `trackers/<tracker>.md`), `{{STRATEGY_RULES}}` (from `strategies/<strategy>.md`, "Workflow rules" block; absent when the strategy is `none`, see `strategies/none.md` for the other edits), `{{MARKER}}` (the settings marker line).
 
 ---BEGIN---
 # CLAUDE.md

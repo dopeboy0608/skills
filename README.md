@@ -108,9 +108,9 @@ They do **not** auto-trigger. Neither skill clones or reads any external templat
 
 1. **`ai-workflow-init`**: a 7-question interview (purpose and scope, tech stack, commands, directories, out of scope, large-task workflow, issue tracker), then a **preview of every file** to be written. Nothing is written until you approve, and existing files are never overwritten. It generates `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/TROUBLE_SHOOTING.md` and an `issue-start` skill, and re-running it only fills in what is missing.
 2. **`ai-workflow-setup`**: detects frontend / backend / full-stack, runs the project scaffolding CLI (for example Vite or Next.js) **after you approve the command**, adds missing directories, syncs `CLAUDE.md` with the real commands and stack, and checks the tools the workflow needs (`gh`, the `dopeboy0608-skills` plugin). Safe to re-run.
-3. **`issue-start`** (generated into your project): reads a GitHub issue, recommends a small task (implement directly) or a large task, and for a large task hands you a ready-to-paste `/feature-strategy` command.
+3. **`issue-start`** (generated into your project): reads a GitHub issue, recommends a small task (implement directly) or a large task, and for a large task hands you a ready-to-paste command for the strategy you chose (or skips the large-task path if you chose none).
 
-Supported in this version: large-task workflow `feature-strategy`, issue tracker GitHub issues.
+Supported in this version: large-task workflow `feature-strategy` (recommended for frontend / full-stack), `speckit` (recommended for backend-only), a skill name you type, or none; issue tracker GitHub issues. The chosen skill must be installed for the large-task path to work; `ai-workflow-setup` checks it and, for `speckit`, can run `specify init --here --integration claude` after your approval.
 
 ---
 
