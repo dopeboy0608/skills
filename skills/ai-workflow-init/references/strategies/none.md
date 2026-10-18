@@ -1,6 +1,6 @@
 # Preset fragment: none (no large-task strategy)
 
-The user does not want a separate large-task workflow. Every issue is implemented directly. This option removes the large-task path from the generated files instead of leaving a dead branch.
+Not offered for a frontend-only stack (see `presets.md`). The user does not want a separate large-task workflow. Every issue is implemented directly. This option removes the large-task path from the generated files instead of leaving a dead branch.
 
 ## Slot values
 

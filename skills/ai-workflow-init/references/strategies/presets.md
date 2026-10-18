@@ -27,7 +27,9 @@ Ask the tech stack first (interview question 2); the recommendation for question
 | Frontend / full-stack | `feature-strategy` | `speckit`, direct input, none |
 | Backend only | `speckit` | direct input, none; say `feature-strategy` is a frontend-oriented skill (design, mocks, UI sub-tasks) but still available |
 
-The user's choice always wins, including `feature-strategy` on a backend-only stack. If the stack is "not decided", ask frontend / backend / full-stack before recommending.
+**Frontend-only stack: "none" is not offered.** List only `feature-strategy`, `speckit`, and direct input. If the user asks for none on a frontend-only stack, say that frontend projects always have a large-task path and use `feature-strategy` (the user may still pick `speckit` or direct input instead). Full-stack and backend-only stacks keep "none".
+
+Otherwise the user's choice wins, including `feature-strategy` on a backend-only stack. If the stack is "not decided", ask frontend / backend / full-stack before recommending.
 
 ## Fragment contract
 
