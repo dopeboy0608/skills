@@ -4,6 +4,8 @@ Fill the slots from the interview, translate into the user's language, and write
 
 Slots: `{{SCOPE}}`, `{{STRUCTURE_OVERVIEW}}`, `{{TECH_STACK}}` (or a pointer to CLAUDE.md), `{{OUT_OF_SCOPE}}`.
 
+If the strategy is `none`, replace the "Task routing criteria" section as described in `strategies/none.md`.
+
 ---BEGIN---
 # ARCHITECTURE
 
@@ -34,7 +36,7 @@ Slots: `{{SCOPE}}`, `{{STRUCTURE_OVERVIEW}}`, `{{TECH_STACK}}` (or a pointer to 
 - **Large task** (use the strategy skill): requirements are ambiguous or need investigation first / the scope is big enough to split into several sub-tasks / the work is design-heavy or has decision points that need the user's judgment.
 - **Small task** (implement directly): a bug whose cause and fix are already clear / 1–2 files following an existing pattern / nothing to investigate.
 - When an issue mixes both signals, decide by which one is closer to the core risk of the issue and explain briefly.
-- Both paths follow the issue and branch conventions in CLAUDE.md, and commit/PR/merge only on the user's explicit request (except where the strategy rules in CLAUDE.md say otherwise).
+- Both paths follow the tracker and branch conventions in CLAUDE.md, and commit/PR/merge only on the user's explicit request (except where the strategy rules in CLAUDE.md say otherwise).
 
 ## External SDK mocking
 

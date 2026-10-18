@@ -7,6 +7,10 @@ The only tracker supported in this version. Rules in this file are the only plac
 - Marker value: `tracker=github`.
 - `{{ISSUE_LOOKUP}}` (used by `project-skills/issue-start.md`): run `gh issue view <N> --json number,title,body,labels,state` and read title, body, and labels. Pass these to the strategy skill as issue number / title / body summary.
 - `{{STRATEGY_TRACKER_NOTES}}`: the "GitHub issue mapping" block of the selected strategy fragment (empty if the strategy has none).
+- `{{ARG_NOUN}}` → "an issue number". `{{ARG_HINT}}` → "issue number (e.g. 24)". `{{ITEM_INPUT}}` → "**Issue number**: if `$ARGUMENTS` has none, ask the user." `{{TRACKER_SECTION_NAME}}` → "GitHub issue management".
+- `{{LABEL_STEP}}` → the bullet "`gh issue edit <N> --add-label in-progress` (ask first)".
+- `{{BRANCH_PATTERN}}` → `<type>/<N>-<description>`. `{{BRANCH_TYPE_RULE}}` → "The type comes from the issue label (`bug`→`bug/`, `feature`→`feature/`, `chore`→`chore/`, `docs`→`docs/`); ask when there is no label."
+- `{{HANDOFF_EXAMPLE}}` → `Issue #24: <title> — <body summary>`.
 - Needs: the `gh` CLI installed and logged in (`gh auth status`). `ai-workflow-setup` checks this.
 
 ## Issue management rules (`{{TRACKER_RULES}}`)

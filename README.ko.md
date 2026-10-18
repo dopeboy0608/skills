@@ -104,13 +104,35 @@ npx skills@latest remove --global code-organizer
 /dopeboy0608-skills:ai-workflow-setup # Claude 플러그인
 ```
 
+![ai-workflow 흐름: init, setup, issue-start](./docs/images/ai-workflow-flow.ko.svg)
+
+그림으로 보는 가이드(한국어 / English): [가이드 열기](https://claude.ai/artifact/VqLZoureu5Rr1EnTmx8kc2)
+
 자동으로 트리거되지 않습니다. 외부 템플릿 레포를 clone하거나 조회하지 않으며, 필요한 자료는 모두 스킬의 `references/`에 들어 있습니다.
 
-1. **`ai-workflow-init`**: 7개 질문 인터뷰(목적/범위, 기술 스택, 명령어, 디렉터리, Out of scope, 큰 작업 워크플로우, 이슈 트래커) 후 **쓸 파일 전체를 미리보기**로 보여 줍니다. 승인 전에는 아무것도 쓰지 않고, 기존 파일은 덮어쓰지 않습니다. `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/TROUBLE_SHOOTING.md`, `issue-start` 스킬을 만들며, 재실행하면 빠진 것만 채웁니다.
+1. **`ai-workflow-init`**: 8개 질문 인터뷰(문서 언어, 목적/범위, 기술 스택, 명령어, 디렉터리, Out of scope, 큰 작업 워크플로우, 이슈 트래커) 후 **쓸 파일 전체를 미리보기**로 보여 줍니다. 승인 전에는 아무것도 쓰지 않고, 기존 파일은 덮어쓰지 않습니다. `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/TROUBLE_SHOOTING.md`, `issue-start` 스킬을 만들며, 재실행하면 빠진 것만 채웁니다.
 2. **`ai-workflow-setup`**: 프론트/백엔드/풀스택을 판단하고, **명령을 확인받은 뒤** 스캐폴딩 CLI(Vite, Next.js 등)를 실행합니다. 빠진 디렉터리를 보충하고 `CLAUDE.md`의 명령어·기술 스택을 실제 결과로 맞추며, 필요한 도구(`gh`, `dopeboy0608-skills` 플러그인)를 확인합니다. 재실행해도 안전합니다.
-3. **`issue-start`**(프로젝트에 생성됨): GitHub 이슈를 읽고 작은 작업(직접 구현)과 큰 작업 중 하나를 추천하며, 큰 작업이면 붙여넣어 실행할 `/feature-strategy` 명령을 안내합니다.
+3. **`issue-start`**(프로젝트에 생성됨): GitHub 이슈를 읽고 작은 작업(직접 구현)과 큰 작업 중 하나를 추천하며, 큰 작업이면 선택한 전략의 붙여넣기용 명령을 안내합니다(전략을 "없음"으로 고르면 큰 작업 경로 없이 바로 구현합니다).
 
-이 버전의 지원 범위: 큰 작업 워크플로우 `feature-strategy`, 이슈 트래커 GitHub 이슈.
+**생성 결과 예시** (프론트엔드, `feature-strategy`, GitHub 이슈, 한국어):
+
+```
+my-app/
+├── CLAUDE.md                      # 에이전트가 따르는 규칙 (마커: 버전, 전략, 트래커, 스택, 언어)
+├── docs/
+│   ├── ARCHITECTURE.md            # 범위, TDD 기준, 작업 분기 기준
+│   ├── TROUBLE_SHOOTING.md        # 문제 해결 기록
+│   └── history/                   # 일별 작업 로그 (git 제외)
+├── .claude/skills/issue-start/    # 이슈를 읽고 작은 작업/큰 작업 추천
+├── .github/workflows/ci.yml       # lint, typecheck, test, build (선택, setup 이후)
+└── src/                           # 도메인별 빈 폴더 (pages, features, common, api, ...)
+```
+
+init이 끝나면 요약이 나옵니다: 만든 파일과 건너뛴 파일, 선택한 전략에 필요한 설치 항목, 다음 명령(`/ai-workflow-setup`).
+
+이 레포가 두 스킬의 원본이며 외부 템플릿 레포는 사용하지 않습니다. 기여하거나 로컬에서 테스트하려면 [개발 가이드](./docs/DEVELOPMENT.ko.md)를 보세요.
+
+이 워크플로우는 프론트엔드에 최적화되어 있으며, 백엔드·풀스택도 동작하지만 기본값은 더 일반적입니다. 이 버전의 지원 범위: 큰 작업 워크플로우 `feature-strategy`(FE/풀스택 추천), `speckit`(백엔드 전용 추천), 직접 입력한 스킬 이름, 없음 / 이슈 트래커 GitHub 이슈 / 없음(로컬 문서만) / 직접 지정한 기타 트래커(위임). 선택한 스킬이 설치돼 있어야 큰 작업 경로가 동작하며, `ai-workflow-setup`이 이를 확인하고 `speckit`은 승인 후 `specify init --here --integration claude`를 실행할 수 있습니다.
 
 ---
 

@@ -2,7 +2,7 @@
 
 Source for the generated `CLAUDE.md`. Fill every `{{SLOT}}` from the interview and the selected presets, then translate all prose into the user's language (see the language table in `SKILL.md`). Keep every instruction below the marker line. Remove this header, and drop any section whose slot is empty only if the section says so.
 
-Slots: `{{PROJECT_PURPOSE}}`, `{{COMMANDS}}`, `{{DIR_STRUCTURE}}`, `{{TECH_STACK}}`, `{{STRATEGY_SKILL}}` (once, in the large-task bullet), `{{TRACKER_RULES}}` (from `trackers/<tracker>.md`), `{{STRATEGY_RULES}}` (from `strategies/<strategy>.md`, "Workflow rules" block), `{{MARKER}}` (the settings marker line).
+Slots: `{{PROJECT_PURPOSE}}`, `{{COMMANDS}}`, `{{DIR_STRUCTURE}}`, `{{TECH_STACK}}`, `{{STRATEGY_SKILL}}` (once, in the large-task bullet; absent when the strategy is `none`), `{{TRACKER_RULES}}` (from `trackers/<tracker>.md`; the block of the selected tracker only — GitHub issue management, "Work tracking" for none, or the delegated section for another tracker), `{{STRATEGY_RULES}}` (from `strategies/<strategy>.md`, "Workflow rules" block; absent when the strategy is `none`, see `strategies/none.md` for the other edits), `{{MARKER}}` (the settings marker line).
 
 ---BEGIN---
 # CLAUDE.md
@@ -22,7 +22,7 @@ Do not implement features outside the current scope without discussing it first.
 ## Rules after writing code
 
 - After writing or changing code, run the formatter/linter and fix issues before committing. If a pre-commit hook (husky + lint-staged, etc.) exists, make sure it runs on the changed files.
-- For **new code** (files/functions/components added in this task), finish by running `/code-organizer` (dopeboy0608-skills plugin) to sort imports and the hook/state/effect layout inside components. Then, if it seems worthwhile, ask `/fowler-refactor` (same plugin) for structure improvements and review them; apply code changes only after the user approves. Neither skill changes behavior without a prior proposal, so they are safe on new code.
+- For **new code** (files/functions/components added in this task), finish by running `/code-organizer` (`dopeboy0608-skills`) to sort imports and the hook/state/effect layout inside components. Then, if it seems worthwhile, ask `/fowler-refactor` (same skill set) for structure improvements and review them; apply code changes only after the user approves. Neither skill changes behavior without a prior proposal, so they are safe on new code.
 - Do **not** auto-apply `/code-organizer` to **existing code**; large diffs collide with collaborators. Do it only when the user explicitly asks. Same for `/fowler-refactor`: use it on existing code only when the user invokes it.
 - Leave comments that explain WHY (hidden constraints, non-obvious behavior, trade-offs). Express WHAT through names and do not repeat it in comments. This rule overrides Claude Code's default "write no comments" behavior.
 
@@ -55,7 +55,7 @@ When extra libraries (TanStack Query, etc.) seem necessary, do not add them on y
 
 ## Starting work on an issue
 
-Start work on an issue with the `issue-start` skill (`.claude/skills/issue-start/`), after the issue has been refined and registered. It reads the issue and recommends one of two paths; the user always makes the final choice.
+Start work on an issue (or a task, when there is no tracker) with the `issue-start` skill (`.claude/skills/issue-start/`), after the issue has been refined and registered. It reads the issue and recommends one of two paths; the user always makes the final choice.
 
 - **Small task (implement directly)**: create the branch → implement → test/format/lint → (on request) commit/PR. The request or the ticket content is the spec; do not write a separate spec document.
 - **Large task**: the user runs `/{{STRATEGY_SKILL}}` (explicit-invocation skill); `issue-start` prepares the issue and hands over a paste-ready command. The procedure and artifacts follow that skill.
@@ -63,6 +63,15 @@ Start work on an issue with the `issue-start` skill (`.claude/skills/issue-start
 The recommendation criteria are in "Task routing criteria" of `docs/ARCHITECTURE.md`. Both paths follow the issue and branch conventions above, and commit/PR only when the user explicitly asks (except where the strategy rules below say otherwise).
 
 {{STRATEGY_RULES}}
+
+## Keeping these documents in sync
+
+This file, `docs/ARCHITECTURE.md`, and `.claude/skills/issue-start/SKILL.md` describe the project as it is today. When the user changes something they describe (package manager, framework, formatter/linter, test runner, CI or deployment setup, directory layout), update them in the same task so they never contradict the project.
+
+- **What to update**: "Commands", "Tech stack", and "Directory structure" here; the matching lines of `docs/ARCHITECTURE.md`; the CI file under `.github/workflows/` if it runs the changed commands.
+- **How**: show a short before/after of each document and write it only after the user approves. Change only the lines that the change affects.
+- **Not automatic**: changing the large-task strategy or the issue tracker affects the marker on the second line and several sections. Do not patch these piecemeal; tell the user which sections are affected and edit them together when the user asks.
+- If a document contradicts what the project actually does, say so and ask which one is right before editing.
 
 ## Daily work history log
 
@@ -75,7 +84,7 @@ Commit history alone does not explain why a change was made, so keep a per-day t
   ## HH:MM — <title>
   - Reason: <why this work was done>
   - Changes: <what was changed and how>
-  - Related issue: #N (if any)
+  - Related issue/ticket: #N or KEY (if any)
   - Related commit: <hash> (if any)
   ```
 
