@@ -2,7 +2,7 @@
 
 Source for the generated `CLAUDE.md`. Fill every `{{SLOT}}` from the interview and the selected presets, then translate all prose into the user's language (see the language table in `SKILL.md`). Keep every instruction below the marker line. Remove this header, and drop any section whose slot is empty only if the section says so.
 
-Slots: `{{PROJECT_PURPOSE}}`, `{{COMMANDS}}`, `{{DIR_STRUCTURE}}`, `{{TECH_STACK}}`, `{{STRATEGY_SKILL}}` (once, in the large-task bullet; absent when the strategy is `none`), `{{TRACKER_RULES}}` (from `trackers/<tracker>.md`), `{{STRATEGY_RULES}}` (from `strategies/<strategy>.md`, "Workflow rules" block; absent when the strategy is `none`, see `strategies/none.md` for the other edits), `{{MARKER}}` (the settings marker line).
+Slots: `{{PROJECT_PURPOSE}}`, `{{COMMANDS}}`, `{{DIR_STRUCTURE}}`, `{{TECH_STACK}}`, `{{STRATEGY_SKILL}}` (once, in the large-task bullet; absent when the strategy is `none`), `{{TRACKER_RULES}}` (from `trackers/<tracker>.md`; the block of the selected tracker only — GitHub issue management, "Work tracking" for none, or the delegated section for another tracker), `{{STRATEGY_RULES}}` (from `strategies/<strategy>.md`, "Workflow rules" block; absent when the strategy is `none`, see `strategies/none.md` for the other edits), `{{MARKER}}` (the settings marker line).
 
 ---BEGIN---
 # CLAUDE.md
@@ -55,7 +55,7 @@ When extra libraries (TanStack Query, etc.) seem necessary, do not add them on y
 
 ## Starting work on an issue
 
-Start work on an issue with the `issue-start` skill (`.claude/skills/issue-start/`), after the issue has been refined and registered. It reads the issue and recommends one of two paths; the user always makes the final choice.
+Start work on an issue (or a task, when there is no tracker) with the `issue-start` skill (`.claude/skills/issue-start/`), after the issue has been refined and registered. It reads the issue and recommends one of two paths; the user always makes the final choice.
 
 - **Small task (implement directly)**: create the branch → implement → test/format/lint → (on request) commit/PR. The request or the ticket content is the spec; do not write a separate spec document.
 - **Large task**: the user runs `/{{STRATEGY_SKILL}}` (explicit-invocation skill); `issue-start` prepares the issue and hands over a paste-ready command. The procedure and artifacts follow that skill.
@@ -84,7 +84,7 @@ Commit history alone does not explain why a change was made, so keep a per-day t
   ## HH:MM — <title>
   - Reason: <why this work was done>
   - Changes: <what was changed and how>
-  - Related issue: #N (if any)
+  - Related issue/ticket: #N or KEY (if any)
   - Related commit: <hash> (if any)
   ```
 

@@ -1,6 +1,6 @@
 # CI workflow (setup step 2d)
 
-Offered only when the tracker is GitHub, the project has a manifest, and at least one of the `lint` / `typecheck` / `test` / `build` scripts exists (after step 2c). It makes "tests pass before merge" a team-level check instead of a local habit. If `.github/workflows/` already has a workflow that runs these scripts, report it and skip.
+Offered only when the repository's remote is GitHub (check `git remote get-url origin`; the issue tracker may be anything), the project has a manifest, and at least one of the `lint` / `typecheck` / `test` / `build` scripts exists (after step 2c). It makes "tests pass before merge" a team-level check instead of a local habit. If `.github/workflows/` already has a workflow that runs these scripts, report it and skip.
 
 Ask once: "Add a GitHub Actions CI workflow that runs lint, typecheck, test and build on pull requests?" Show the file before writing; write `.github/workflows/ci.yml` only after a yes. Never overwrite an existing `ci.yml`.
 

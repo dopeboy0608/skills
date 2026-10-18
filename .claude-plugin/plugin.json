@@ -1,6 +1,6 @@
 {
   "name": "dopeboy0608-skills",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Agent skills for planning large features in verifiable steps (story → sub-tasks → checkpointed implementation), bootstrapping an AI coding workflow in a blank project (CLAUDE.md rules, issue-start, project scaffolding), refactoring with Martin Fowler's catalog, and organizing React/TypeScript code without changing logic.",
   "author": {
     "name": "YongKyu Kim",
