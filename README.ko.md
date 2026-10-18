@@ -110,7 +110,7 @@ npx skills@latest remove --global code-organizer
 2. **`ai-workflow-setup`**: 프론트/백엔드/풀스택을 판단하고, **명령을 확인받은 뒤** 스캐폴딩 CLI(Vite, Next.js 등)를 실행합니다. 빠진 디렉터리를 보충하고 `CLAUDE.md`의 명령어·기술 스택을 실제 결과로 맞추며, 필요한 도구(`gh`, `dopeboy0608-skills` 플러그인)를 확인합니다. 재실행해도 안전합니다.
 3. **`issue-start`**(프로젝트에 생성됨): GitHub 이슈를 읽고 작은 작업(직접 구현)과 큰 작업 중 하나를 추천하며, 큰 작업이면 선택한 전략의 붙여넣기용 명령을 안내합니다(전략을 "없음"으로 고르면 큰 작업 경로 없이 바로 구현합니다).
 
-이 버전의 지원 범위: 큰 작업 워크플로우 `feature-strategy`(FE/풀스택 추천), `speckit`(백엔드 전용 추천), 직접 입력한 스킬 이름, 없음 / 이슈 트래커 GitHub 이슈. 선택한 스킬이 설치돼 있어야 큰 작업 경로가 동작하며, `ai-workflow-setup`이 이를 확인하고 `speckit`은 승인 후 `specify init --here --integration claude`를 실행할 수 있습니다.
+이 워크플로우는 프론트엔드에 최적화되어 있으며, 백엔드·풀스택도 동작하지만 기본값은 더 일반적입니다. 이 버전의 지원 범위: 큰 작업 워크플로우 `feature-strategy`(FE/풀스택 추천), `speckit`(백엔드 전용 추천), 직접 입력한 스킬 이름, 없음 / 이슈 트래커 GitHub 이슈. 선택한 스킬이 설치돼 있어야 큰 작업 경로가 동작하며, `ai-workflow-setup`이 이를 확인하고 `speckit`은 승인 후 `specify init --here --integration claude`를 실행할 수 있습니다.
 
 ---
 

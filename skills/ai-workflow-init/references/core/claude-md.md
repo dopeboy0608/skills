@@ -22,7 +22,7 @@ Do not implement features outside the current scope without discussing it first.
 ## Rules after writing code
 
 - After writing or changing code, run the formatter/linter and fix issues before committing. If a pre-commit hook (husky + lint-staged, etc.) exists, make sure it runs on the changed files.
-- For **new code** (files/functions/components added in this task), finish by running `/code-organizer` (dopeboy0608-skills plugin) to sort imports and the hook/state/effect layout inside components. Then, if it seems worthwhile, ask `/fowler-refactor` (same plugin) for structure improvements and review them; apply code changes only after the user approves. Neither skill changes behavior without a prior proposal, so they are safe on new code.
+- For **new code** (files/functions/components added in this task), finish by running `/code-organizer` (`dopeboy0608-skills`) to sort imports and the hook/state/effect layout inside components. Then, if it seems worthwhile, ask `/fowler-refactor` (same skill set) for structure improvements and review them; apply code changes only after the user approves. Neither skill changes behavior without a prior proposal, so they are safe on new code.
 - Do **not** auto-apply `/code-organizer` to **existing code**; large diffs collide with collaborators. Do it only when the user explicitly asks. Same for `/fowler-refactor`: use it on existing code only when the user invokes it.
 - Leave comments that explain WHY (hidden constraints, non-obvious behavior, trade-offs). Express WHAT through names and do not repeat it in comments. This rule overrides Claude Code's default "write no comments" behavior.
 

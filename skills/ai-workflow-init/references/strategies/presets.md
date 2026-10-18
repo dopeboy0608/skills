@@ -5,9 +5,18 @@ The user picks exactly one strategy for large tasks during the interview. Each o
 | Name | Marker value | Skill the user runs (`{{STRATEGY_SKILL}}`) | Call argument | Needs setup | Artifacts | Target stack | Fragment |
 |---|---|---|---|---|---|---|---|
 | `feature-strategy` | `feature-strategy` | `feature-strategy` | issue number, title, body summary | `dopeboy0608-skills` plugin only | `docs/feature/<issue>-<slug>.md`, sub-issues | Frontend, full-stack | `feature-strategy.md` |
-| `speckit` | `speckit` | `speckit.specify` (then `speckit.plan`, `speckit.tasks`, `speckit.implement`) | feature description built from the issue | Spec Kit CLI (`specify`) + `specify init --here --integration claude` | `specs/<NNN-slug>/`, `.specify/` | Any (backend-friendly) | `speckit.md` |
+| `speckit` | `speckit` | `speckit-specify` (then `speckit-plan`, `speckit-tasks`, `speckit-implement`) | feature description built from the issue | Spec Kit CLI (`specify`) + `specify init --here --integration claude` | `specs/<NNN-slug>/`, `.specify/` | Any (backend-friendly) | `speckit.md` |
 | Direct input | `custom:<skill-name>` | the name the user types | issue number, title, body summary | whatever that skill needs (the user does it) | defined by that skill | Any | `custom.md` |
 | None | `none` | — | — | nothing | none | Any | `none.md` |
+
+## One-line descriptions (shown in interview question 6)
+
+Show each option with its description, translated, so the user knows what they are choosing. Do not mention options that are not offered.
+
+- `feature-strategy` — plans a big, design-heavy feature as "big flow first, details incrementally": story requirements → a roadmap of sub-tasks (created as GitHub sub-issues) → one sub-task at a time, with your check before every commit. Also has a mock strategy for when the API is not ready.
+- `speckit` — Spec Kit's spec-driven flow: write a spec, then a plan, a task list, and implement from it. Documents live under `specs/` and `.specify/`. Needs the `specify` CLI.
+- Direct input — use a large-task skill you already have; this workflow only hands it the issue and leaves everything else to that skill.
+- None — no separate large-task path; every issue is implemented directly (split big issues into smaller ones yourself).
 
 ## Default recommendation by stack
 

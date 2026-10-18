@@ -44,16 +44,32 @@ Slots are written `{{NAME}}`. Every slot must be replaced; no `{{` may remain in
 
 **Output of every turn in the interview is only: the question, then the recommended answer.** Never write sentences like "I will record X and then ask about Y", "the project is empty so nothing is skipped", or a restatement of the previous answer; at most one short acknowledgment word. The recommended answer is a separate line in the form `Recommended: <answer>` (in the user's language), under every question including questions 1–5; if there is nothing sensible to recommend, offer the most common answer.
 
+**Question format** (use it for every question so the interview looks the same each time; translate the labels to the user's language):
+
+```
+### Question 2/7 · Tech stack
+One line on why this is asked (what it decides later).
+
+1. Frontend  ← recommended
+2. Backend
+3. Full-stack
+
+> Recommended: 1. Frontend — one short reason.
+```
+
+Use a numbered list whenever there is a fixed set of choices, mark the recommended one with `← recommended`, and keep the whole question under ~8 lines. Free-text questions skip the list and keep the title, one-line reason, and the `> Recommended:` line.
+
 One question at a time, each with your recommended answer; skip anything already known from the pre-check. Wait for the answer before the next question. Order:
 
 1. **Purpose and current scope** — what the project does and what is in scope now.
-2. **Tech stack** — asked before the strategy because the strategy recommendation depends on it; and whether it is **frontend / backend / full-stack** (ask directly if unclear). Language/framework, package manager, styling, state, routing, data fetching as relevant.
-3. **Commands** — dev, build, lint, test commands. If the stack is not decided yet, write "to be decided after setup" instead of inventing commands.
+2. **Tech stack** — when asking, say plainly that **this workflow is optimized for frontend projects** (the directory layout, tool recommendations, and `feature-strategy` are frontend-oriented); backend and full-stack work too, with more general defaults. Asked before the strategy because the strategy recommendation depends on it; and whether it is **frontend / backend / full-stack** (ask directly if unclear). Language/framework, package manager, styling, state, routing, data fetching as relevant.
+3. **Commands and quality tools** — dev, build commands, plus the **formatter/linter** and **test runner** the project will use (these make the "format/lint after coding" and "run tests" rules in `CLAUDE.md` executable). Recommend by stack: frontend → Biome and Vitest + Testing Library; backend → the stack's standard pair (for example ruff + pytest). If the stack is not decided yet, write "to be decided after setup" instead of inventing commands; `ai-workflow-setup` will offer the tools when it installs the environment. Record the chosen tool names in `CLAUDE.md` "Commands" and "Tech stack" as planned, not as installed.
 4. **Directory structure** — an existing plan, or "decide with the scaffolding in `ai-workflow-setup`".
 5. **Out of scope** — features intentionally excluded for now.
 6. **Large-task workflow** — ask this **after** the tech stack (question 2) is known; if the stack was "not decided", ask frontend / backend / full-stack first. Offer four options and put the stack-based recommendation first (see `references/strategies/presets.md`):
    - Frontend / full-stack → recommend `feature-strategy`.
    - Backend only → say `feature-strategy` is a frontend-oriented skill and recommend `speckit`, direct input, or none instead; if the user still picks `feature-strategy`, follow it.
+   - Show each option with the one-line description from `references/strategies/presets.md` ("One-line descriptions"), and for the recommended `feature-strategy` say in one sentence what it does before recommending it.
    - `speckit` (Spec Kit; needs the `specify` CLI, installed later by `ai-workflow-setup` with approval), **direct input** (ask for the skill name), **none** (every issue is implemented directly, no large-task path).
 7. **Issue tracker** — GitHub issues (the only supported option here).
 
