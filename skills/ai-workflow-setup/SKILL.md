@@ -43,7 +43,7 @@ Use `stack=` from the marker; if absent or unclear, ask "frontend, backend, or f
 
 ### 2. Development environment install via a project generator CLI (approval required)
 This step **installs a development environment**: a generator CLI creates the manifest (`package.json`), bundler/framework config, source entry files, and may install dependencies. It is different from step 3, which only creates empty folders. Say this in one sentence when you introduce the step, and title the prompt "Install a development environment (project generator)", not "scaffolding".
-- If the project already has a manifest (`package.json`, `pyproject.toml`, `go.mod`, ...) or source folders, show what exists and skip the CLI.
+- If the project already has a manifest (`package.json`, `pyproject.toml`, `go.mod`, ...) or source folders, show what exists and skip the CLI. **Check that it is complete before treating it as done**: a manifest without a lockfile or `node_modules/`, or without an entry/source file, may be the leftover of an interrupted run. In that case say so, do not re-run the generator over it, and offer step 2b (install) and a choice between repairing by hand or starting a new generator run in a temp directory.
 - Otherwise, offer the options that fit the tech stack in `CLAUDE.md` as a short numbered list, recommend one, and always include "skip (I will set it up myself)". For a frontend or the frontend part of full-stack:
   1. Vite (React/TS template): `npm create vite@latest` (the project's package manager may differ)
   2. Rsbuild with **pnpm**: `pnpm create rsbuild@latest`
@@ -58,7 +58,7 @@ This step **installs a development environment**: a generator CLI creates the ma
 Right after the generator, ask separately: "Install dependencies now (`<pm> install`)?" with the package manager from `CLAUDE.md` or the generator choice. Run it only after a yes. Expected result: a lockfile (`pnpm-lock.yaml`, `package-lock.json`, ...) appears and `node_modules/` fills; check that `node_modules` is git-ignored and tell the user to commit the lockfile. If any other tracked file changed (`package.json`, config), show the diff. If the user declines, say that dev/build commands will not work until they install.
 
 ### 2c. Formatter, linter and test tools (separate approvals)
-Follow `references/quality-tools.md`. If the init interview already recorded a choice in `CLAUDE.md`, install that; otherwise recommend the stack's defaults. These tools are what lets the rules in `CLAUDE.md` (format/lint after coding, run tests, TDD) actually run. Declining is fine: say which rule cannot be followed yet.
+Follow `references/quality-tools.md`. **Detect existing tools first** (`biome.json`, `.eslintrc*`/`eslint.config.*`, `.prettierrc*`, `vitest`/`jest` in the manifest, existing `lint`/`test` scripts): keep what the project already uses, do not offer a replacement, and only offer the missing kind (for example a test runner when a linter exists). If the init interview already recorded a choice in `CLAUDE.md`, install that; otherwise recommend the stack's defaults. These tools are what lets the rules in `CLAUDE.md` (format/lint after coding, run tests, TDD) actually run. Declining is fine: say which rule cannot be followed yet.
 
 ### 2d. CI workflow (approval required)
 Follow `references/ci-workflow.md`: one GitHub Actions file that runs the scripts that exist (lint, typecheck, test, build) on pull requests. Only for the GitHub tracker; skip if the project has no scripts yet.

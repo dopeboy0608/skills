@@ -7,7 +7,7 @@ Target stack: frontend / full-stack. Artifacts and sub-task rules for this strat
 - `{{STRATEGY_SKILL}}` → `feature-strategy`.
 - `{{STRATEGY_INVOKE_NOTE}}` → "With a plugin install the command is `/dopeboy0608-skills:feature-strategy`."
 - Marker value: `strategy=feature-strategy`.
-- Requires (for the summary): the `dopeboy0608-skills` plugin. Without it the large-task path does not work. `ai-workflow-setup` checks this.
+- Requires (for the summary): the `feature-strategy` skill (plugin or `.claude/skills/feature-strategy`). Without it the large-task path does not work. `ai-workflow-setup` checks this.
 
 ## Workflow rules (`{{STRATEGY_RULES}}`)
 
@@ -24,7 +24,7 @@ Write this block into CLAUDE.md, translated, directly after the "Starting work o
 - **Commits**: put the **sub-task issue number** in every sub-task commit message (follow the team's commit convention otherwise).
 - **Draft PR**: after the first sub-task commit, ask before opening a Draft PR (it is visible to others). Put `Closes #N` **only for the story issue** in the PR description; never close sub-issues with it.
 - **Checkpoints**: stop before every commit and wait for the user's verification, as the skill specifies.
-- **Requires**: the `dopeboy0608-skills` plugin (provides `feature-strategy`).
+- **Requires**: the `feature-strategy` skill from `dopeboy0608-skills` (installed as a plugin or as a project skill under `.claude/skills/`).
 ---END---
 
 ## GitHub issue mapping (inserted into the tracker rules)
