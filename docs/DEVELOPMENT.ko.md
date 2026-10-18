@@ -38,6 +38,10 @@ cp -R <repo>/_sandbox-pack/.claude .           # 매번 빈 디렉터리에서
 - [ ] `SKILL.md`와 `SKILL.ko.md` 일치, 테스트 전에 샌드박스 팩을 재동기화함
 - [ ] 아래 규칙에 맞게 `plugin.json` 버전을 올림
 
+## 구조 검증
+
+`./scripts/validate-skills.sh`는 `plugin.json`, 등록된 모든 스킬의 `SKILL.md`·`SKILL.ko.md` 존재와 frontmatter `name`(폴더명과 일치)·`description`, 매니페스트에 빠진 스킬 폴더, `ai-workflow-init`의 마커 버전과 플러그인 버전 일치, `_sandbox-pack` 미추적 여부를 확인합니다. CI(`.github/workflows/validate.yml`)가 모든 PR에서 실행하며, PR 템플릿에 시나리오 체크리스트가 들어 있습니다.
+
 ## 버전 규칙
 
 - 기존 스킬 수정(`SKILL.md`, `references/` 내용) → **패치**.

@@ -38,6 +38,10 @@ Frontend is the supported focus; backend and full-stack are best effort and not 
 - [ ] `SKILL.md` and `SKILL.ko.md` agree; the sandbox pack was re-synced before testing
 - [ ] `plugin.json` version raised according to the rules below
 
+## Structure validation
+
+`./scripts/validate-skills.sh` checks `plugin.json`, that every listed skill has `SKILL.md` and `SKILL.ko.md` with a matching frontmatter `name` and a `description`, that no skill folder is missing from the manifest, that the marker version in `ai-workflow-init` equals the plugin version, and that `_sandbox-pack` is not tracked. CI (`.github/workflows/validate.yml`) runs it on every pull request; the PR template carries the scenario checklist.
+
 ## Version rules
 
 - Changing an existing skill (content under `SKILL.md` or `references/`) → **patch**.
