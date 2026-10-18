@@ -108,6 +108,7 @@ Write generated documents in the language the user used in the interview. The re
 | GitHub issue management | GitHub 이슈 관리 |
 | Starting work on an issue | 이슈 작업 시작 워크플로우 |
 | Large-task workflow: `<strategy>` (`feature-strategy`, `speckit`, `custom skill`) | 큰 작업 워크플로우: `<strategy>` (`custom skill` → 사용자 지정 스킬) |
+| Keeping these documents in sync | 문서 동기화 규칙 |
 | Daily work history log | 일별 작업 히스토리 로그 |
 | Troubleshooting log | 트러블슈팅 로그 |
 | Current scope / Structure overview | 현재 구현 범위 / 구조 개요 |

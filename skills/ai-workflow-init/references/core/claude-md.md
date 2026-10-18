@@ -64,6 +64,15 @@ The recommendation criteria are in "Task routing criteria" of `docs/ARCHITECTURE
 
 {{STRATEGY_RULES}}
 
+## Keeping these documents in sync
+
+This file, `docs/ARCHITECTURE.md`, and `.claude/skills/issue-start/SKILL.md` describe the project as it is today. When the user changes something they describe (package manager, framework, formatter/linter, test runner, CI or deployment setup, directory layout), update them in the same task so they never contradict the project.
+
+- **What to update**: "Commands", "Tech stack", and "Directory structure" here; the matching lines of `docs/ARCHITECTURE.md`; the CI file under `.github/workflows/` if it runs the changed commands.
+- **How**: show a short before/after of each document and write it only after the user approves. Change only the lines that the change affects.
+- **Not automatic**: changing the large-task strategy or the issue tracker affects the marker on the second line and several sections. Do not patch these piecemeal; tell the user which sections are affected and edit them together when the user asks.
+- If a document contradicts what the project actually does, say so and ask which one is right before editing.
+
 ## Daily work history log
 
 Commit history alone does not explain why a change was made, so keep a per-day timeline in `docs/history/YYYY-MM-DD.md`. This directory is git-ignored (internal notes; track it in git instead if the repository is private).
