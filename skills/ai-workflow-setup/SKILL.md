@@ -16,7 +16,7 @@ Scaffold references are in this skill's `references/scaffold/` (`fe-scaffold.md`
 
 ## Steps
 
-Ask for confirmation between steps. Write all user-facing text in the language of the project's `CLAUDE.md`. Start with a one-line banner that lists the steps (read choices → CLI → dependencies → quality tools → CI → directories → tools and strategy hook → report), numbered "Step n/5" as you go, so prompts are not mistaken for errors. Do not narrate internal steps such as reading references.
+Ask for confirmation between steps. Write all user-facing text in the language of the project's `CLAUDE.md` (`lang=` in the marker when present). Start with a one-line banner that lists the steps (read choices → CLI → dependencies → quality tools → CI → directories → tools and strategy hook → report), numbered "Step n/5" as you go, so prompts are not mistaken for errors. Do not narrate internal steps such as reading references.
 
 **Prompt format** (use it for every approval question in every step, so the steps look the same each time; translate the labels):
 

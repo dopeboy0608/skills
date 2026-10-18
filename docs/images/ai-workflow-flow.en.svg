@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 600" width="980" height="600" role="img" aria-label="AI Workflow: from a blank project to issue-driven work" font-family="-apple-system,'Segoe UI','Apple SD Gothic Neo','Noto Sans KR',sans-serif">
+<rect width="980" height="600" rx="14" fill="#ffffff" stroke="#d0d7de"/>
+<text x="490" y="44" text-anchor="middle" font-size="24" font-weight="700" fill="#1f2328">AI Workflow: from a blank project to issue-driven work</text>
+<text x="490" y="70" text-anchor="middle" font-size="14" fill="#57606a">Every file write and every command needs your approval</text>
+<defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 10 5 0 10z" fill="#57606a"/></marker></defs>
+<rect x="30" y="100" width="290" height="380" rx="10" fill="#ddf4ff" stroke="#54aeff" stroke-width="1.5"/>
+<text x="48" y="130" font-size="17" font-weight="700" fill="#0969da" text-anchor="start">1  /ai-workflow-init</text>
+<text x="48" y="162" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">• 8-question interview</text>
+<text x="48" y="188" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">• Language · purpose · stack</text>
+<text x="48" y="214" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">• Commands &amp; tools · layout</text>
+<text x="48" y="240" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">• Out of scope · strategy · tracker</text>
+<rect x="48" y="276" width="254" height="36" rx="10" fill="#ffffff" stroke="#54aeff" stroke-width="1.5"/>
+<text x="175" y="299" font-size="14" font-weight="600" fill="#0969da" text-anchor="middle">Preview, then approve</text>
+<text x="48" y="342" font-size="14" font-weight="700" fill="#57606a" text-anchor="start">→</text>
+<text x="70" y="342" font-size="13" font-weight="400" fill="#1f2328" text-anchor="start">CLAUDE.md</text>
+<text x="70" y="368" font-size="13" font-weight="400" fill="#1f2328" text-anchor="start">docs/ARCHITECTURE.md</text>
+<text x="70" y="394" font-size="13" font-weight="400" fill="#1f2328" text-anchor="start">docs/TROUBLE_SHOOTING.md</text>
+<text x="70" y="420" font-size="13" font-weight="400" fill="#1f2328" text-anchor="start">issue-start skill</text>
+<text x="48" y="462" font-size="13" font-weight="400" fill="#1a7f37" text-anchor="start">✓ Never overwrites existing files</text>
+<rect x="345" y="100" width="290" height="380" rx="10" fill="#fff8c5" stroke="#d4a72c" stroke-width="1.5"/>
+<text x="363" y="130" font-size="17" font-weight="700" fill="#9a6700" text-anchor="start">2  /ai-workflow-setup</text>
+<text x="363" y="166" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">1. Project generator CLI</text>
+<text x="363" y="200" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">2. Install dependencies</text>
+<text x="363" y="234" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">3. Formatter · linter · tests</text>
+<text x="363" y="268" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">4. CI workflow · labels</text>
+<text x="363" y="302" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">5. Folders (.gitkeep only)</text>
+<text x="363" y="336" font-size="14" font-weight="400" fill="#1f2328" text-anchor="start">6. Strategy hook (e.g. speckit)</text>
+<text x="363" y="462" font-size="13" font-weight="400" fill="#1a7f37" text-anchor="start">✓ Never overwrites existing files</text>
+<rect x="660" y="100" width="290" height="380" rx="10" fill="#dafbe1" stroke="#4ac26b" stroke-width="1.5"/>
+<text x="678" y="130" font-size="17" font-weight="700" fill="#1a7f37" text-anchor="start">3  /issue-start &lt;issue&gt;</text>
+<text x="678" y="160" font-size="14" font-weight="400" fill="#57606a" text-anchor="start">Reads the issue and recommends</text>
+<rect x="678" y="176" width="254" height="72" rx="10" fill="#ffffff" stroke="#4ac26b" stroke-width="1.5"/>
+<text x="692" y="202" font-size="15" font-weight="700" fill="#1a7f37" text-anchor="start">A  Small task</text>
+<text x="692" y="226" font-size="13" font-weight="400" fill="#1f2328" text-anchor="start">Branch → implement → lint/test</text>
+<rect x="678" y="262" width="254" height="72" rx="10" fill="#ffffff" stroke="#4ac26b" stroke-width="1.5"/>
+<text x="692" y="288" font-size="15" font-weight="700" fill="#1a7f37" text-anchor="start">B  Large task</text>
+<text x="692" y="312" font-size="13" font-weight="400" fill="#1f2328" text-anchor="start">Hands you a paste-ready command</text>
+<rect x="678" y="350" width="254" height="100" rx="10" fill="#f6f8fa" stroke="#d0d7de" stroke-width="1.5"/>
+<text x="692" y="374" font-size="13" font-weight="700" fill="#57606a" text-anchor="start">Your large-task strategy</text>
+<text x="692" y="398" font-size="13" font-weight="400" fill="#1f2328" text-anchor="start">• feature-strategy</text>
+<text x="692" y="419" font-size="13" font-weight="400" fill="#1f2328" text-anchor="start">• speckit</text>
+<text x="692" y="440" font-size="13" font-weight="400" fill="#1f2328" text-anchor="start">• your own skill</text>
+<text x="678" y="470" font-size="12" font-weight="400" fill="#57606a" text-anchor="start">Tracker: GitHub issues · none · other</text>
+<line x1="320" y1="290" x2="345" y2="290" stroke="#57606a" stroke-width="2" marker-end="url(#a)"/>
+<line x1="635" y1="290" x2="660" y2="290" stroke="#57606a" stroke-width="2" marker-end="url(#a)"/>
+<line x1="805" y1="334" x2="805" y2="350" stroke="#57606a" stroke-width="1.5" marker-end="url(#a)"/>
+<text x="490" y="530" font-size="14" font-weight="400" fill="#57606a" text-anchor="middle">Frontend-optimized. Backend and full-stack work with general defaults.</text>
+<text x="490" y="556" font-size="12" font-weight="400" fill="#8c959f" text-anchor="middle">github.com/dopeboy0608/skills</text>
+</svg>

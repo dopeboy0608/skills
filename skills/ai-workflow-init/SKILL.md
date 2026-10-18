@@ -36,18 +36,18 @@ Slots are written `{{NAME}}`. Every slot must be replaced; no `{{` may remain in
 ### 1. Pre-check (no writes)
 1. Look at the current directory: is it empty? Is it a git repository? Note which of these exist: `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/TROUBLE_SHOOTING.md`, `.claude/skills/issue-start/SKILL.md`, `.gitignore`, `README.md`, `package.json` and similar manifests.
 2. **Existing files are never overwritten.** Mark each existing target as `skip`. An existing `README.md` is not a target; read it only to prefill interview answers.
-3. **Re-run**: if `CLAUDE.md` contains the `ai-workflow:` marker, the project is already initialized. Read the strategy/tracker/stack from the marker, do not repeat the interview, and only offer to create targets that are still missing (for example a deleted `issue-start`). Then jump to step 4.
+3. **Re-run**: if `CLAUDE.md` contains the `ai-workflow:` marker, the project is already initialized. Read the strategy/tracker/stack/lang from the marker, do not repeat the interview, and only offer to create targets that are still missing (for example a deleted `issue-start`). Then jump to step 4.
 4. If `CLAUDE.md` exists without the marker, do not touch it; tell the user and offer to generate only the other missing files, or stop.
 
 ### 2. Interview
-**Open with a clear banner before the first question**, so the user knows this is a guided interview and not an error: say that this is a 7-question setup interview, that nothing has been written yet, and that files are written only after the user approves a preview. Number every question ("Question 2/7"), and show your recommended answer on its own line. Speak in the user's language from the very first message (use the language of their earlier messages or the project's language setting); if it cannot be told, write the banner and first question in both English and Korean. Do not narrate internal steps such as reading references.
+**Open with a clear banner before the first question**, so the user knows this is a guided interview and not an error: say that this is an 8-question setup interview, that nothing has been written yet, and that files are written only after the user approves a preview. Number every question ("Question 2/8"), and show your recommended answer on its own line. Speak in the user's language from the very first message (use the language of their earlier messages or the project's language setting); if it cannot be told, write the banner and first question in both English and Korean. Do not narrate internal steps such as reading references.
 
 **Output of every turn in the interview is only: the question, then the recommended answer.** Never write sentences like "I will record X and then ask about Y", "the project is empty so nothing is skipped", or a restatement of the previous answer; at most one short acknowledgment word. The recommended answer is a separate line in the form `Recommended: <answer>` (in the user's language), under every question including questions 1–5; if there is nothing sensible to recommend, offer the most common answer.
 
 **Question format** (use it for every question so the interview looks the same each time; translate the labels to the user's language):
 
 ```
-### Question 2/7 · Tech stack
+### Question 3/8 · Tech stack
 One line on why this is asked (what it decides later).
 
 1. Frontend  ← recommended
@@ -61,17 +61,18 @@ Use a numbered list whenever there is a fixed set of choices, mark the recommend
 
 One question at a time, each with your recommended answer; skip anything already known from the pre-check. Wait for the answer before the next question. Order:
 
-1. **Purpose and current scope** — what the project does and what is in scope now.
-2. **Tech stack** — when asking, say plainly that **this workflow is optimized for frontend projects** (the directory layout, tool recommendations, and `feature-strategy` are frontend-oriented); backend and full-stack work too, with more general defaults. Asked before the strategy because the strategy recommendation depends on it; and whether it is **frontend / backend / full-stack** (ask directly if unclear). Language/framework, package manager, styling, state, routing, data fetching as relevant.
-3. **Commands and quality tools** — dev, build commands, plus the **formatter/linter** and **test runner** the project will use (these make the "format/lint after coding" and "run tests" rules in `CLAUDE.md` executable). Recommend by stack: frontend → Biome and Vitest + Testing Library; backend → the stack's standard pair (for example ruff + pytest). If the stack is not decided yet, write "to be decided after setup" instead of inventing commands; `ai-workflow-setup` will offer the tools when it installs the environment. Record the chosen tool names in `CLAUDE.md` "Commands" and "Tech stack" as planned, not as installed.
-4. **Directory structure** — an existing plan, or "decide with the scaffolding in `ai-workflow-setup`".
-5. **Out of scope** — features intentionally excluded for now.
-6. **Large-task workflow** — ask this **after** the tech stack (question 2) is known; if the stack was "not decided", ask frontend / backend / full-stack first. Offer four options and put the stack-based recommendation first (see `references/strategies/presets.md`):
+1. **Document language** — the language of the generated documents (`CLAUDE.md`, `docs/`, the `issue-start` skill). Offer `English`, `한국어`, and "other (type the language)", recommend the language the user has been writing in, and say that code, commands, file names, and skill names stay as they are. The interview itself continues in the user's language. Record the choice as `lang=<en|ko|code>` in the marker.
+2. **Purpose and current scope** — what the project does and what is in scope now.
+3. **Tech stack** — when asking, say plainly that **this workflow is optimized for frontend projects** (the directory layout, tool recommendations, and `feature-strategy` are frontend-oriented); backend and full-stack work too, with more general defaults. Asked before the strategy because the strategy recommendation depends on it; and whether it is **frontend / backend / full-stack** (ask directly if unclear). Language/framework, package manager, styling, state, routing, data fetching as relevant.
+4. **Commands and quality tools** — dev, build commands, plus the **formatter/linter** and **test runner** the project will use (these make the "format/lint after coding" and "run tests" rules in `CLAUDE.md` executable). Recommend by stack: frontend → Biome and Vitest + Testing Library; backend → the stack's standard pair (for example ruff + pytest). If the stack is not decided yet, write "to be decided after setup" instead of inventing commands; `ai-workflow-setup` will offer the tools when it installs the environment. Record the chosen tool names in `CLAUDE.md` "Commands" and "Tech stack" as planned, not as installed.
+5. **Directory structure** — an existing plan, or "decide with the scaffolding in `ai-workflow-setup`".
+6. **Out of scope** — features intentionally excluded for now.
+7. **Large-task workflow** — ask this **after** the tech stack (question 3) is known; if the stack was "not decided", ask frontend / backend / full-stack first. Offer four options and put the stack-based recommendation first (see `references/strategies/presets.md`):
    - Frontend / full-stack → recommend `feature-strategy`. For a **frontend-only** stack do not offer "none"; if the user asks for it, explain that frontend projects always keep a large-task path and use `feature-strategy` (`speckit` or direct input are still allowed).
    - Backend only → say `feature-strategy` is a frontend-oriented skill and recommend `speckit`, direct input, or none instead; if the user still picks `feature-strategy`, follow it.
    - Show each option with the one-line description from `references/strategies/presets.md` ("One-line descriptions"), and for the recommended `feature-strategy` say in one sentence what it does before recommending it.
    - `speckit` (Spec Kit; needs the `specify` CLI, installed later by `ai-workflow-setup` with approval), **direct input** (ask for the skill name), **none** (every issue is implemented directly, no large-task path).
-7. **Issue tracker** — three options, GitHub issues recommended:
+8. **Issue tracker** — three options, GitHub issues recommended:
    - **GitHub issues** (recommended): issues, labels, and sub-issues are managed with the `gh` CLI.
    - **None**: local documents only; no issues, labels, or `gh`. Large tasks are tracked in the strategy's documents (with `feature-strategy`, the feature document is the single source and sub-tasks are numbered `01`, `02`, …).
    - **Other (Jira, Linear, ...)**: ask for the tracker name only. The generated documents say to use that tracker's own tools; no tool-specific commands are written.
@@ -83,7 +84,7 @@ One question at a time, each with your recommended answer; skip anything already
 3. **Ask for approval.** If the user declines, write nothing and stop; offer to change answers.
 4. After approval, write: `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/TROUBLE_SHOOTING.md`, `docs/history/.gitkeep`, `.claude/skills/issue-start/SKILL.md`, then append missing `.gitignore` lines. Use the Write tool only for files marked `create`.
 5. The strategy skill name appears in exactly one place in `CLAUDE.md` and one place in `issue-start`. Strategy-specific locations and rules (feature document directory, sub-issues, branch/commit/PR rules) appear only in the block inserted from the selected strategy fragment. Read only that fragment: nothing about a strategy that was not selected may appear in any generated file. For `none`, apply the edits listed in `strategies/none.md` and use the "no strategy" variant of `issue-start`.
-6. **Marker**: the first line under the title of `CLAUDE.md` is `<!-- ai-workflow: version=1.4.2 strategy=<feature-strategy|speckit|custom:<skill-name>|none> tracker=<github|none|custom:<name>> stack=<frontend|backend|fullstack> -->`, so that later steps and `ai-workflow-setup` know the choices and which skill version generated the documents. Also keep `version=1.4.2` current when this skill changes.
+6. **Marker**: the first line under the title of `CLAUDE.md` is `<!-- ai-workflow: version=1.4.3 strategy=<feature-strategy|speckit|custom:<skill-name>|none> tracker=<github|none|custom:<name>> stack=<frontend|backend|fullstack> lang=<en|ko|code> -->`, so that later steps and `ai-workflow-setup` know the choices and which skill version generated the documents. Also keep `version=1.4.3` current when this skill changes.
 
 ### 4. Summary and next step
 Report what was created and skipped (short list), then tell the user:
@@ -98,7 +99,7 @@ Do not run the other skill yourself; skills link only by this guidance. Do not c
 
 ## Language
 
-Write generated documents in the language the user used in the interview. The references are in English; translate all prose and headings. For Korean, use these fixed section titles (this file is the one loaded at run time, so the table lives here):
+Write generated documents in the **document language chosen in question 1** (not necessarily the language of the chat). The references are in English; translate all prose and headings into that language. For English, keep the headings as written in the references. For Korean, use these fixed section titles (this file is the one loaded at run time, so the table lives here). For any other language, translate the headings the same way and keep the meaning of each section.
 
 | English | Korean |
 |---|---|

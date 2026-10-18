@@ -9,7 +9,7 @@ The user picks exactly one strategy for large tasks during the interview. Each o
 | Direct input | `custom:<skill-name>` | the name the user types | issue number, title, body summary | whatever that skill needs (the user does it) | defined by that skill | Any | `custom.md` |
 | None | `none` | — | — | nothing | none | Any | `none.md` |
 
-## One-line descriptions (shown in interview question 6)
+## One-line descriptions (shown in the large-task workflow question)
 
 Show each option with its description, translated, so the user knows what they are choosing. Do not mention options that are not offered.
 
@@ -20,7 +20,7 @@ Show each option with its description, translated, so the user knows what they a
 
 ## Default recommendation by stack
 
-Ask the tech stack first (interview question 2); the recommendation for question 6 depends on it.
+Ask the tech stack first; the recommendation in the large-task workflow question depends on it.
 
 | Stack | Recommend first | Also offer |
 |---|---|---|
