@@ -9,8 +9,8 @@
 | [`feature-strategy`](./skills/feature-strategy/SKILL.ko.md) | 기획·디자인이 큰 피처를 "큰 흐름 먼저, 상세는 점진적으로" 구현합니다. 스토리 요구사항 정의 → 하위 작업 로드맵 → 하위 작업별 구현 순서로 진행하며, **커밋 전마다 사람이 확인**합니다. API 계약이 미정이어도 진행할 수 있는 mock 전략을 포함합니다. |
 | [`fowler-refactor`](./skills/fowler-refactor/SKILL.ko.md) | 마틴 파울러의 리팩터링 카탈로그를 적용합니다. 인터뷰 → Before/After 제안 → 승인 후 적용 순서로 진행하며, **기존 호출처에 Breaking Change가 없습니다.** |
 | [`code-organizer`](./skills/code-organizer/SKILL.ko.md) | React/TypeScript 코드의 import와 훅·상태·ref·이펙트 선언을 **로직 변경 없이** 정렬합니다. |
-| [`ai-workflow-init`](./skills/ai-workflow-init/SKILL.ko.md) | 빈 프로젝트에서 짧은 인터뷰로 AI 워크플로우 규칙 문서(`CLAUDE.md`, `docs/ARCHITECTURE.md`, `issue-start` 스킬)를 생성합니다. AI 워크플로우를 처음 도입해보는 사람이나 최소한의 내용으로 구성하고 싶은 사람에게 추천하며, 다음으로 `/ai-workflow-setup`을 실행합니다. |
-| [`ai-workflow-setup`](./skills/ai-workflow-setup/SKILL.ko.md) | init 이후 개발환경을 설정합니다: 스캐폴딩 CLI(승인 후), 프론트/백 디렉터리, 도구 확인(`gh`, 플러그인). 재실행해도 안전합니다. |
+| [`ai-workflow-init`](./skills/ai-workflow-init/SKILL.ko.md) | 빈 프로젝트 또는 기존 프로젝트에서 8개 질문 인터뷰로 AI 워크플로우 규칙 문서(`CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/TROUBLE_SHOOTING.md`, `issue-start` 스킬)를 생성합니다. 큰 작업 워크플로우(`feature-strategy`, `speckit`, 직접 입력, 없음)와 이슈 트래커(GitHub 이슈, 없음, 기타)를 선택할 수 있습니다. AI 워크플로우를 처음 도입해보는 사람이나 최소한의 내용으로 구성하고 싶은 사람에게 추천하며, 다음으로 `/ai-workflow-setup`을 실행합니다. |
+| [`ai-workflow-setup`](./skills/ai-workflow-setup/SKILL.ko.md) | init 이후 개발환경을 설정합니다: 스캐폴딩 CLI(승인 후), 프론트/백 디렉터리, 포매터·린터·테스트 도구와 CI, 도구 확인(`gh`, 플러그인, 선택한 전략의 CLI). 재실행해도 안전합니다. |
 
 각 스킬 폴더의 `SKILL.ko.md`는 사람이 읽기 위한 한국어 번역본입니다. 에이전트는 `SKILL.md`만 읽습니다.
 
@@ -29,7 +29,7 @@ claude plugin install dopeboy0608-skills
 
 세션 안에서는 `/plugin marketplace add dopeboy0608/skills`, `/plugin install dopeboy0608-skills`, `/reload-plugins` 순서로 실행합니다.
 
-플러그인으로 설치한 스킬은 앞에 플러그인 이름이 붙어 `/dopeboy0608-skills:feature-strategy`, `/dopeboy0608-skills:fowler-refactor`, `/dopeboy0608-skills:code-organizer`로 표시되고 실행됩니다.
+플러그인으로 설치한 스킬은 앞에 플러그인 이름이 붙어 `/dopeboy0608-skills:feature-strategy`, `/dopeboy0608-skills:fowler-refactor`, `/dopeboy0608-skills:code-organizer`, `/dopeboy0608-skills:ai-workflow-init`, `/dopeboy0608-skills:ai-workflow-setup`로 표시되고 실행됩니다.
 
 ### 모든 에이전트 (npx)
 
@@ -49,7 +49,7 @@ npx skills@latest add dopeboy0608/skills --skill fowler-refactor
 npx skills@latest add dopeboy0608/skills --skill code-organizer --agent opencode
 ```
 
-이 방법으로 설치한 스킬은 `/feature-strategy`, `/fowler-refactor`, `/code-organizer`로 실행합니다. Claude Code에서는 설치 후 재시작하거나 세션에서 `/reload-skills`를 실행하세요.
+이 방법으로 설치한 스킬은 `/feature-strategy`, `/fowler-refactor`, `/code-organizer`, `/ai-workflow-init`, `/ai-workflow-setup`으로 실행합니다. Claude Code에서는 설치 후 재시작하거나 세션에서 `/reload-skills`를 실행하세요.
 
 ### 업데이트
 

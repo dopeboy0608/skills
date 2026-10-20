@@ -9,8 +9,8 @@ Agent skills for setting up an AI coding workflow, planning features, refactorin
 | [`feature-strategy`](./skills/feature-strategy/SKILL.md) | Plans a large, design-heavy feature as "big flow first, details incrementally": requirements on the story, a sub-task roadmap, then one sub-task at a time with a **human check before every commit**. Includes a mock strategy for when the API contract isn't ready. |
 | [`fowler-refactor`](./skills/fowler-refactor/SKILL.md) | Applies Martin Fowler's refactoring catalog. It interviews you, proposes a Before/After plan, and changes code only after you approve, with **zero breaking changes** to existing callers. |
 | [`code-organizer`](./skills/code-organizer/SKILL.md) | Reorders imports and hook/state/ref/effect declarations in React/TypeScript code **without changing logic**. |
-| [`ai-workflow-init`](./skills/ai-workflow-init/SKILL.md) | Generates AI workflow rule documents (`CLAUDE.md`, `docs/ARCHITECTURE.md`, an `issue-start` skill) in an empty project through a short interview. Recommended for first-time adopters of an AI workflow or anyone who wants a minimal setup. Run `/ai-workflow-setup` next. |
-| [`ai-workflow-setup`](./skills/ai-workflow-setup/SKILL.md) | Sets up the dev environment after init: scaffolding CLI (with approval), frontend/backend directories, and tool checks (`gh`, plugin). Safe to re-run. |
+| [`ai-workflow-init`](./skills/ai-workflow-init/SKILL.md) | Generates AI workflow rule documents (`CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/TROUBLE_SHOOTING.md`, an `issue-start` skill) in a blank or existing project through an 8-question interview. You choose the large-task workflow (`feature-strategy`, `speckit`, your own skill, or none) and the issue tracker (GitHub issues, none, or another). Recommended for first-time adopters of an AI workflow or anyone who wants a minimal setup. Run `/ai-workflow-setup` next. |
+| [`ai-workflow-setup`](./skills/ai-workflow-setup/SKILL.md) | Sets up the dev environment after init: scaffolding CLI (with approval), frontend/backend directories, formatter/linter/test tools and CI, and tool checks (`gh`, plugin, the chosen strategy's CLI). Safe to re-run. |
 
 Korean translations of each skill live next to it as `SKILL.ko.md`. They are for humans; agents only read `SKILL.md`.
 
@@ -29,7 +29,7 @@ claude plugin install dopeboy0608-skills
 
 Or inside a session: `/plugin marketplace add dopeboy0608/skills`, then `/plugin install dopeboy0608-skills`, then `/reload-plugins`.
 
-Plugin skills are namespaced: they show up and run as `/dopeboy0608-skills:feature-strategy`, `/dopeboy0608-skills:fowler-refactor` and `/dopeboy0608-skills:code-organizer`.
+Plugin skills are namespaced: they show up and run as `/dopeboy0608-skills:feature-strategy`, `/dopeboy0608-skills:fowler-refactor`, `/dopeboy0608-skills:code-organizer`, `/dopeboy0608-skills:ai-workflow-init` and `/dopeboy0608-skills:ai-workflow-setup`.
 
 ### Any agent (npx)
 
@@ -49,7 +49,7 @@ npx skills@latest add dopeboy0608/skills --skill fowler-refactor
 npx skills@latest add dopeboy0608/skills --skill code-organizer --agent opencode
 ```
 
-Skills installed this way run as `/feature-strategy`, `/fowler-refactor` and `/code-organizer`. In Claude Code, restart the session or run `/reload-skills` after installing.
+Skills installed this way run as `/feature-strategy`, `/fowler-refactor`, `/code-organizer`, `/ai-workflow-init` and `/ai-workflow-setup`. In Claude Code, restart the session or run `/reload-skills` after installing.
 
 ### Update
 
@@ -111,7 +111,7 @@ Interactive visual guide (English / 한국어): [open the guide](https://claude.
 They do **not** auto-trigger. Neither skill clones or reads any external template; everything is bundled in the skill's `references/`.
 
 1. **`ai-workflow-init`**: an 8-question interview (document language, purpose and scope, tech stack, commands, directories, out of scope, large-task workflow, issue tracker), then a **preview of every file** to be written. Nothing is written until you approve, and existing files are never overwritten. It generates `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/TROUBLE_SHOOTING.md` and an `issue-start` skill, and re-running it only fills in what is missing.
-2. **`ai-workflow-setup`**: detects frontend / backend / full-stack, runs the project scaffolding CLI (for example Vite or Next.js) **after you approve the command**, adds missing directories, syncs `CLAUDE.md` with the real commands and stack, and checks the tools the workflow needs (`gh`, the `dopeboy0608-skills` plugin). Safe to re-run.
+2. **`ai-workflow-setup`**: detects frontend / backend / full-stack, runs the project scaffolding CLI (for example Vite or Next.js) **after you approve the command**, adds missing directories, sets up the formatter, linter, test runner and CI, syncs `CLAUDE.md` with the real commands and stack, and checks the tools the workflow needs (`gh`, the `dopeboy0608-skills` plugin). Safe to re-run.
 3. **`issue-start`** (generated into your project): reads a GitHub issue, recommends a small task (implement directly) or a large task, and for a large task hands you a ready-to-paste command for the strategy you chose (or skips the large-task path if you chose none).
 
 **Example result** (frontend, `feature-strategy`, GitHub issues, English):
