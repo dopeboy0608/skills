@@ -71,7 +71,7 @@ One question at a time, each with your recommended answer; skip anything already
    - Frontend / full-stack → recommend `feature-strategy`. For a **frontend-only** stack do not offer "none"; if the user asks for it, explain that frontend projects always keep a large-task path and use `feature-strategy` (`speckit` or direct input are still allowed).
    - Backend only → say `feature-strategy` is a frontend-oriented skill and recommend `speckit`, direct input, or none instead; if the user still picks `feature-strategy`, follow it.
    - Show each option with the one-line description from `references/strategies/presets.md` ("One-line descriptions"), and for the recommended `feature-strategy` say in one sentence what it does before recommending it.
-   - `speckit` (Spec Kit; needs the `specify` CLI, installed later by `ai-workflow-setup` with approval), **direct input** (ask for the skill name), **none** (every issue is implemented directly, no large-task path).
+   - `speckit` (Spec Kit; needs the `specify` CLI, which you install yourself; `ai-workflow-setup` shows the commands and detects the result), **direct input** (ask for the skill name), **none** (every issue is implemented directly, no large-task path).
 8. **Issue tracker** — three options, GitHub issues recommended:
    - **GitHub issues** (recommended): issues, labels, and sub-issues are managed with the `gh` CLI.
    - **None**: local documents only; no issues, labels, or `gh`. Large tasks are tracked in the strategy's documents (with `feature-strategy`, the feature document is the single source and sub-tasks are numbered `01`, `02`, …).
