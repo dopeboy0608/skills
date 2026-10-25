@@ -11,7 +11,7 @@ The only tracker supported in this version. Rules in this file are the only plac
 - `{{LABEL_STEP}}` → the bullet "`gh issue edit <N> --add-label in-progress` (ask first; skip it when the label does not exist)".
 - `{{BRANCH_PATTERN}}` → `<type>/<N>-<description>`. `{{BRANCH_TYPE_RULE}}` → "The type comes from the issue label (`bug`→`bug/`, `feature`→`feature/`, `chore`→`chore/`, `docs`→`docs/`); ask when there is no label."
 - `{{HANDOFF_EXAMPLE}}` → `Issue #24: <title> — <body summary>`.
-- Needs: the `gh` CLI installed and logged in (`gh auth status`). `ai-workflow-setup` checks this.
+- Needs: the `gh` CLI installed and working for this repository. `ai-workflow-setup` checks that it is installed; setting it up is the user's job.
 
 ## Issue management rules (`{{TRACKER_RULES}}`)
 
