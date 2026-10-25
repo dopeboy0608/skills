@@ -4,7 +4,7 @@ Not offered for a frontend-only stack (see `presets.md`). The user does not want
 
 ## Slot values
 
-- No `{{STRATEGY_SKILL}}`, `{{STRATEGY_RULES}}`, `{{STRATEGY_INVOKE_NOTE}}` or `{{STRATEGY_TRACKER_NOTES}}`: delete the places that use them as described below. No `{{` may remain.
+- No `{{STRATEGY_SKILL}}`, `{{STRATEGY_RULES}}`, `{{STRATEGY_PRECHECK}}`, `{{STRATEGY_INVOKE_NOTE}}` or `{{STRATEGY_TRACKER_NOTES}}`: delete the places that use them as described below. No `{{` may remain.
 - Marker value: `strategy=none`.
 - Requires (for the summary): nothing; say that large issues are not routed anywhere and the user should split them into smaller issues first.
 

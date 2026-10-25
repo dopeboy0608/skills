@@ -36,6 +36,7 @@ Otherwise the user's choice wins, including `feature-strategy` on a backend-only
 Every fragment defines these slot values, using the same section names as `feature-strategy.md`:
 
 - `{{STRATEGY_SKILL}}` — substituted in exactly two places: the large-task bullet of CLAUDE.md and step 6 of `issue-start`.
+- `{{STRATEGY_PRECHECK}}` — a read-only installation check that `issue-start` runs at the start of path B and a stop message when the strategy's tool is missing (empty when none is needed).
 - `{{STRATEGY_INVOKE_NOTE}}` — one sentence for `issue-start` about how the command is spelled in a plugin install (empty when not applicable).
 - `{{STRATEGY_RULES}}` — the "Workflow rules" block written into CLAUDE.md.
 - `{{STRATEGY_TRACKER_NOTES}}` — the "GitHub issue mapping" block (empty when none).

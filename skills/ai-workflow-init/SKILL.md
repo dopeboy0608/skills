@@ -71,7 +71,7 @@ One question at a time, each with your recommended answer; skip anything already
    - Frontend / full-stack → recommend `feature-strategy`. For a **frontend-only** stack do not offer "none"; if the user asks for it, explain that frontend projects always keep a large-task path and use `feature-strategy` (`speckit` or direct input are still allowed).
    - Backend only → say `feature-strategy` is a frontend-oriented skill and recommend `speckit`, direct input, or none instead; if the user still picks `feature-strategy`, follow it.
    - Show each option with the one-line description from `references/strategies/presets.md` ("One-line descriptions"), and for the recommended `feature-strategy` say in one sentence what it does before recommending it.
-   - `speckit` (Spec Kit; needs the `specify` CLI, installed later by `ai-workflow-setup` with approval), **direct input** (ask for the skill name), **none** (every issue is implemented directly, no large-task path).
+   - `speckit` (Spec Kit; needs the `specify` CLI, which you install yourself; `ai-workflow-setup` shows the commands and detects the result), **direct input** (ask for the skill name), **none** (every issue is implemented directly, no large-task path).
 8. **Issue tracker** — three options, GitHub issues recommended:
    - **GitHub issues** (recommended): issues, labels, and sub-issues are managed with the `gh` CLI.
    - **None**: local documents only; no issues, labels, or `gh`. Large tasks are tracked in the strategy's documents (with `feature-strategy`, the feature document is the single source and sub-tasks are numbered `01`, `02`, …).
@@ -84,7 +84,7 @@ One question at a time, each with your recommended answer; skip anything already
 3. **Ask for approval.** If the user declines, write nothing and stop; offer to change answers.
 4. After approval, write: `CLAUDE.md`, `docs/ARCHITECTURE.md`, `docs/TROUBLE_SHOOTING.md`, `docs/history/.gitkeep`, `.claude/skills/issue-start/SKILL.md`, then append missing `.gitignore` lines. Use the Write tool only for files marked `create`.
 5. The strategy skill name appears in exactly one place in `CLAUDE.md` and one place in `issue-start`. Strategy-specific locations and rules (feature document directory, sub-issues, branch/commit/PR rules) appear only in the block inserted from the selected strategy fragment. Read only that fragment: nothing about a strategy that was not selected may appear in any generated file. For `none`, apply the edits listed in `strategies/none.md` and use the "no strategy" variant of `issue-start`.
-6. **Marker**: the first line under the title of `CLAUDE.md` is `<!-- ai-workflow: version=1.4.4 strategy=<feature-strategy|speckit|custom:<skill-name>|none> tracker=<github|none|custom:<name>> stack=<frontend|backend|fullstack> lang=<en|ko|code> -->`, so that later steps and `ai-workflow-setup` know the choices and which skill version generated the documents. Also keep `version=1.4.3` current when this skill changes.
+6. **Marker**: the first line under the title of `CLAUDE.md` is `<!-- ai-workflow: version=1.4.5 strategy=<feature-strategy|speckit|custom:<skill-name>|none> tracker=<github|none|custom:<name>> stack=<frontend|backend|fullstack> lang=<en|ko|code> -->`, so that later steps and `ai-workflow-setup` know the choices and which skill version generated the documents. Also keep `version=1.4.3` current when this skill changes.
 
 ### 4. Summary and next step
 Report what was created and skipped (short list), then tell the user:
