@@ -132,7 +132,7 @@ Summary shown after init: files created or skipped, what the selected strategy n
 
 This repository is the source of these skills; no external template repository is used. Contributing or testing locally: see the [development guide](./docs/DEVELOPMENT.md).
 
-This workflow is optimized for frontend projects; backend and full-stack work with more general defaults. Supported in this version: large-task workflow `feature-strategy` (recommended for frontend / full-stack), `speckit` (recommended for backend-only), a skill name you type, or none; issue tracker GitHub issues, none (local documents only), or another tracker you name (delegated). The chosen skill must be installed for the large-task path to work; `ai-workflow-setup` checks it and, for `speckit`, can run `specify init --here --integration claude` after your approval.
+This workflow is optimized for frontend projects; backend and full-stack work with more general defaults. Supported in this version: large-task workflow `feature-strategy` (recommended for frontend / full-stack), `speckit` (recommended for backend-only), a skill name you type, or none; issue tracker GitHub issues, none (local documents only), or another tracker you name (delegated). The chosen skill must be installed for the large-task path to work; `ai-workflow-setup` checks it. For `speckit` you install the CLI and run `specify init --here --integration claude` yourself; the skill shows the commands, waits for your confirmation, and continues once it detects the result. Missing GitHub labels are shown as `gh label create` commands for you to run. If speckit is not installed, `issue-start` stops at large tasks (small tasks still work).
 
 ---
 

@@ -2,7 +2,7 @@
 
 Create this as `.claude/skills/issue-start/SKILL.md` in the project. Replace the slots, translate the body into the user's language (keep the frontmatter keys, and keep `name` as `issue-start`), and show the result in the approval list.
 
-Tracker slots (`{{ARG_NOUN}}`, `{{ARG_HINT}}`, `{{ITEM_INPUT}}`, `{{ISSUE_LOOKUP}}`, `{{TRACKER_SECTION_NAME}}`, `{{LABEL_STEP}}` (a whole bullet line, or removed), `{{BRANCH_PATTERN}}`, `{{BRANCH_TYPE_RULE}}`, `{{HANDOFF_EXAMPLE}}`) all come from the selected tracker fragment ("Slot values"). Slots: `{{STRATEGY_SKILL}}` — substituted in exactly **one** place (step 6). `{{STRATEGY_INVOKE_NOTE}}` — from the strategy fragment (step 6; drop the sentence when empty). `{{ISSUE_LOOKUP}}` — from the tracker fragment (step 2). `{{DEFAULT_BRANCH_NOTE}}` — name the repository's actual default branch (check `git symbolic-ref --short HEAD` or `git branch`), for example "this repository uses `master`".
+Tracker slots (`{{ARG_NOUN}}`, `{{ARG_HINT}}`, `{{ITEM_INPUT}}`, `{{ISSUE_LOOKUP}}`, `{{TRACKER_SECTION_NAME}}`, `{{LABEL_STEP}}` (a whole bullet line, or removed), `{{BRANCH_PATTERN}}`, `{{BRANCH_TYPE_RULE}}`, `{{HANDOFF_EXAMPLE}}`) all come from the selected tracker fragment ("Slot values"). Slots: `{{STRATEGY_SKILL}}` — substituted in exactly **one** place (step 6). `{{STRATEGY_INVOKE_NOTE}}` — from the strategy fragment (step 6; drop the sentence when empty). `{{STRATEGY_PRECHECK}}` — from the strategy fragment (a whole bullet under step 4, or removed when empty). `{{ISSUE_LOOKUP}}` — from the tracker fragment (step 2). `{{DEFAULT_BRANCH_NOTE}}` — name the repository's actual default branch (check `git symbolic-ref --short HEAD` or `git branch`), for example "this repository uses `master`".
 
 Do not write the routing criteria into this file: `docs/ARCHITECTURE.md` ("Task routing criteria") is the single source.
 
@@ -27,6 +27,7 @@ The standard entry point once an issue is registered. The routing criteria live 
    - **B. Large task** (strategy skill)
    - If the issue mixes both, decide by which signal is closer to the core risk and say why briefly.
 4. **Recommend and confirm**: explain the reason in 1–2 sentences, give your recommended answer, and have the user choose A or B. If the user chooses differently, follow it; the recommendation is only a hint.
+{{STRATEGY_PRECHECK}}
 5. **Common preparation** (both paths), following "{{TRACKER_SECTION_NAME}}" in CLAUDE.md:
 {{LABEL_STEP}}
    - Create the branch from the repository's default branch ({{DEFAULT_BRANCH_NOTE}}). **Base check first**: if the current branch is ahead of the default branch with workflow setup that the default branch lacks (for example `CLAUDE.md` or `package.json` exists only on the current branch, or `git log <default>..HEAD` shows setup commits), branching from the default branch would drop that work. Say so and ask "branch from `<default>` or from the current branch `<current>`?" with the current branch recommended in that case; never silently choose. Commands for the default-branch case: `git checkout <default> && git pull origin <default> --ff-only` (skip the pull when there is no `origin` remote) `&& git checkout -b {{BRANCH_PATTERN}}`. {{BRANCH_TYPE_RULE}}

@@ -6,6 +6,7 @@ The user names a skill they already use for large tasks. This fragment knows not
 
 - Ask: "What is the skill name (without the leading `/`)?" Accept letters, digits, `-`, `_`, `.`, `:` only; strip a leading `/`. If the input has spaces or other characters, ask again. Do not check that the skill exists; setup tells the user to install it.
 - `{{STRATEGY_SKILL}}` → the name as typed. Substituted **only** in the large-task bullet of CLAUDE.md and step 6 of `issue-start`; never in this fragment's rules block.
+- `{{STRATEGY_PRECHECK}}` → empty.
 - `{{STRATEGY_INVOKE_NOTE}}` → empty.
 - `{{STRATEGY_TRACKER_NOTES}}` → empty.
 - Marker value: `strategy=custom:<skill-name>`.
