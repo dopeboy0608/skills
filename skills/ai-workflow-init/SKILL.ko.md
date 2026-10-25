@@ -31,7 +31,7 @@ AI 에이전트가 프로젝트에서 매번 같은 방식으로 일하도록 �
 
 - 선택한 전략 스킬 이름은 `CLAUDE.md`와 `issue-start`에 각각 한 곳에만 치환한다. 전략별 위치·규칙은 **선택한 전략 조각만** 읽어 삽입한 블록에만 두며, 선택하지 않은 전략의 이름·경로·설치 안내는 어떤 생성 파일에도 남기지 않는다. `none`이면 큰 작업 경로를 제거하고 가벼운 경로만 있는 `issue-start`를 만든다(`strategies/none.md`).
 - 요약에 선택한 전략의 요구사항(예: "`speckit`이 설치돼 있어야 큰 작업 경로가 동작한다")을 명시한다. 전략 도구 설치는 `ai-workflow-setup`이 승인 후에 한다.
-- `CLAUDE.md` 제목 아래 첫 줄에 `<!-- ai-workflow: version=1.4.5 strategy=<feature-strategy|speckit|custom:<스킬명>|none> tracker=<github|none|custom:<이름>> stack=… lang=<en|ko|코드> -->` 마커를 남긴다(어느 버전의 스킬로 만들었는지 구분, setup이 선택값을 읽는 용도).
+- `CLAUDE.md` 제목 아래 첫 줄에 `<!-- ai-workflow: version=1.4.6 strategy=<feature-strategy|speckit|custom:<스킬명>|none> tracker=<github|none|custom:<이름>> stack=… lang=<en|ko|코드> -->` 마커를 남긴다(어느 버전의 스킬로 만들었는지 구분, setup이 선택값을 읽는 용도).
 - 생성 문서는 질문 1에서 고른 문서 언어로 쓴다(채팅 언어와 다를 수 있다). 한국어 고정 섹션 제목은 `SKILL.md`의 언어 대응표를 따른다.
 - `docs/spec/`과 "스펙 선작성" 규칙은 만들지 않는다.
 - 스캐폴딩 CLI 실행, 설치, 커밋, push, PR은 하지 않는다.
