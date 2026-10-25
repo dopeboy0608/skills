@@ -114,6 +114,20 @@ They do **not** auto-trigger. Neither skill clones or reads any external templat
 2. **`ai-workflow-setup`**: detects frontend / backend / full-stack, runs the project scaffolding CLI (for example Vite or Next.js) **after you approve the command**, adds missing directories, sets up the formatter, linter, test runner and CI, syncs `CLAUDE.md` with the real commands and stack, and checks the tools the workflow needs (`gh`, the `dopeboy0608-skills` plugin). Safe to re-run.
 3. **`issue-start`** (generated into your project): reads a GitHub issue, recommends a small task (implement directly) or a large task, and for a large task hands you a ready-to-paste command for the strategy you chose (or skips the large-task path if you chose none).
 
+#### How `issue-start` and the large-task skill fit together
+
+`issue-start` is the **entry point for a new issue, used once**. It does not analyze requirements itself.
+
+1. Run `/issue-start <issue>` when you start a new issue. It reads the issue, recommends a small task (A) or a large task (B), and prepares the label and branch.
+2. **Small task (A):** the work is done inside `issue-start`; you do not need another skill.
+3. **Large task (B):** `issue-start` prints a ready-to-paste command (for example `/feature-strategy Issue #N: ...`). It never starts the strategy skill for you; you run the command.
+4. From then on, **continue with the large-task skill, not `issue-start`**. With `feature-strategy`, requirements analysis is its Phase A, planning is Phase B, and implementation is Phase C. Ask it to "start work on issue #N" (or a sub-task) with `/feature-strategy` and it picks the phase from what the issue already contains.
+5. Avoid calling `issue-start` again for the same story or for its sub-issues. It is not aware of earlier analysis, so it would classify the issue again and may, for a self-contained sub-issue, recommend a small task and skip the per-sub-task checks of Phase C.
+
+Notes:
+- `issue-start` reads the issue body (title, body, labels). It does not open external links such as Figma or Confluence by itself; put the requirements you want considered in the issue body, or give them to the large-task skill, which reads design and spec links.
+- A request like "analyze the requirements of issue #N" is not a mode of `issue-start`: it classifies the issue and asks you to choose A or B. For requirements analysis, run the large-task skill (for example `/feature-strategy`).
+
 **Example result** (frontend, `feature-strategy`, GitHub issues, English):
 
 ```
