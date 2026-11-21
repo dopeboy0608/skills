@@ -6,7 +6,7 @@ Ask once: "Add a GitHub Actions CI workflow that runs lint, typecheck, test and 
 
 ## Frontend / Node template
 
-Include a step only for scripts that exist in `package.json`; never add a step that would fail with "script not found". Use the project's package manager. Pin the Node version from `.nvmrc` if present, otherwise `lts/*`. Do not add secrets or deploy steps.
+Include a step only for scripts that exist in `package.json`; never add a step that would fail with "script not found". Use the project's package manager. Pin the Node version from `.nvmrc` if present, otherwise `lts/*`. Keep the workflow to lint, typecheck, test and build; do not add deploy steps.
 
 ```yaml
 name: CI

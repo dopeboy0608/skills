@@ -104,7 +104,7 @@ npx skills@latest remove --global code-organizer
 /dopeboy0608-skills:ai-workflow-setup # Claude 플러그인
 ```
 
-![ai-workflow 흐름: init, setup, issue-start](./docs/images/ai-workflow-flow.ko.svg)
+![ai-workflow 흐름: init, setup, issue-start](./docs/images/ai-workflow-flow.ko.png)
 
 그림으로 보는 가이드(한국어 / English): [가이드 열기](https://claude.ai/artifact/VqLZoureu5Rr1EnTmx8kc2)
 
