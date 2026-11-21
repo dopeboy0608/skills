@@ -11,16 +11,22 @@ How to change and test the skills in this repository. The repository is the sing
 
 ## Test with the sandbox pack
 
-The local test pack is **kept as the maintenance test strategy**: it lets you run the skills against a blank project without installing the plugin. `_sandbox-pack/` itself is git-ignored (it is generated); the script that builds it is versioned.
+The local test pack is **kept as the maintenance test strategy**: it lets you run the skills against a blank project without installing the plugin. `_sandbox-pack/` itself is git-ignored (it is generated). Rebuild it from the repo root with:
 
 ```bash
-./scripts/sync-sandbox.sh                      # rebuild _sandbox-pack/ from skills/
+rm -rf _sandbox-pack/.claude/skills
+mkdir -p _sandbox-pack/.claude/skills
+cp -R skills/ai-workflow-init skills/ai-workflow-setup skills/feature-strategy _sandbox-pack/.claude/skills/
+# first time only: write _sandbox-pack/README.txt with the steps below, as a reminder
+```
+
+```bash
 mkdir ~/tmp/aiw-test && cd ~/tmp/aiw-test && git init
 cp -R <repo>/_sandbox-pack/.claude .           # an EMPTY directory each time
 # open a NEW Claude Code session here, then run /ai-workflow-init and /ai-workflow-setup
 ```
 
-Always re-run the sync script after editing anything under `skills/`, and use a fresh directory for every scenario (re-runs are a scenario of their own).
+Always re-run the rebuild command after editing anything under `skills/`, and use a fresh directory for every scenario (re-runs are a scenario of their own).
 
 To check the plugin install path instead, use a local marketplace or `claude --plugin-dir <repo>` and confirm the namespaced commands (`/dopeboy0608-skills:ai-workflow-init`).
 
@@ -40,7 +46,7 @@ Frontend is the supported focus; backend and full-stack are best effort and not 
 
 ## Structure validation
 
-`./scripts/validate-skills.sh` checks `plugin.json`, that every listed skill has `SKILL.md` and `SKILL.ko.md` with a matching frontmatter `name` and a `description`, that no skill folder is missing from the manifest, that the marker version in `ai-workflow-init` equals the plugin version, and that `_sandbox-pack` is not tracked. CI (`.github/workflows/validate.yml`) runs it on every pull request; the PR template carries the scenario checklist.
+CI (`.github/workflows/validate.yml`) checks `plugin.json`, that every listed skill has `SKILL.md` and `SKILL.ko.md` with a matching frontmatter `name` and a `description`, that no skill folder is missing from the manifest, that the marker version in `ai-workflow-init` equals the plugin version, and that `_sandbox-pack` is not tracked, on every pull request; the PR template carries the scenario checklist. To run the same check locally, copy the `run:` step out of that workflow file and run it from the repo root.
 
 ## Version rules
 

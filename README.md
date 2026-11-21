@@ -104,7 +104,7 @@ Recommended for people **adopting an AI workflow for the first time**, or anyone
 /dopeboy0608-skills:ai-workflow-setup # Claude plugin
 ```
 
-![ai-workflow flow: init, setup, issue-start](./docs/images/ai-workflow-flow.en.svg)
+![ai-workflow flow: init, setup, issue-start](./docs/images/ai-workflow-flow.en.png)
 
 Interactive visual guide (English / 한국어): [open the guide](https://claude.ai/artifact/VqLZoureu5Rr1EnTmx8kc2)
 

@@ -11,16 +11,22 @@
 
 ## 샌드박스 팩으로 테스트
 
-로컬 테스트 팩은 **유지보수용 테스트 전략으로 계속 남겨 둡니다.** 플러그인을 설치하지 않고 백지 프로젝트에서 스킬을 돌려 볼 수 있습니다. `_sandbox-pack/` 자체는 생성물이라 git에서 제외하고, 만드는 스크립트는 버전 관리합니다.
+로컬 테스트 팩은 **유지보수용 테스트 전략으로 계속 남겨 둡니다.** 플러그인을 설치하지 않고 백지 프로젝트에서 스킬을 돌려 볼 수 있습니다. `_sandbox-pack/` 자체는 생성물이라 git에서 제외합니다. 레포 루트에서 다음으로 재생성합니다.
 
 ```bash
-./scripts/sync-sandbox.sh                      # skills/로 _sandbox-pack/ 재생성
+rm -rf _sandbox-pack/.claude/skills
+mkdir -p _sandbox-pack/.claude/skills
+cp -R skills/ai-workflow-init skills/ai-workflow-setup skills/feature-strategy _sandbox-pack/.claude/skills/
+# 처음 한 번만: 아래 사용법을 _sandbox-pack/README.txt로 적어 두면 편합니다
+```
+
+```bash
 mkdir ~/tmp/aiw-test && cd ~/tmp/aiw-test && git init
 cp -R <repo>/_sandbox-pack/.claude .           # 매번 빈 디렉터리에서
 # 여기서 새 Claude Code 세션을 열고 /ai-workflow-init, /ai-workflow-setup 실행
 ```
 
-`skills/` 아래를 수정할 때마다 동기화 스크립트를 다시 실행하고, 시나리오마다 새 디렉터리를 쓰세요(재실행도 하나의 시나리오입니다).
+`skills/` 아래를 수정할 때마다 재생성 명령을 다시 실행하고, 시나리오마다 새 디렉터리를 쓰세요(재실행도 하나의 시나리오입니다).
 
 플러그인 설치 경로를 확인하려면 로컬 마켓플레이스나 `claude --plugin-dir <repo>`로 네임스페이스 명령(`/dopeboy0608-skills:ai-workflow-init`)이 동작하는지 봅니다.
 
@@ -40,7 +46,7 @@ cp -R <repo>/_sandbox-pack/.claude .           # 매번 빈 디렉터리에서
 
 ## 구조 검증
 
-`./scripts/validate-skills.sh`는 `plugin.json`, 등록된 모든 스킬의 `SKILL.md`·`SKILL.ko.md` 존재와 frontmatter `name`(폴더명과 일치)·`description`, 매니페스트에 빠진 스킬 폴더, `ai-workflow-init`의 마커 버전과 플러그인 버전 일치, `_sandbox-pack` 미추적 여부를 확인합니다. CI(`.github/workflows/validate.yml`)가 모든 PR에서 실행하며, PR 템플릿에 시나리오 체크리스트가 들어 있습니다.
+CI(`.github/workflows/validate.yml`)가 `plugin.json`, 등록된 모든 스킬의 `SKILL.md`·`SKILL.ko.md` 존재와 frontmatter `name`(폴더명과 일치)·`description`, 매니페스트에 빠진 스킬 폴더, `ai-workflow-init`의 마커 버전과 플러그인 버전 일치, `_sandbox-pack` 미추적 여부를 모든 PR에서 확인하며, PR 템플릿에 시나리오 체크리스트가 들어 있습니다. 로컬에서 같은 검증을 하려면 그 워크플로 파일의 `run:` 단계를 레포 루트에서 그대로 실행하세요.
 
 ## 버전 규칙
 

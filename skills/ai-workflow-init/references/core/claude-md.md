@@ -48,7 +48,7 @@ When extra libraries (TanStack Query, etc.) seem necessary, do not add them on y
 
 ## Prohibited
 
-- Do not hardcode API keys in code. Manage them with environment variables.
+- Keep environment-specific values out of the source code; use the project's environment configuration.
 - Do not implement features outside the current scope without discussing it first.
 
 {{TRACKER_RULES}}
