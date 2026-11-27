@@ -85,7 +85,7 @@ Phase A. Story pre-definition   design or API spec → requirements doc → stor
    ↓
 Phase B. Sub-task planning      input check → fact finding → cross-check gate ─┬─ pass ──────────────────────────────┐
                                                                                └─ re-verify once → update story top ─┘
-                                → question rounds → roadmap → create sub-tasks & feature doc
+                                → question rounds → roadmap → write local docs → (ask) create tracker sub-tasks
    ↓
 Phase C. Per-sub-task build     start → implement → stop before commit → human check → commit → refine next
    ↺ repeat per sub-task (open a Draft PR/MR after the first one)
@@ -252,7 +252,7 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
 - Add new decisions to the round when findings surface them.
 - When an answer comes with a condition, ask about the new decision it creates (e.g., "keep the old button" → how does it coexist with the new one?).
 - Question checklist (ask only the items that apply to this feature; skip the rest):
-  - Issue hierarchy (e.g., sub-issues vs. issue type/label on GitHub Issues); how many sub-tasks to create and when (skip anything already known, e.g., the user said there's no tracker)
+  - Issue hierarchy (e.g., sub-issues vs. issue type/label on GitHub Issues); whether to create tracker sub-tasks at all (asked once the local docs are written; see step 6), and how many (skip anything already known, e.g., the user said there's no tracker)
   - How to split the first sub-task
   - Handling the missing API contract
   - Branch, commit, and PR strategy
@@ -278,11 +278,11 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 - Put cascading actions (bulk apply, etc.) and other apps (partner-facing screens, etc.) last.
 - Write full bodies for **the first two only**. Give the rest a title, FR, in/out, and references, and flesh them out right before starting.
 
-### 6. Create sub-tasks and the feature doc
-- Show the human the roadmap and the drafts of sub-tasks 01–02, and get approval before creating anything (an external write; see "Operational notes").
-- Write the local docs first, in the layout from "Feature doc layout": the story doc, and one file per sub-task (full bodies for 01–02, summary-only for the rest).
-- Create the sub-tasks under the story (on GitHub Issues, as sub-issues linked to the story issue; summary-only for the rest), then write the feature doc: roadmap & key mapping, workflow, decision log, findings (including ③ items), progress log.
-- A sub-task's key is known only after it is created (e.g., GitHub issue numbers). As part of the approved creation, edit each created sub-task afterward and replace the key placeholder in its `## Commit` line with the real key, and mention it in your report.
+### 6. Write the local docs; create tracker sub-tasks only if asked
+- Show the human the roadmap and the drafts of sub-tasks 01–02, and get approval before writing anything.
+- Write the local docs, in the layout from "Feature doc layout": the story doc (roadmap & key mapping, workflow, decision log, findings including ③ items, progress log), and one file per sub-task (full bodies for 01–02, summary-only for the rest).
+- **Then ask whether to create the sub-tasks in the tracker** (e.g., "Create these N sub-tasks as sub-issues of #<story>?"). Ask every time; the default is no. A refusal or no answer means no tracker sub-tasks: carry on with the roadmap numbers (`01`, `02`, …) as keys. The approval of the roadmap in the first bullet does **not** count as this approval.
+- If the human approves, create them under the story (on GitHub Issues, as sub-issues linked to the story issue; summary-only for the rest). A sub-task's key is known only after it is created (e.g., GitHub issue numbers), so afterward replace the key placeholder in each `## Commit` line (in the issue and in the local sub-task file) with the real key, record the keys in the story doc's key mapping, and mention it in your report. Without approval, the `## Commit` line keeps the roadmap number.
 - Without a tracker, the roadmap and bodies already live in the local docs; just fill in the rest. Each sub-task body is its own file, so its headings stay at the template's `##` level.
 
 ### 7. Working without the API contract
@@ -368,12 +368,12 @@ Written for UI components. For API-integration work, apply the same ideas to exi
 ## Operational notes (issue tracker)
 
 ### All trackers
-- Creating and editing issues is an external write; get approval first, as described in step 6.
+- Creating or editing issues, sub-issues, labels, or the story body is an external write: get the human's approval each time, as described in step 6. Never create or change anything in the tracker without it, and never treat the roadmap approval as that approval.
 - If a create call fails with a network error, **search by parent before retrying**, so you don't create duplicates. How to search depends on the tracker (see below).
 
 ### GitHub Issues
-- Link each sub-task as a **sub-issue** of the story issue; don't track sub-tasks as a checklist in the story body. Check what your environment supports before relying on it: if the `gh` version has no command for linking sub-issues, use `gh api` with the sub-issues REST endpoint (`POST /repos/<owner>/<repo>/issues/<story number>/sub_issues`, body `sub_issue_id` = the sub-task's numeric issue **id**, not its number).
-- Issue types exist only on some organization repositories. If the repo has none, mark sub-tasks with a label (e.g., `sub-task`); if the label doesn't exist yet, ask before creating it.
+- Only after the human approves creating tracker sub-tasks (step 6): link each sub-task as a **sub-issue** of the story issue; don't track sub-tasks as a checklist in the story body. Check what your environment supports before relying on it: if the `gh` version has no command for linking sub-issues, use `gh api` with the sub-issues REST endpoint (`POST /repos/<owner>/<repo>/issues/<story number>/sub_issues`, body `sub_issue_id` = the sub-task's numeric issue **id**, not its number).
+- Issue types exist only on some organization repositories. If the repo has none, mark sub-tasks with a label (e.g., `sub-task`); if the label doesn't exist yet, don't create it yourself: show the `gh label create <name> --color <hex> --description "<text>"` command for the human to run (in Claude Code they can prefix a command with `!`), and leave sub-tasks unlabeled until it exists.
 - Duplicate check: list the story's sub-issues (`GET /repos/<owner>/<repo>/issues/<story number>/sub_issues`) and compare titles before creating again.
 - The story body is plain markdown, so the `## Re-verification` block can be inserted directly; the format-preservation warning in step 3 doesn't apply.
 - Commit messages use the sub-task's `#<number>` as its key.
