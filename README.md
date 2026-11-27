@@ -86,10 +86,10 @@ npx skills@latest remove --global code-organizer
 It does **not** auto-trigger. Call it explicitly with the command above.
 
 - **Phase A, story pre-definition**: design → requirements doc (screen layout, FRs, fields, policies, open questions) in the story body.
-- **Phase B, sub-task planning**: cross-check the story against the code, run question rounds, then create the roadmap and sub-tasks.
+- **Phase B, sub-task planning**: cross-check the story against the code, run question rounds, then write the roadmap and sub-task docs locally (`docs/feature/<base>/<base>.md` plus `sub-tasks/NN. <title>.md`). It then asks whether to create the sub-tasks in your tracker; the default is no.
 - **Phase C, per-sub-task build**: implement one sub-task, stop before commit for your check, then refine the next one.
 - The agent gathers facts; you make the decisions. Existing components are replaced, never edited, so rollback is one line.
-- Issue-tracker writes (Jira, Linear, ...) happen only after you approve the drafts.
+- Issue-tracker writes (issues, sub-issues, labels; Jira, Linear, ...) happen only when you approve them each time, separately from approving the roadmap.
 
 ---
 
