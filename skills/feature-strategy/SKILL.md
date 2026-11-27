@@ -114,7 +114,7 @@ Phase C. Per-sub-task build     start → implement → stop before commit → h
 If there's no tracker, or the human doesn't want issues created, keep the same cycle but use the feature doc as the single source of truth:
 - Phase A: put the five sections at the top of the story doc instead of a story body.
 - Phase B: step 1 reads the story doc instead of fetching a story. Write the roadmap in the story doc and each sub-task body as its own file under `sub-tasks/` (same template); skip the tracker steps in "Operational notes".
-- Phase C: refer to sub-tasks by their roadmap number (`01`, `02`, …) in requests and commit messages.
+- Phase C: refer to sub-tasks by their roadmap number (`01`, `02`, …) in requests, and in commit keys as step 9 describes.
 
 ---
 
@@ -255,7 +255,7 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
   - Issue hierarchy (e.g., sub-issues vs. issue type/label on GitHub Issues); whether to create tracker sub-tasks at all (asked once the local docs are written; see step 6), and how many (skip anything already known, e.g., the user said there's no tracker)
   - How to split the first sub-task
   - Handling the missing API contract
-  - Branch, commit, and PR strategy
+  - Branch, commit, and PR strategy; commit key style (`[story][sub]` or `[story]`, step 9)
   - Apps and flows in scope
   - Sub-task body template and title format
   - Replace vs coexist for existing components; rollback path
@@ -310,7 +310,7 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 ## Design                (optional — section link, may be supplied by the human; omit if there is no design file)
 ## Verification scenario (checkboxes, including regressions)
 ## Code review points    (rollback path, naming, listener cleanup, cleanup tools on new code only)
-## Commit                (team convention)
+## Commit                (commit key per step 9, team convention)
 ```
 - Title format example: `[App][Feature] NN. <entry point> > <content>`. For a single-app project, a simpler `NN. <entry point> > <content>` is enough.
 - Summary-only sub-tasks start with `> Full body to be added before starting / **API required**`.
@@ -333,7 +333,12 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 
 ### 9. Branch · commits · PR
 - Use a single story branch. Sub-tasks are for tracking scope and decisions.
-- Put the **sub-task key** in each commit message and **fix the scope to the feature name**. Follow your team's commit convention otherwise.
+- **Commit key rule**: choose it with the human once per story, when work starts (a question in step 4), and record it in the story doc's decision log. Never use `#` in the key (some trackers, e.g. GitLab, turn it into a link). Two styles:
+  - `[story][sub] message`, e.g., `[30][01] feature-strategy: …`
+  - `[story] message`, e.g., `[30] feature-strategy: …`
+
+  `story` is the story's issue number or tracker key (`30`, `PROJ-12`). `sub` is the created sub-issue's number or tracker key; if no tracker sub-task was created, the roadmap number (`01`). A commit that belongs to no single sub-task (e.g., a docs-only commit) uses `[story] message` in either style. With no tracker there is no story number: use `[NN] message` (roadmap number) in the first style, and no key in the second.
+- **Fix the scope to the feature name** in each commit message. Follow your team's commit convention otherwise.
 - Open a Draft PR/MR after the first sub-task and review commit by commit, so you don't end up with one giant PR.
 
 ### 10. Protecting existing code
@@ -376,7 +381,7 @@ Written for UI components. For API-integration work, apply the same ideas to exi
 - Issue types exist only on some organization repositories. If the repo has none, mark sub-tasks with a label (e.g., `sub-task`); if the label doesn't exist yet, don't create it yourself: show the `gh label create <name> --color <hex> --description "<text>"` command for the human to run (in Claude Code they can prefix a command with `!`), and leave sub-tasks unlabeled until it exists.
 - Duplicate check: list the story's sub-issues (`GET /repos/<owner>/<repo>/issues/<story number>/sub_issues`) and compare titles before creating again.
 - The story body is plain markdown, so the `## Re-verification` block can be inserted directly; the format-preservation warning in step 3 doesn't apply.
-- Commit messages use the sub-task's `#<number>` as its key.
+- Commit keys follow the commit key rule in step 9: the issue number without `#`.
 
 ### Jira and other trackers
 - Sub-task issue type names differ per project. List the issue types before creating any.

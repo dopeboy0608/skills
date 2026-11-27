@@ -22,7 +22,7 @@ Write this block into CLAUDE.md, translated, directly after the "Starting work o
 - **Sub-tasks**: written as local files first. After that, ask **every time** whether to create them as GitHub **sub-issues** of the story issue (not as a checklist in the story body); the default is no. Without sub-issues, refer to sub-tasks by roadmap numbers (`01`, `02`, …). The feature document is not the task list; it keeps the roadmap, decisions, and progress.
 - **Issue creation approval**: never create issues, sub-issues, or labels, or edit an issue body, without the user's explicit approval each time. Approving the `feature-strategy` roadmap and the drafts of sub-tasks 01–02 is **not** that approval; the skill asks separately after the local docs are written. Do not create labels yourself: show the `gh label create` command for the user to run.
 - **Branch**: one branch per **story**, named `type/story-issue-number-description` (for example `feature/12-description`). Do not create a branch per sub-task.
-- **Commits**: put the **sub-task key** in every sub-task commit message: `#<number>` if its sub-issue was created, otherwise the roadmap number (for example `[02]`). Follow the team's commit convention otherwise.
+- **Commits**: when work on a story starts, ask which commit key rule to use and record the answer: `[story][sub] message` (story issue number, then the sub-issue number if it was created, otherwise the roadmap number; for example `[12][02] …`) or `[story] message` (for example `[12] …`). Never put `#` in the key. A commit that belongs to no single sub-task uses `[story] message`. Follow the team's commit convention otherwise.
 - **Draft PR**: after the first sub-task commit, ask before opening a Draft PR (it is visible to others). Put `Closes #N` **only for the story issue** in the PR description; never close sub-issues with it.
 - **Checkpoints**: stop before every commit and wait for the user's verification, as the skill specifies.
 - **Requires**: the `feature-strategy` skill from `dopeboy0608-skills` (installed as a plugin or as a project skill under `.claude/skills/`).
@@ -50,7 +50,7 @@ The six bullets exactly as written above (Feature document through Draft PR).
 - **Sub-tasks**: written as local files first. After that, ask **every time** whether to create them in the tracker with its own tools, as the skill's "Jira and other trackers" mapping describes; the default is no. If created, the sub-task key is whatever the tracker returns; otherwise use the roadmap numbers.
 - **Ticket creation approval**: never create or edit tickets without the user's explicit approval each time. Approving the roadmap is **not** that approval; the skill asks separately after the local docs are written.
 - **Branch**: one branch per **story**, named `type/KEY-description`. Do not create a branch per sub-task.
-- **Commits**: put the **sub-task key** in every sub-task commit message (the tracker key if created, otherwise the roadmap number).
+- **Commits**: when work on a story starts, ask which commit key rule to use and record the answer: `[KEY][sub] message` (the ticket key, then the sub-task's tracker key if it was created, otherwise the roadmap number) or `[KEY] message`. Never put `#` in the key. A commit that belongs to no single sub-task uses `[KEY] message`.
 - **PR**: ask before opening a Draft PR; link tickets by the team's convention, not by invented closing keywords.
 
 ## GitHub issue mapping (inserted into the tracker rules)
