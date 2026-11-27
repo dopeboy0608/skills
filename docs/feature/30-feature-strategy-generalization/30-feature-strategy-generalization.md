@@ -10,7 +10,7 @@
 |---|---|---|---|---|---|
 | 01 | feature-strategy 스킬 본문 > 진입 방식 3종 판별 + 로컬 문서 구조 | FR-01, FR-02 | (없음) | 완료 (0482544) | [sub-tasks/01](sub-tasks/01.%20스킬%20본문%20-%20진입%20방식%203종%20판별%20+%20로컬%20문서%20구조.md) |
 | 02 | feature-strategy 스킬 본문 > 하위티켓 생성 승인 흐름 | FR-03, FR-05 | (없음) | 완료 (20f8d4a) | [sub-tasks/02](sub-tasks/02.%20스킬%20본문%20-%20하위티켓%20생성%20승인%20흐름.md) |
-| 03 | ai-workflow-init·setup > 프래그먼트·프리셋 정렬 + 마커 버전 | FR-04, FR-05 | (없음) | 요약만 | [sub-tasks/03](sub-tasks/03.%20ai-workflow%20-%20프래그먼트·프리셋%20정렬%20+%20마커%20버전.md) |
+| 03 | ai-workflow-init·setup > 프래그먼트·프리셋 정렬 + 마커 버전 | FR-04, FR-05 | (없음) | 완료 (2c21fc6) | [sub-tasks/03](sub-tasks/03.%20ai-workflow%20-%20프래그먼트·프리셋%20정렬%20+%20마커%20버전.md) |
 | 04 | README·docs 동기화 | FR-04 | (없음) | 요약만 | [sub-tasks/04](sub-tasks/04.%20README·docs%20동기화.md) |
 
 - 하위티켓(이슈)은 만들지 않았다. 사용자가 원할 때만 승인 후 생성한다.
@@ -49,7 +49,11 @@
 
 경로 사용처: `feature-strategy/SKILL.md`·`SKILL.ko.md`, `strategies/feature-strategy.md`(21, 41, 49줄), `presets.md`(7줄), README.
 
-미검증 한 건(판정에 넣지 않음): 마커 버전 상향 필요 여부. 03 착수 때 확인.
+마커 버전 상향 필요 여부(미검증이던 항목): `docs/DEVELOPMENT.md` Version rules상 스킬 내용 변경은 patch 상향이 필요해 03에서 1.4.6 → 1.4.7로 올림 (plugin.json, marketplace.json, init 마커 일치).
+
+ai-workflow-setup 영향 점검(확인 필요 6번): 구조 변경 불필요. `feature-strategy`는 추가 설치가 없고(`strategy-hooks.md`), 라벨 생성은 이미 사용자 직접 실행 방식(`SKILL.md:84`). 별도 이슈 불필요.
+
+남은 위험: 이미 `CLAUDE.md`를 생성한 프로젝트에는 옛 규칙(로드맵 승인 = 이슈 생성 승인)이 남는다. 재생성은 자동으로 하지 않으며 릴리스 노트에 안내 필요. 샘플 프로젝트에서 `/ai-workflow-init`을 돌려 옛 경로가 남지 않는지 보는 시나리오는 아직 미실행.
 
 ## 진행 로그
 
@@ -58,3 +62,5 @@
   - 02로 넘길 것: (a) Phase B 6단계의 "then write the feature doc: …" 문장이 새 "로컬 문서 먼저" 항목과 중복, (b) 같은 단계 "Create the sub-tasks under the story…"가 아직 자동 생성으로 읽힘.
 - 2026-11-27: [02] 완료, 커밋 20f8d4a. 6단계를 "로컬 문서 작성 → 트래커 하위 작업 생성 여부 질문(매번, 기본 아니오)"으로 변경. 로드맵 승인은 이슈 생성 승인이 아님을 명시. 외부 쓰기(이슈·하위 이슈·라벨·본문) 전반을 매번 승인으로, 라벨은 `gh label create` 명령을 보여 사용자가 직접 실행.
   - 03으로 넘길 것: init `strategies/feature-strategy.md`의 "Issue creation approval"(23줄)과 sub-issue 기본 생성 문구(22, 61줄), `presets.md` 7·16줄이 새 스킬 본문과 어긋남. `ai-workflow-init/SKILL.md:76`의 "sub-issues are managed with the gh CLI"도 점검.
+- 2026-11-27: [03] 완료, 커밋 2c21fc6. init `strategies/feature-strategy.md`(github/none/custom 변형), `presets.md`, `ai-workflow-init/SKILL.md` 정렬, 버전 1.4.7. 마켓 배포는 하지 않음(사용자가 직접).
+  - 04로 넘길 것: README.md/README.ko.md의 Phase B 설명("create the roadmap and sub-tasks")과 "Issue-tracker writes … only after you approve the drafts" 문구를 새 흐름(로컬 문서 먼저, 이슈 생성은 매번 별도 승인)에 맞춤. DEVELOPMENT*.md는 경로 언급이 없어 변경 불필요.
