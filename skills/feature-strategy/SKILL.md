@@ -28,6 +28,15 @@ Check the input, then enter at the matching phase:
 
 If the user names a phase, follow it, but stop and say so when a required input is missing (e.g., Phase C without a sub-task body).
 
+### Entry type
+
+The way the feature is reached changes the roadmap rules in Phase B step 5, so settle it at the start. If the story or memo already states it, use that; otherwise ask the human (a decision, not a fact the code can answer). One of:
+- **New entry point**: a new button, menu, or link that opens the feature (e.g., a button that opens a modal).
+- **Addition to an existing screen**: the screen already exists and the work adds behavior or elements to it.
+- **New page**: a new route with its own layout and navigation entry.
+
+Write the answer under "Related docs" at the top of the story (or story doc).
+
 ## Terms
 
 | Term | Meaning |
@@ -36,7 +45,7 @@ If the user names a phase, follow it, but stop and say so when a required input 
 | Sub-task | Implementation-unit issue under the story (GitHub sub-issue, Jira Sub-task, etc.) |
 | Design file | Figma or similar design source |
 | API contract | Backend request/response schema (DTO, OpenAPI, etc.) |
-| Feature doc | Local doc holding this feature's decision log and progress log (e.g., `docs/feature/<KEY>-<slug>.md`) |
+| Feature doc | The local docs of one feature: a story doc (roadmap, decision log, findings, progress log) plus one file per sub-task. See "Feature doc layout" below. |
 
 ### Tracker mapping
 
@@ -44,13 +53,30 @@ Pick the column that matches the project's tracker. The cycle is identical; only
 
 | | GitHub Issues | Jira, Linear, etc. | No tracker |
 |---|---|---|---|
-| Story | An issue | Story / Issue | Top of the feature doc |
-| Story body | The issue body (plain markdown) | The description (may be a rich format such as Jira ADF) | The feature doc |
-| Sub-task | A sub-issue linked under the story issue | Sub-task / child issue | A numbered section (`01`, `02`, …) of the feature doc |
+| Story | An issue | Story / Issue | The story doc |
+| Story body | The issue body (plain markdown) | The description (may be a rich format such as Jira ADF) | The story doc |
+| Sub-task | A sub-issue linked under the story issue | Sub-task / child issue | A numbered file (`01`, `02`, …) under `sub-tasks/` |
 | Sub-task key | `#<number>` | The tracker key | The roadmap number |
 | Sub-task kind | A label (e.g., `sub-task`), unless the repo has issue types | The project's sub-task issue type | — |
-| Feature doc file | `docs/feature/<issue number>-<slug>.md` (no `#` in file names) | `docs/feature/<KEY>-<slug>.md` | `docs/feature/<slug>.md` |
+| Story doc file | `docs/feature/<issue number>-<slug>/<issue number>-<slug>.md` (no `#` in file names) | `docs/feature/<KEY>-<slug>/<KEY>-<slug>.md` | `docs/feature/<slug>/<slug>.md` |
+| Sub-task doc file | `docs/feature/<base>/sub-tasks/NN. <title>.md` | same | same |
 | Operational notes | "GitHub Issues" below | "Jira and other trackers" below | Skip |
+
+### Feature doc layout
+
+`<base>` is the story doc's folder name: `<issue number>-<slug>` or `<KEY>-<slug>` with a tracker, `<slug>` alone without one.
+
+```
+docs/feature/<base>/
+├── <base>.md                      story doc: Phase A sections, roadmap & key mapping,
+│                                  workflow, decision log, findings, progress log
+└── sub-tasks/
+    ├── 01. <entry point> - <content>.md   full body (step 8 template)
+    └── 02. ….md                           (later ones: summary only until just before starting)
+```
+
+- **File names**: a sub-task's issue title keeps `>` (`NN. <entry point> > <content>`), but in the file name replace `>` with `-`, and replace any other character a file name can't hold (`\ / : * ? " < |`) with `-` or a space.
+- **Older single-file docs**: a project may already have `docs/feature/<base>.md` as one file. Read it as the story doc, with sub-task bodies as its numbered sections. Create only the layout above for new docs; don't migrate old ones unless the human asks.
 
 ## The cycle
 
@@ -86,8 +112,8 @@ Phase C. Per-sub-task build     start → implement → stop before commit → h
 ## Without an issue tracker
 
 If there's no tracker, or the human doesn't want issues created, keep the same cycle but use the feature doc as the single source of truth:
-- Phase A: put the five sections at the top of the feature doc instead of a story body.
-- Phase B: step 1 reads the feature doc instead of fetching a story. Write the roadmap and each sub-task body as sections of the feature doc (same template); skip the tracker steps in "Operational notes".
+- Phase A: put the five sections at the top of the story doc instead of a story body.
+- Phase B: step 1 reads the story doc instead of fetching a story. Write the roadmap in the story doc and each sub-task body as its own file under `sub-tasks/` (same template); skip the tracker steps in "Operational notes".
 - Phase C: refer to sub-tasks by their roadmap number (`01`, `02`, …) in requests and commit messages.
 
 ---
@@ -242,7 +268,10 @@ Why ③ stays out of the story: it would mix implementation decisions into the s
 
 ### 5. Roadmap rules
 A roadmap shown while question rounds are still open is a provisional draft: don't save or create anything from it until step 6.
-- 01–02: **entry flow & layout**. One per entry point (e.g., create vs edit). With a single entry point, 01 is entry flow & layout and 02 is the next item below. Lay out static UI placeholders so later sub-tasks only fill in behavior.
+- 01–02: **entry flow & layout**. One per entry point (e.g., create vs edit). With a single entry point, 01 is entry flow & layout and 02 is the next item below. Lay out static UI placeholders so later sub-tasks only fill in behavior. The entry type changes this:
+  - *New entry point*: as above.
+  - *Addition to an existing screen*: 01 places the new element on the existing screen as a static placeholder (rollback path: remove one render line); 02 is the next item below.
+  - *New page*: 01 is the route, page shell, and navigation entry; 02 is the page's main static layout.
 - Next: entry validation → editing & live calculation → secondary behavior (sorting, etc.)
 - **Put API-dependent work later**: save/fetch/delete integration, filters, removing mocks.
 - **API-integration work** (the spec exists; the screen may already exist): if the screen already exists, 01–02 are the types/mapping layer and the first read integration instead of entry flow & layout. Then: read integration (fetch → screen mapping) → mutation integration → error, loading, and empty states → removing mocks and `TODO(API)` markers.
@@ -251,9 +280,10 @@ A roadmap shown while question rounds are still open is a provisional draft: don
 
 ### 6. Create sub-tasks and the feature doc
 - Show the human the roadmap and the drafts of sub-tasks 01–02, and get approval before creating anything (an external write; see "Operational notes").
+- Write the local docs first, in the layout from "Feature doc layout": the story doc, and one file per sub-task (full bodies for 01–02, summary-only for the rest).
 - Create the sub-tasks under the story (on GitHub Issues, as sub-issues linked to the story issue; summary-only for the rest), then write the feature doc: roadmap & key mapping, workflow, decision log, findings (including ③ items), progress log.
 - A sub-task's key is known only after it is created (e.g., GitHub issue numbers). As part of the approved creation, edit each created sub-task afterward and replace the key placeholder in its `## Commit` line with the real key, and mention it in your report.
-- Without a tracker, the roadmap and bodies already live in the feature doc; just fill in the rest. Nest each sub-task body's headings under its sub-task heading (e.g., `####` for the template's `##`), so they don't collide with the doc's own top-level sections.
+- Without a tracker, the roadmap and bodies already live in the local docs; just fill in the rest. Each sub-task body is its own file, so its headings stay at the template's `##` level.
 
 ### 7. Working without the API contract
 - Reuse existing list and response data as much as possible. Create mode can usually be built from that alone.
