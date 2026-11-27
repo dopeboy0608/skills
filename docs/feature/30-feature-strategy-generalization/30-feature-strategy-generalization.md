@@ -9,7 +9,7 @@
 | # | 제목 | 관련 FR | 트래커 키 | 상태 | 본문 |
 |---|---|---|---|---|---|
 | 01 | feature-strategy 스킬 본문 > 진입 방식 3종 판별 + 로컬 문서 구조 | FR-01, FR-02 | (없음) | 완료 (0482544) | [sub-tasks/01](sub-tasks/01.%20스킬%20본문%20-%20진입%20방식%203종%20판별%20+%20로컬%20문서%20구조.md) |
-| 02 | feature-strategy 스킬 본문 > 하위티켓 생성 승인 흐름 | FR-03, FR-05 | (없음) | 대기 | [sub-tasks/02](sub-tasks/02.%20스킬%20본문%20-%20하위티켓%20생성%20승인%20흐름.md) |
+| 02 | feature-strategy 스킬 본문 > 하위티켓 생성 승인 흐름 | FR-03, FR-05 | (없음) | 완료 (20f8d4a) | [sub-tasks/02](sub-tasks/02.%20스킬%20본문%20-%20하위티켓%20생성%20승인%20흐름.md) |
 | 03 | ai-workflow-init·setup > 프래그먼트·프리셋 정렬 + 마커 버전 | FR-04, FR-05 | (없음) | 요약만 | [sub-tasks/03](sub-tasks/03.%20ai-workflow%20-%20프래그먼트·프리셋%20정렬%20+%20마커%20버전.md) |
 | 04 | README·docs 동기화 | FR-04 | (없음) | 요약만 | [sub-tasks/04](sub-tasks/04.%20README·docs%20동기화.md) |
 
@@ -56,3 +56,5 @@
 - 2026-11-27: Phase A 정리, 교차 확인, 질문 라운드 1 완료. 로드맵과 01·02 본문 작성. 구현 전.
 - 2026-11-27: [01] 완료, 커밋 0482544. `SKILL.md`·`SKILL.ko.md`에 Entry type 절, 5단계 진입 방식 분기, "Feature doc layout"(스토리 문서 + `sub-tasks/`, 파일명 규칙, 기존 단일 파일 호환) 추가.
   - 02로 넘길 것: (a) Phase B 6단계의 "then write the feature doc: …" 문장이 새 "로컬 문서 먼저" 항목과 중복, (b) 같은 단계 "Create the sub-tasks under the story…"가 아직 자동 생성으로 읽힘.
+- 2026-11-27: [02] 완료, 커밋 20f8d4a. 6단계를 "로컬 문서 작성 → 트래커 하위 작업 생성 여부 질문(매번, 기본 아니오)"으로 변경. 로드맵 승인은 이슈 생성 승인이 아님을 명시. 외부 쓰기(이슈·하위 이슈·라벨·본문) 전반을 매번 승인으로, 라벨은 `gh label create` 명령을 보여 사용자가 직접 실행.
+  - 03으로 넘길 것: init `strategies/feature-strategy.md`의 "Issue creation approval"(23줄)과 sub-issue 기본 생성 문구(22, 61줄), `presets.md` 7·16줄이 새 스킬 본문과 어긋남. `ai-workflow-init/SKILL.md:76`의 "sub-issues are managed with the gh CLI"도 점검.
